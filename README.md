@@ -27,4 +27,5 @@
 * Personalized greeting
 * Overview statistics: nr. of entries on list, total cash intended to spend (...TODO more...)
 
-#### 
+#### List screen
+* List of people (?maybe names and after click unroll rest of info?)
