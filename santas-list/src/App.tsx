@@ -17,13 +17,6 @@ import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 import Box from '@material-ui/core/Box';
 
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-
 import Login from "./pages/Login";
 import About from "./pages/About";
 import Home from "./pages/Home";
@@ -60,26 +53,8 @@ function App() {
     const classes = useStyles();
     const [auth, setAuth] = React.useState(true);
 
-
-    /*const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    /*const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-        const handleProfile = () => {
-        //Handle profile? 
-        setAnchorEl(null);
-
-    };*/
-
     const handleLogout = () => {
         setAuth(false);
-        //setAnchorEl(null);
     };
 
 
@@ -99,33 +74,6 @@ function App() {
                                 <Button className={classes.menuButton}>
                                     <Link className={classes.link} to="/list/"><b>List</b></Link>
                                 </Button>
-                                {/* <IconButton
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleMenu}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={open}
-                                onClose={handleClose}
-                            >
-                                <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                                <MenuItem onClick={handleLogout}> Logout</MenuItem>
-                            </Menu>*/}
                             </Box>
                             <Button className={classes.menuButton} onClick={handleLogout}>
                                 <Link className={classes.link} to="/"><b>Logout</b></Link>
