@@ -20,9 +20,10 @@ import Box from '@material-ui/core/Box';
 import Login from "./pages/Login";
 import About from "./pages/About";
 import Home from "./pages/Home";
-import List from "./pages/List";
 import Register from "./pages/Register";
 import './App.css';
+import GiftList from "./pages/GiftList";
+
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -33,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: "none",
         color: "white",
     },
-
 }));
 
 const ourTheme = createMuiTheme({
@@ -56,7 +56,6 @@ function App() {
     const handleLogout = () => {
         setAuth(false);
     };
-
 
     return (
         <MuiThemeProvider theme={ourTheme}>
@@ -98,7 +97,7 @@ function App() {
                             <Route exact path="/" component={Home} />
                             <Route exact path="/login/" component={Login} />
                             <Route exact path="/about/" component={About} />
-                            <Route exact path="/list/" component={List} />
+                            <Route exact path="/list/" component={GiftList} />
                             <Route exact path="/register/" component={Register} />
                         </Switch>
                     </Container>
