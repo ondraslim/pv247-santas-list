@@ -9,8 +9,15 @@ import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardActions from "@material-ui/core/CardActions/CardActions";
-import Grid from "@material-ui/core/Grid/Grid";
+import { makeStyles } from "@material-ui/styles";
 
+
+const useStyles = makeStyles({
+  fullSizeCard: {
+    height: "100%",
+    width: "100%",
+    },
+});
 
 type Props = {
   listing: GiftListModel;
@@ -18,27 +25,28 @@ type Props = {
 };
 
 const ListCard: FC<Props> = ({ listing, onClick }) => {
+  const classes = useStyles();
+  
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
-      <Card onClick={() => onClick(listing.id)}>
-        <CardHeader title={listing.name}
-          action={
-            <Tooltip title="Delete this list.">
-              <IconButton onClick={() => { console.log("click card delete") /* TODO: db.listings.remove...  */ } }>
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-          }>
+    <Card onClick={() => onClick(listing.id)} className={classes.fullSizeCard}>
+      <CardHeader title={listing.name}
+        action={
+          <Tooltip title="Delete this list.">
+            <IconButton onClick={() => { console.log("click card delete") /* TODO: db.listings.remove...  */ }}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        }>
 
-        </CardHeader>
-        <CardContent>
-          <p><CardGiftcardRoundedIcon />{listing.recipients.map(r => r.name).join(', ')}</p>
-        </CardContent>
-        <CardActions>
+      </CardHeader>
+      <CardContent>
+        <CardGiftcardRoundedIcon />
+        <p>{listing.recipients.map(r => r.name).join(', ')}</p>
+      </CardContent>
+      <CardActions>
 
-        </CardActions>
-      </Card>
-    </Grid>
+      </CardActions>
+    </Card>
   )
 };
 

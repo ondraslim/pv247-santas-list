@@ -13,7 +13,7 @@ type Props = {
   onClick: (recipient: string) => void;
 };
 
-const ReceiverListItem: FC<Props> = ({ recipient, onClick }) => {
+const RecipientListItem: FC<Props> = ({ recipient, onClick }) => {
   return (
     <ListItem onClick={() => onClick(recipient.id)} >
       <ListItemAvatar>
@@ -27,7 +27,7 @@ const ReceiverListItem: FC<Props> = ({ recipient, onClick }) => {
 
       <ListItemSecondaryAction>
         <Tooltip title="Delete this recipient">
-          <IconButton onClick={() => { /* TODO: db.listings.recipient.remove */  } }>
+          <IconButton onClick={() => { console.log("delete " + recipient.id) /* TODO: db.listings.recipient.remove */  } }>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -36,4 +36,4 @@ const ReceiverListItem: FC<Props> = ({ recipient, onClick }) => {
   );
 };
 
-export default ReceiverListItem;
+export default RecipientListItem;
