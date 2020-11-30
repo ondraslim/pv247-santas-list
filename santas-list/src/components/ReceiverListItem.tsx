@@ -10,13 +10,12 @@ import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
 type Props = {
   recipient: RecipientModel;
-  onClick: () => void;
-  onDelete: () => void;
+  onClick: (recipient: string) => void;
 };
 
-const ReceiverListItem: FC<Props> = ({ recipient, onClick, onDelete, children }) => {
+const ReceiverListItem: FC<Props> = ({ recipient, onClick }) => {
   return (
-    <ListItem onClick={onClick} onMouseOver={() => console.log("onmouseover")}>
+    <ListItem onClick={() => onClick(recipient.id)} >
       <ListItemAvatar>
         <Avatar>
           <CardGiftcardRoundedIcon />
@@ -27,8 +26,8 @@ const ReceiverListItem: FC<Props> = ({ recipient, onClick, onDelete, children })
         secondary="My very thoughful note about the gift for him..." />
 
       <ListItemSecondaryAction>
-        <Tooltip title="Delete this receiver">
-          <IconButton onClick={onDelete}>
+        <Tooltip title="Delete this recipient">
+          <IconButton onClick={() => { /* TODO: db.listings.recipient.remove */  } }>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

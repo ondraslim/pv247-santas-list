@@ -92,7 +92,7 @@ function App() {
                 </AppBar>
 
                 <main className="App">
-                    <Container maxWidth="sm">
+                    <Container maxWidth="lg">
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route exact path="/login/" component={Login} />
