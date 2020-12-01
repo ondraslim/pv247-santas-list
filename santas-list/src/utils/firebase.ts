@@ -32,7 +32,7 @@ export const getUserGiftLists = (user: User) => {
 
 // Given gift list return list of recipients in it's subcollection
 export const getGiftListRecipients = (list: GiftList) => {
-  return giftListsCollection.doc(list.id).collection('giftees') as firebase.firestore.CollectionReference<Giftee>
+  return giftListsCollection.doc(list.id).collection('recipients') as firebase.firestore.CollectionReference<Giftee>
 }
 
 // Given gift list return list of gifts in it's subcollection (to be used to stats)
