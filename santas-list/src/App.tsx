@@ -16,6 +16,7 @@ import { MuiThemeProvider, createMuiTheme, makeStyles } from "@material-ui/core/
 import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
 import Login from "./pages/Login";
 import About from "./pages/About";
@@ -34,18 +35,22 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
     },
 
+    title: {
+        flexGrow: 1,
+    },
+
 }));
 
 const ourTheme = createMuiTheme({
     palette: {
         primary: {
-            main: red[700],
+            main: red[900],
         },
 
         secondary: {
             main: green[900],
         },
-    }
+    },
 });
 
 
@@ -69,11 +74,20 @@ function App() {
                         <Button className={classes.menuButton}>
                             <Link className={classes.link} to="/about/"><b>About</b></Link>
                         </Button>
+
                         {auth && <>
                             <Box display='flex' flexGrow={1}>
                                 <Button className={classes.menuButton}>
                                     <Link className={classes.link} to="/list/"><b>List</b></Link>
                                 </Button>
+                                <Box display="flex"
+                                    m='auto'
+                                    alignItems="center"
+                                    justifyContent="center">
+                                    <Typography variant="h5">
+                                        Santa's list
+                                </Typography>
+                                </Box>
                             </Box>
                             <Button className={classes.menuButton} onClick={handleLogout}>
                                 <Link className={classes.link} to="/"><b>Logout</b></Link>
@@ -81,7 +95,14 @@ function App() {
                         </>}
 
                         {auth === false && <>
-                            <Box display='flex' flexGrow={1}/>
+                            <Box display="flex"
+                                m='auto'
+                                alignItems="center"
+                                justifyContent="center">
+                                <Typography variant='h5'>
+                                    Santa's list
+                                </Typography>
+                            </Box>
                             <Button className={classes.menuButton}>
                                 <Link className={classes.link} to="/login/"><b>Login</b></Link>
                             </Button>
