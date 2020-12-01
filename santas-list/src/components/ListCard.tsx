@@ -11,7 +11,6 @@ import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardActions from "@material-ui/core/CardActions/CardActions";
 import { makeStyles } from "@material-ui/styles";
 
-
 const useStyles = makeStyles({
   fullSizeCard: {
     height: "100%",
@@ -41,6 +40,7 @@ const ListCard: FC<Props> = ({ listing, onClick }) => {
       </CardHeader>
       <CardContent>
         <CardGiftcardRoundedIcon />
+        {/* TODO: Typography, nowrap */}
         <p>{listing.recipients.map(r => r.name).join(', ')}</p>
       </CardContent>
       <CardActions>

@@ -13,7 +13,7 @@ type Props = {
   onClick: (recipient: string) => void;
 };
 
-const RecipientListItem: FC<Props> = ({ recipient, onClick }) => {
+const GifteeListItem: FC<Props> = ({ recipient, onClick }) => {
   return (
     <ListItem onClick={() => onClick(recipient.id)} >
       <ListItemAvatar>
@@ -36,4 +36,4 @@ const RecipientListItem: FC<Props> = ({ recipient, onClick }) => {
   );
 };
 
-export default RecipientListItem;
+export default GifteeListItem;

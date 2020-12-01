@@ -22,7 +22,7 @@ import About from "./pages/About";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import './App.css';
-import Listing from "./pages/Listing";
+import GiftLists from "./pages/GiftLists";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -97,7 +97,7 @@ function App() {
                             <Route exact path="/" component={Home} />
                             <Route exact path="/login/" component={Login} />
                             <Route exact path="/about/" component={About} />
-                            <Route exact path="/list/" component={Listing} />
+                            <Route exact path="/list/" component={GiftLists} />
                             <Route exact path="/register/" component={Register} />
                         </Switch>
                     </Container>
