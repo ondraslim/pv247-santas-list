@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { Gift, GiftList, Recipient } from '../data/DataTypes'
+import { Gift, GiftList, Giftee } from '../data/DataTypes'
 
   const firebaseConfig = {
     apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
@@ -21,24 +21,26 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Each list has "user" field that holds email of the user it belongs to
-export var listsCollection = db.collection(
+export var giftListsCollection = db.collection(
   'lists',
 ) as firebase.firestore.CollectionReference<GiftList>;
 
 // Return documents of lists for given user
-export const getUserLists = (user: User) => {
-  return listsCollection.where("user", "==", user.email).get()
+export const getUserGiftLists = (user: User) => {
+  return giftListsCollection.where("user", "==", user.email).get()
 }
 
-// Given list ID return list of recipients in it's subcollection
-export const getListRecipients = (list: GiftList) => {
-  return listsCollection.doc(list.id).collection('recipients') as firebase.firestore.CollectionReference<Recipient>
+// Given gift list return list of recipients in it's subcollection
+export const getGiftListRecipients = (list: GiftList) => {
+  return giftListsCollection.doc(list.id).collection('giftees') as firebase.firestore.CollectionReference<Giftee>
 }
 
-// Given list ID return list of gifts in it's subcollection
-export const getListGifts = (list: GiftList) => {
-  return listsCollection.doc(list.id).collection('gifts') as firebase.firestore.CollectionReference<Gift>
+// Given gift list return list of gifts in it's subcollection (to be used to stats)
+export const getGiftListGifts = (list: GiftList) => {
+  return giftListsCollection.doc(list.id).collection('gifts') as firebase.firestore.CollectionReference<Gift>
 }
+
+
 
 // Simplified user type for referencing users
 export type User = Pick<firebase.User, 'uid' | 'email'>;
