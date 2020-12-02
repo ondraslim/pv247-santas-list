@@ -1,24 +1,26 @@
 
 
-export type GiftModel = {
+
+export type Gift = {
   id: string;
   name: string;
   price: number;
   description?: string;
-  for: RecipientModel
+  for: Recipient
 };
 
-export type RecipientModel = {
+export type Recipient = {
   id: string;
   name: string;
   note: string;
   budget: number;
-  gifts: GiftModel[];
+  listId: string;
+  gifts: Gift[];
 }
 
-export type GiftListModel = {
+export type GiftList = {
   id: string;
   name: string;
-  recipients: RecipientModel[];
+  recipients: Recipient[];
 }
 
