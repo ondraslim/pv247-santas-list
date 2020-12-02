@@ -8,7 +8,7 @@ export type Gift = {
   description?: string;
 };
 
-export type Recipient = {
+export type Giftee = {
   id: string;
   name: string;
   note?: string;
@@ -19,7 +19,7 @@ export type Recipient = {
 export type GiftList = {
   id: string;
   name: string;
-  recipients: Recipient[];
+  recipients: Giftee[];
   gifts: Gift[];
 }
 
