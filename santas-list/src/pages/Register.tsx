@@ -2,11 +2,8 @@ import React, { FC, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import {
-    BrowserRouter as Router,
-    Route,
     Link,
     Redirect,
-    Switch,
 } from "react-router-dom";
 
 import Card from '@material-ui/core/Card';
@@ -18,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { signIn, signUp, useLoggedInUser } from '../utils/firebase';
+import { signUp, useLoggedInUser } from '../utils/firebase';
 
 const useStyles = makeStyles({
     app: {
@@ -59,6 +56,14 @@ const Login: FC = () => {
     if (isLoggedIn) {
         return <Redirect to='/' />;
     }
+
+    const register = async (): Promise<void> => {
+        try {
+            await signUp(user, password);
+          } catch (err) {
+            setError(err.message);
+          }
+    };
 
     return (
         <Grid container className={classes.app}>
@@ -118,7 +123,8 @@ const Login: FC = () => {
                         variant='contained'
                         size='large'
                         color='primary'
-                        onClick={() => { password === confirmPassword ? console.log("Good") : setError("Passwords do not match");
+                        onClick={() => { 
+                            password === confirmPassword ? register() : setError("Passwords do not match");
                          }
                         }
                     >

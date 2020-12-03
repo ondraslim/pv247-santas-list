@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { Gift, GiftList, Recipient } from '../src/data/DataTypes';
+import { Gift, GiftList, Giftee } from '../data/DataTypes'
 
   const firebaseConfig = {
     apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
