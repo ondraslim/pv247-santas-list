@@ -1,25 +1,25 @@
 
 
+
 export type Gift = {
   id: string;
   name: string;
-  price: number;
+  price?: number;
   description?: string;
-  for: Recipient
 };
 
-export type Recipient = {
+export type Giftee = {
   id: string;
   name: string;
-  note: string;
-  budget: number;
-  listId: string;
-  gifts: Gift[];
+  note?: string;
+  budget?: number;
+  gift?: Gift;
 }
 
 export type GiftList = {
   id: string;
   name: string;
-  recipients: Recipient[];
+  recipients: Giftee[];
+  gifts: Gift[];
 }
 
