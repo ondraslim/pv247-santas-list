@@ -28,10 +28,29 @@ export const giftListsCollection = db.collection(
   'lists',
 ) as firebase.firestore.CollectionReference<GiftList>;
 
-
+// Promise of number of all lists
 export const giftListCount = async() => {
   const snapshot = await giftListsCollection.get()
   return snapshot.size;  
+}
+
+export const giftListCountUser = async(user : User) => {
+  return await giftListsCollection.where("user", "==", user.email).get().then(async snap => {
+    return snap.size
+  })
+}
+
+// Promise of number of giftees on lists for user
+export const gifteeCount = async (user: User) => {
+  return await giftListsCollection.where("user", "==", user.email).get().then(async snapshot => {
+    let total_count = 0;
+    await Promise.all(snapshot.docs.map(async (doc) => {
+      await doc.ref.collection('recipients').get().then(sn =>
+        total_count += sn.size      
+        )
+    }))
+    return total_count;
+  })
 }
 
 // Return documents of lists for given user
