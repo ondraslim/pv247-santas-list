@@ -15,15 +15,24 @@ import { Gift, GiftList, Recipient } from '../src/data/DataTypes';
     appId: "1:219098905244:web:18bcac0a5146e83d9e8b59"
   };
 
-firebase.initializeApp(firebaseConfig);
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 // Firestore database
 const db = firebase.firestore();
 
 // Each list has "user" field that holds email of the user it belongs to
-export var giftListsCollection = db.collection(
+export const giftListsCollection = db.collection(
   'lists',
 ) as firebase.firestore.CollectionReference<GiftList>;
+
+
+export const giftListCount = async() => {
+  const snapshot = await giftListsCollection.get()
+  return snapshot.size;  
+}
 
 // Return documents of lists for given user
 export const getUserGiftLists = (user: User) => {
@@ -39,6 +48,7 @@ export const getGiftListRecipients = (list: GiftList) => {
 export const getGiftListGifts = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('gifts') as firebase.firestore.CollectionReference<Gift>
 }
+
 
 
 

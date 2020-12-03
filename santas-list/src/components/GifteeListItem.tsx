@@ -4,12 +4,12 @@ import React from "react";
 import { FC } from "react";
 import CardGiftcardRoundedIcon from '@material-ui/icons/CardGiftcardRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { RecipientModel } from "../data/DataTypes";
+import { Giftee } from "../data/DataTypes";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
 
 type Props = {
-  recipient: RecipientModel;
+  recipient: Giftee;
   onClick: (recipient: string) => void;
 };
 
