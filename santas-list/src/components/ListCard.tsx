@@ -3,7 +3,7 @@ import React from "react";
 import { FC } from "react";
 import CardGiftcardRoundedIcon from '@material-ui/icons/CardGiftcardRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { GiftListModel } from "../data/DataTypes";
+import { GiftList } from "../data/DataTypes";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 import Card from "@material-ui/core/Card/Card";
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 });
 
 type Props = {
-  listing: GiftListModel;
+  listing: GiftList;
   onClick: (listingId: string) => void;
 };
 
