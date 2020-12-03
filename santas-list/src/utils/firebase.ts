@@ -3,11 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-<<<<<<< HEAD
-import { Gift, GiftList, Recipient } from '../src/data/DataTypes'
-=======
-import { Gift, GiftList, Giftee } from '../data/DataTypes'
->>>>>>> 34ae3c28af712ef4ae6065e263ceae1172afb41b
+import { Gift, GiftList, Recipient } from '../src/data/DataTypes';
 
   const firebaseConfig = {
     apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
@@ -25,12 +21,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Each list has "user" field that holds email of the user it belongs to
-<<<<<<< HEAD
-export const listsCollection = db.collection(
-  'lists',
-) as firebase.firestore.CollectionReference<GiftList>;
-
-=======
 export var giftListsCollection = db.collection(
   'lists',
 ) as firebase.firestore.CollectionReference<GiftList>;
@@ -50,7 +40,6 @@ export const getGiftListGifts = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('gifts') as firebase.firestore.CollectionReference<Gift>
 }
 
->>>>>>> 34ae3c28af712ef4ae6065e263ceae1172afb41b
 
 
 // Simplified user type for referencing users

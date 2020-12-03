@@ -35,14 +35,11 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: "none",
         color: "white",
     },
-<<<<<<< HEAD
 
     title: {
         flexGrow: 1,
     },
 
-=======
->>>>>>> 34ae3c28af712ef4ae6065e263ceae1172afb41b
 }));
 
 const ourTheme = createMuiTheme({
