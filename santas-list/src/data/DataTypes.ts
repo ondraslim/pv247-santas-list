@@ -20,6 +20,6 @@ export type GiftList = {
   id: string;
   name: string;
   recipients: Giftee[];
-  gifts: Gift[];
+  gifts?: Gift[];
 }
 

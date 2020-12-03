@@ -1,7 +1,7 @@
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import React, { FC } from "react";
-import { GiftListModel } from "../data/DataTypes";
+import { GiftList } from "../data/DataTypes";
 import { useState } from "react";
 import GifteeListItem from "../components/GifteeListItem";
 import ListCard from "../components/ListCard";
@@ -27,8 +27,8 @@ const useStyles = makeStyles({
 });
 
 
-const lists: GiftListModel[] = [
-    { id: "1", name: "Christmas 2021", recipients: [{ id: "1", name: "Joe", note: "No idea", budget: 100, gifts: [] }] },
+const lists: GiftList[] = [
+    { id: "1", name: "Christmas 2021", recipients: [{ id: "1", name: "Joe", note: "No idea", budget: 100 }] },
     { id: "2", name: "Bar mitzvah", recipients: [] },
     { id: "3", name: "Wedding", recipients: [] },
     { id: "4", name: "Christmas", recipients: [] },
@@ -43,7 +43,7 @@ const GiftLists: FC = () => {
     const classes = useStyles();
 
 
-    const [list, setList] = useState<GiftListModel>();
+    const [list, setList] = useState<GiftList>();
     const [error, setError] = useState<string>("");
     const [newListingName, setNewListingName] = useState<string>("");
 
