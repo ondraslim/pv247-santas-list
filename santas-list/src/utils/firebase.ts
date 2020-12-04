@@ -34,22 +34,43 @@ export const giftListCount = async() => {
   return snapshot.size;  
 }
 
-export const giftListCountUser = async(user : User) => {
-  return await giftListsCollection.where("user", "==", user.email).get().then(async snap => {
-    return snap.size
+
+// Returns stats for given list [max budget, min budget, giftee count]
+export const listStats = async (name: string) => {
+  return await giftListsCollection.where("name", "==", name).get().then(
+    async snapshot => {
+      let max_count = 0;
+      let min_count = 0;
+      let giftee_count = 0;
+      await Promise.all(snapshot.docs.map(async doc => {
+        await doc.ref.collection('recipients').get().then(sn => {
+          giftee_count += sn.size
+          sn.forEach(d => {
+            let m = d.get("budget")
+            if (m > max_count) {
+              max_count = m;
+            }
+            if (m < min_count) {
+              min_count = m;
+            }
+          })
+        })
+    }))
+    return [max_count, min_count, giftee_count];
   })
 }
 
-// Promise of number of giftees on lists for user
-export const gifteeCount = async (user: User) => {
+// Returns list count and giftees count for user
+export const statsForUser = async (user: User) => {
   return await giftListsCollection.where("user", "==", user.email).get().then(async snapshot => {
     let total_count = 0;
+    let list_count = snapshot.size
     await Promise.all(snapshot.docs.map(async (doc) => {
       await doc.ref.collection('recipients').get().then(sn =>
         total_count += sn.size      
         )
     }))
-    return total_count;
+    return [total_count, list_count];
   })
 }
 
@@ -59,7 +80,7 @@ export const getUserGiftLists = (user: User) => {
 }
 
 // Given gift list return list of recipients in it's subcollection
-export const getGiftListRecipients = (list: GiftList) => {
+export const getGiftListGiftees = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('recipients') as firebase.firestore.CollectionReference<Giftee>
 }
 
@@ -67,8 +88,6 @@ export const getGiftListRecipients = (list: GiftList) => {
 export const getGiftListGifts = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('gifts') as firebase.firestore.CollectionReference<Gift>
 }
-
-
 
 
 // Simplified user type for referencing users
