@@ -19,7 +19,8 @@ export type Giftee = {
 export type GiftList = {
   id: string;
   name: string;
-  recipients: Giftee[];
-  gifts?: Gift[];
+  user: string;
+  recipients: Giftee[];   // TODO: rename to giftees
+  gifts?: Gift[];         // TODO: is this necessary here?
 }
 

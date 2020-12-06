@@ -5,19 +5,19 @@ import 'firebase/auth';
 
 import { Gift, GiftList, Giftee } from '../data/DataTypes'
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
-    authDomain: "santa-s-list-92869.firebaseapp.com",
-    databaseURL: "https://santa-s-list-92869.firebaseio.com",
-    projectId: "santa-s-list-92869",
-    storageBucket: "santa-s-list-92869.appspot.com",
-    messagingSenderId: "219098905244",
-    appId: "1:219098905244:web:18bcac0a5146e83d9e8b59"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
+  authDomain: "santa-s-list-92869.firebaseapp.com",
+  databaseURL: "https://santa-s-list-92869.firebaseio.com",
+  projectId: "santa-s-list-92869",
+  storageBucket: "santa-s-list-92869.appspot.com",
+  messagingSenderId: "219098905244",
+  appId: "1:219098905244:web:18bcac0a5146e83d9e8b59"
+};
 
 
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
 }
 
 // Firestore database
@@ -29,25 +29,39 @@ export const giftListsCollection = db.collection(
 ) as firebase.firestore.CollectionReference<GiftList>;
 
 
-export const giftListCount = async() => {
+export const giftListCount = async () => {
   const snapshot = await giftListsCollection.get()
-  return snapshot.size;  
+  return snapshot.size;
 }
 
 // Return documents of lists for given user
 export const getUserGiftLists = (user: User) => {
-  return giftListsCollection.where("user", "==", user.email).get()
+  return giftListsCollection.where("user", "==", user.email).get();
 }
 
 // Given gift list return list of recipients in it's subcollection
-export const getGiftListRecipients = (list: GiftList) => {
+export const getGiftListRecipientsCollection = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('recipients') as firebase.firestore.CollectionReference<Giftee>
 }
+// Given gift list return list of recipients in it's subcollection
+export const getGiftListRecipients = (list: GiftList) => {
+  return giftListsCollection.doc(list.id).collection('recipients').get();
+}
+
 
 // Given gift list return list of gifts in it's subcollection (to be used to stats)
 export const getGiftListGifts = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('gifts') as firebase.firestore.CollectionReference<Gift>
 }
+
+export const createNewGiftList = (list: GiftList) => {
+  return giftListsCollection.doc(list.id).set(list);
+}
+
+export const updateGiftList = (list: GiftList) => {
+  return giftListsCollection.doc(list.id).update(list);
+}
+
 
 
 
@@ -74,7 +88,7 @@ export const useLoggedInUser = () => {
   }, []);
 
   return user;
-  
+
 };
 
 // Sign up handler

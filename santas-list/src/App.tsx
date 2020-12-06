@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React from "react";
 import {
     BrowserRouter as Router,
     Route,
@@ -28,7 +28,7 @@ import About from "./pages/About";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import './App.css';
-import GiftLists from "./pages/GiftLists";
+import Lists from "./pages/Lists";
 import { signOut, useLoggedInUser } from "./utils/firebase";
 import UserContext from "./context/UserContext";
 
@@ -172,7 +172,7 @@ function App() {
                                 <Route exact path="/" component={Home} />
                                 <Route exact path="/login/" component={Login} />
                                 <Route exact path="/about/" component={About} />
-                                <Route exact path="/list/" component={GiftLists} />
+                                <Route exact path="/list/" component={Lists} />
                                 <Route exact path="/register/" component={Register} />
                             </Switch>
                         </Container>
