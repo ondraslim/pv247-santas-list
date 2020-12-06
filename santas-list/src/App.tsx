@@ -31,6 +31,9 @@ import './App.css';
 import GiftLists from "./pages/GiftLists";
 import { signOut, useLoggedInUser } from "./utils/firebase";
 import UserContext from "./context/UserContext";
+import MenuDrawerLeft from "./components/MenuDrawerLeft";
+import Hidden from '@material-ui/core/Hidden';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -84,6 +87,7 @@ function App() {
         <MuiThemeProvider theme={ourTheme}>
             <UserContext.Provider value={{ user }}>
                 <Router>
+                    <Hidden xsDown>
                     <AppBar color="primary" position="static" variant="outlined">
                         <Toolbar>
                             {user && <>
@@ -108,7 +112,7 @@ function App() {
                                             Santa's list
                                 </Typography>
                                     </Box>
-                                </Box>
+                            </Box>
                                 {/*<Button className={classes.menuButton} onClick={signOut}>
                                     <Link className={classes.link} to="/"><b>Logout</b></Link>
                             </Button>*/}
@@ -142,7 +146,7 @@ function App() {
                                     <Divider />
                                     <MenuItem onClick={() => { handleClose(); signOut() }}>Logout</MenuItem>
                                 </Menu>
-                            </>}
+                                </>}
 
                             {user === null && <>
                                 <Box display="flex"
@@ -163,6 +167,10 @@ function App() {
                             </>}
                         </Toolbar>
                     </AppBar>
+                    </Hidden>
+                    <Hidden smUp>
+                        <MenuDrawerLeft/>
+                    </Hidden>
 
                     {user === null && <Redirect to='/login' />}
 
