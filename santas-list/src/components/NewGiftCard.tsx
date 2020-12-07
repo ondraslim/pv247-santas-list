@@ -48,7 +48,7 @@ const NewGiftCard: FC = () => {
         user: user!.uid,
         gifts: [],
         recipients: []
-      }; 
+      };
 
       console.log("creating new list " + { ...newGiftList });
 
@@ -62,20 +62,23 @@ const NewGiftCard: FC = () => {
     <Card className={classes.fullSizeCard}>
       <CardHeader title="Create new gift list!" />
       <CardContent>
-        <CardGiftcardRoundedIcon />
-        <br />
-        <AddIcon />
-        <TextField
-          error={error ? true : false} // TODO: how to convert to bool?
-          id="listing-new-name"
-          placeholder="my awesome gift list..."
-          value={newListingName}
-          onChange={e => {
-            setNewListingName(e.target.value);
-            setError("");
-          }}
-          helperText={error}
-        />
+        <p style={{ textAlign: "center" }}>
+          <CardGiftcardRoundedIcon />
+          <br />
+          <AddIcon />
+
+          <TextField
+            error={error ? true : false} // TODO: how to convert to bool?
+            id="listing-new-name"
+            placeholder="my awesome gift list..."
+            value={newListingName}
+            onChange={e => {
+              setNewListingName(e.target.value);
+              setError("");
+            }}
+            helperText={error}
+          />
+        </p>
       </CardContent>
       <CardActions>
         <Button variant="text" color="primary" onClick={handleSubmit}>

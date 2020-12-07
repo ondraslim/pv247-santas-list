@@ -51,9 +51,10 @@ const GiftCard: FC<Props> = ({ giftList, onClick }) => {
 
       </CardHeader>
       <CardContent>
-        <CardGiftcardRoundedIcon />
-        {/* TODO: Typography, nowrap */}
-        <p>{giftList.recipients?.map(r => r.name).join(', ')}</p>
+        <p style={{ textAlign: "center" }}>
+          <CardGiftcardRoundedIcon />
+          <p>{giftList.recipients?.map(r => r.name).join(', ')}</p>
+        </p>
       </CardContent>
       <CardActions>
 

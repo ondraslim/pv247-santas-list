@@ -44,6 +44,17 @@ const Lists: FC = () => {
         setSelectedGiftee(selectedGiftList?.recipients?.find(l => l.id === gifteeId));
     };
 
+    const onGifteeDelete = (gifteeId: string) => {
+        console.log("delete giftee: " + gifteeId);
+        selectedGiftList!.recipients = selectedGiftList!.recipients.filter(r => r.id !== gifteeId);
+
+        updateGiftList(selectedGiftList!)
+            .catch((error: Error) => {
+                setError("Couldn't update the giftee.");
+                console.log(error.message);
+            });
+    };
+
     const onSaveGifteeChanges = (updatedGiftee: Giftee) => {
         console.log(updatedGiftee);
         selectedGiftList!.recipients = selectedGiftList!.recipients.map(r => r.id === updatedGiftee.id ? updatedGiftee : r);
@@ -62,7 +73,7 @@ const Lists: FC = () => {
             {error && <p>error</p>  /* TOOD:show error on download */}
             {
                 selectedGiftList &&
-                <Grid container>
+                <Grid container spacing={5}>
                     <Grid item xs={12} md={6}>
                         <Typography variant="h5">
                             <Tooltip title="Go back">
@@ -78,7 +89,7 @@ const Lists: FC = () => {
                         <List>
                             {
                                 selectedGiftList.recipients && selectedGiftList.recipients.map(rec => (
-                                    <GifteeListItem key={rec.id} giftee={rec} onClick={onGifteeClick} />
+                                    <GifteeListItem key={rec.id} giftee={rec} onClick={onGifteeClick} onDelete={onGifteeDelete} />
                                 ))
                             }
                             <NewGifteeForm giftList={selectedGiftList} onGifteeCreated={(giftee) => setSelectedGiftee(giftee)} />

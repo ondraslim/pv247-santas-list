@@ -1,4 +1,4 @@
-import { Button, InputAdornment, ListItem, TextField } from "@material-ui/core";
+import { Button, Grid, InputAdornment, ListItem, TextField } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import React, { FC, useState } from "react";
 import { Giftee, GiftList } from "../data/DataTypes";
@@ -41,25 +41,31 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated }) => {
 
     return (
         <ListItem>
-            <TextField
-                fullWidth
-                label="New Giftee"
-                error={error ? true : false}
-                value={newGifteeName}
-                onChange={e => setNewGifteeName(e.target.value)}
-                variant="outlined"
-                helperText={error}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <AccountCircle />
-                        </InputAdornment>
-                    ),
-                }}
-            />
-            <Button variant="contained" color="primary" onClick={onCreateNewGiftee}>
-                Create new
-            </Button>
+            <Grid container xs={12}>
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        label="New Giftee"
+                        error={error ? true : false}
+                        value={newGifteeName}
+                        onChange={e => setNewGifteeName(e.target.value)}
+                        variant="outlined"
+                        helperText={error}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AccountCircle />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Button variant="contained" color="primary" onClick={onCreateNewGiftee} fullWidth>
+                        Create new
+                    </Button>
+                </Grid>
+            </Grid>
         </ListItem>
     );
 };
