@@ -3,32 +3,32 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import tree from './tree.png';
 
-import React, { FC, useState, useEffect, useContext } from "react";
+import React, { FC, useState, useContext, useMemo } from "react";
 import { statsForUser, listStats } from "../utils/firebase"
 import UserContext from "../context/UserContext"
+import { GiftListStats, UserStats } from "../data/DataTypes"
 
 const Home: FC = () => {
-    const [listCount, setListCount] = useState<number>(0);
-    const [gifteeCountState, setGifteeCountState] = useState<number>(0);
+    const [userStats, setUserStats] = useState<UserStats>({giftListCount: -1, gifteeCount:-1})
+    const [giftListStats, setGiftListStats] = useState<GiftListStats>({gifteeCount: -1, maxCount: -1, minCount: -1});
     const [chosenList, setChosenList] = useState<string>("Christmas 2020");
-    const [gifteesPerList, setGifteesPerList] = useState<number>(0);
-    const [minBudgetState, setMinBudgetState] = useState<number>(0);
-    const [maxBudgetState, setMaxBudgetState] = useState<number>(0);
     const { user } = useContext(UserContext);
 
-    useEffect(() => {
+
+    useMemo(() => {
         if (user?.email) {
             statsForUser(user).then(val => {
-                setGifteeCountState(val[0]);
-                setListCount(val[1]);
-            })
+                setUserStats(val)
+        })}
+    }, [user])
+    
+    useMemo(() => {
+        if (user?.email) {            
             listStats(chosenList).then(val => {
-                setMaxBudgetState(val[0]);
-                setMinBudgetState(val[1])
-                setGifteesPerList(val[2])
+                setGiftListStats(val);
             })
         } 
-    },[chosenList])
+    },[chosenList, user])
    
     
 
@@ -43,11 +43,17 @@ const Home: FC = () => {
                     </Card>
                 </Grid>
             </Grid>
-            <p>
-                Nr. of lists: { listCount } and nr. of giftees on them: { gifteeCountState }
+            {(user === undefined || userStats.gifteeCount === -1) ? (
+                <p>
+                    Loading...
+                </p>
+            ) : (
+                <p>
+                Nr. of lists: { userStats.giftListCount } and nr. of giftees on them: { userStats.gifteeCount }
                 <br />
-                Chosen list: { chosenList } and nr. of people on chosen list: { gifteesPerList } and min budget for this list: { minBudgetState } and max: { maxBudgetState }
-            </p>
+                Chosen list: { chosenList } and nr. of people on chosen list: { giftListStats.gifteeCount } and min budget for this list: { giftListStats.minCount } and max: { giftListStats.maxCount }
+                </p>
+            )}       
         </div>
     );
 };

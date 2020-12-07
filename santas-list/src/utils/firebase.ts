@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLayoutEffect } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { Gift, GiftList, Giftee } from '../data/DataTypes'
+import { Gift, GiftList, Giftee, GiftListStats, UserStats } from '../data/DataTypes'
 
   const firebaseConfig = {
     apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
@@ -16,7 +16,7 @@ import { Gift, GiftList, Giftee } from '../data/DataTypes'
   };
 
 
-  if (!firebase.apps.length) {
+if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
@@ -56,7 +56,8 @@ export const listStats = async (name: string) => {
           })
         })
     }))
-    return [max_count, min_count, giftee_count];
+    const stats: GiftListStats = {gifteeCount: giftee_count, maxCount: max_count, minCount: min_count}
+    return stats;
   })
 }
 
@@ -70,7 +71,8 @@ export const statsForUser = async (user: User) => {
         total_count += sn.size      
         )
     }))
-    return [total_count, list_count];
+    const stats: UserStats = {giftListCount: list_count, gifteeCount: total_count}
+    return stats;
   })
 }
 
@@ -100,7 +102,7 @@ export const useLoggedInUser = () => {
   const [user, setUser] = useState<firebase.User | null>();
 
   // Setup onAuthStateChanged once when component is mounted
-  useEffect(() => {
+  useLayoutEffect(() => {
     firebase.auth().onAuthStateChanged(u => setUser(u));
   }, []);
 
