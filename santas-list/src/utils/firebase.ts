@@ -49,12 +49,8 @@ export const getGiftListGifts = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('gifts') as firebase.firestore.CollectionReference<Gift>
 }
 
-
-
-
 // Simplified user type for referencing users
 export type User = Pick<firebase.User, 'uid' | 'email'>;
-
 
 // Hook providing logged in user information
 export const useLoggedInUser = () => {
