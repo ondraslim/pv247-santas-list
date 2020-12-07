@@ -1,10 +1,6 @@
 import React, { FC, useContext, useState } from 'react';
 import {
-    BrowserRouter as Router,
-    Route,
     Link,
-    Redirect,
-    Switch,
 } from "react-router-dom";
 
 import Drawer from '@material-ui/core/Drawer';
@@ -55,8 +51,6 @@ const MenuDrawerLeft: FC = () => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const { user } = useContext(UserContext);
-
-    const isLoggedIn = user !== null;
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -115,7 +109,7 @@ const MenuDrawerLeft: FC = () => {
                         </ListItem>
                         <ListItem button onClick={handleDrawerClose}>
                             <Button fullWidth>
-                                <Link className={classes.link} to="/list/"><b>List</b></Link>
+                                <Link className={classes.link} to="/list/"><b>Gift Lists</b></Link>
                             </Button>
                         </ListItem>
                         <Divider />
