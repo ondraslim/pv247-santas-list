@@ -23,3 +23,13 @@ export type GiftList = {
   gifts?: Gift[];
 }
 
+export type GiftListStats = {
+  gifteeCount: number;
+  minCount: number;
+  maxCount: number;
+}
+
+export type UserStats = {
+  giftListCount: number;
+  gifteeCount: number;
+}

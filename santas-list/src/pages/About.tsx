@@ -2,9 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 
 import { giftListCount } from '../utils/firebase'
 
-
-
-
 const About: FC = () => {
 const [listCount, setListCount] = useState<number>(0);
 
