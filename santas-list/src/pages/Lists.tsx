@@ -12,6 +12,8 @@ import GifteeDetail from "../components/GifteeDetail";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Tooltip, IconButton } from "@material-ui/core";
 import NewGifteeForm from "../components/NewGifteeForm";
+import UserContext from "../context/UserContext";
+import { useContext } from "react";
 
 
 const Lists: FC = () => {
@@ -20,18 +22,24 @@ const Lists: FC = () => {
     const [error, setError] = useState<string>("");
     const [selectedGiftList, setSelectedGiftList] = useState<GiftList>();
     const [selectedGiftee, setSelectedGiftee] = useState<Giftee>();
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
-        const unsubscribe = giftListsCollection.onSnapshot( // TODO: onSnapshot with filtered user
+        const unsubscribe = giftListsCollection.onSnapshot(
             snapshot => {
-                setGiftLists(snapshot.docs.map(doc => { return { ...doc.data(), id: doc.id } }));
+                setGiftLists(
+                    snapshot
+                        .docs
+                        .filter(doc => doc.data().user === user?.email)
+                        .map(doc => { return { ...doc.data(), id: doc.id } })
+                );
             },
             err => setError(err.message),
         );
 
         // Call unsubscribe in the cleanup of the hook
         return () => unsubscribe();
-    }, []);
+    }, [user]);
 
 
     const onGiftListClick = async (giftListId: string) => {
