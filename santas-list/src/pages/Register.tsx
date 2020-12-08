@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import {
@@ -15,7 +15,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { signUp, useLoggedInUser } from '../utils/firebase';
+import { signUp,} from '../utils/firebase';
+import UserContext from '../context/UserContext';
 
 const useStyles = makeStyles({
     app: {
@@ -42,24 +43,25 @@ const useStyles = makeStyles({
 });
 
 const Login: FC = () => {
-    const [user, setUser] = useState('');
+    // Since firebase returns informative error messages we can show them directly
+    const classes = useStyles();
+    const { user } = useContext(UserContext);
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-
-
+  
     // Since firebase returns informative error messages we can show them directly
     const [error, setError] = useState<string>();
-    const classes = useStyles();
-
-    const isLoggedIn = useLoggedInUser();
-
+  
+    const isLoggedIn = user !== null;
+  
     if (isLoggedIn) {
-        return <Redirect to='/' />;
+      return <Redirect to='/' />;
     }
 
     const register = async (): Promise<void> => {
         try {
-            await signUp(user, password);
+            await signUp(email, password);
           } catch (err) {
             setError(err.message);
           }
@@ -82,8 +84,8 @@ const Login: FC = () => {
                         margin='normal'
                         variant='outlined'
                         color="secondary"
-                        value={user}
-                        onChange={e => setUser(e.target.value)}
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
                     <TextField
                         label='Password'

@@ -95,7 +95,6 @@ export const getGiftListGifts = (list: GiftList) => {
 // Simplified user type for referencing users
 export type User = Pick<firebase.User, 'uid' | 'email'>;
 
-
 // Hook providing logged in user information
 export const useLoggedInUser = () => {
   // Hold user info in state
