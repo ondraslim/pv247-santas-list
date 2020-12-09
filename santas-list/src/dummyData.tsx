@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 export type Gift = Array<string | number>;
 export type Recipient = Array<string | number | Gift>;
 export type Listing = Array<string | Recipient[]>;

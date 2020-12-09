@@ -9,25 +9,30 @@ import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
 
 type Props = {
-  recipient: Giftee;
-  onClick: (recipient: string) => void;
+  giftee: Giftee;
+  onClick: (gifteeId: string) => void;
+  onDelete: (gifteeId: string) => void;
 };
 
-const GifteeListItem: FC<Props> = ({ recipient, onClick }) => {
+const GifteeListItem: FC<Props> = ({ giftee, onClick, onDelete }) => {
+  // const handleDelete = (event) => {
+  //   event.stopPropagation();
+  // onDelete(giftee.id);
+  // }
+
   return (
-    <ListItem onClick={() => onClick(recipient.id)} >
+    <ListItem onClick={() => onClick(giftee.id)} >
       <ListItemAvatar>
         <Avatar>
           <CardGiftcardRoundedIcon />
         </Avatar>
       </ListItemAvatar>
       <ListItemText
-        primary="Joe Doe"
-        secondary="My very thoughful note about the gift for him..." />
-
+        primary={giftee.name}
+        secondary={giftee.note} />
       <ListItemSecondaryAction>
-        <Tooltip title="Delete this recipient">
-          <IconButton onClick={() => { console.log("delete " + recipient.id) /* TODO: db.listings.recipient.remove */  } }>
+        <Tooltip title="Delete this giftee">
+          <IconButton onClick={() =>  onDelete(giftee.id)}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

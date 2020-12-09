@@ -5,7 +5,7 @@ export type Gift = {
   id: string;
   name: string;
   price?: number;
-  description?: string;
+  note?: string;
 };
 
 export type Giftee = {
@@ -13,14 +13,15 @@ export type Giftee = {
   name: string;
   note?: string;
   budget?: number;
-  gift?: Gift;
+  gifts: Gift[];
 }
 
 export type GiftList = {
   id: string;
   name: string;
-  recipients: Giftee[];
-  gifts?: Gift[];
+  user: string;
+  recipients: Giftee[];   // TODO: rename to giftees
+  gifts?: Gift[];         // TODO: is this necessary here?
 }
 
 export type GiftListStats = {
