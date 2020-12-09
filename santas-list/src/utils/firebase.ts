@@ -18,7 +18,7 @@ import { Gift, GiftList, Giftee, GiftListStats, UserStats } from '../data/DataTy
 
 
 if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 }
 
 // Firestore database
@@ -35,7 +35,7 @@ export const giftListsCollection = db.collection(
 // Promise of number of all lists
 export const giftListCount = async() => {
   const snapshot = await giftListsCollection.get()
-  return snapshot.size;  
+  return snapshot.size;
 }
 
 // Get gifts for giftee within given list
@@ -161,13 +161,27 @@ export const setGift = async (listName: string, gifteeName: string, gift: Gift, 
 
 // Return documents of lists for given user
 export const getUserGiftLists = (user: User) => {
-  return giftListsCollection.where("user", "==", user.email).get()
+  return giftListsCollection.where("user", "==", user.email).get();
 }
 
 // Given gift list return list of recipients in it's subcollection
 export const getGiftListGiftees = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('recipients') as firebase.firestore.CollectionReference<Giftee>
 }
+// Given gift list return list of recipients in it's subcollection
+export const getGiftListRecipients = (list: GiftList) => {
+  return giftListsCollection.doc(list.id).collection('recipients').get();
+}
+
+
+export const createNewGiftList = (list: GiftList) => {
+  return giftListsCollection.doc(list.id).set(list);
+}
+
+export const updateGiftList = (list: GiftList) => {
+  return giftListsCollection.doc(list.id).update(list);
+}
+
 
 
 // Hook providing logged in user information
@@ -188,7 +202,7 @@ export const useLoggedInUser = () => {
   }, []);
 
   return user;
-  
+
 };
 
 // Sign up handler
