@@ -32,7 +32,7 @@ const GifteeListItem: FC<Props> = ({ giftee, onClick, onDelete }) => {
         secondary={giftee.note} />
       <ListItemSecondaryAction>
         <Tooltip title="Delete this giftee">
-          <IconButton onClick={() => console.log("delete " + giftee.id)/* onDelete(giftee.id) */}>
+          <IconButton onClick={() =>  onDelete(giftee.id)}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

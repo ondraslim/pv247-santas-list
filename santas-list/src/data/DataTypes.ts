@@ -5,7 +5,7 @@ export type Gift = {
   id: string;
   name: string;
   price?: number;
-  description?: string;
+  note?: string;
 };
 
 export type Giftee = {
@@ -13,7 +13,7 @@ export type Giftee = {
   name: string;
   note?: string;
   budget?: number;
-  gift?: Gift;
+  gifts: Gift[];
 }
 
 export type GiftList = {

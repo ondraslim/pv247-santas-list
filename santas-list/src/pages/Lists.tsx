@@ -17,7 +17,6 @@ import { useContext } from "react";
 
 
 const Lists: FC = () => {
-
     const [giftLists, setGiftLists] = useState<GiftList[]>([]);
     const [error, setError] = useState<string>("");
     const [selectedGiftList, setSelectedGiftList] = useState<GiftList>();
@@ -36,10 +35,10 @@ const Lists: FC = () => {
             },
             err => setError(err.message),
         );
-
-        // Call unsubscribe in the cleanup of the hook
         return () => unsubscribe();
     }, [user]);
+
+    console.log(giftLists);
 
 
     const onGiftListClick = async (giftListId: string) => {
@@ -100,7 +99,7 @@ const Lists: FC = () => {
                                     <GifteeListItem key={rec.id} giftee={rec} onClick={onGifteeClick} onDelete={onGifteeDelete} />
                                 ))
                             }
-                            <NewGifteeForm giftList={selectedGiftList} onGifteeCreated={(giftee) => setSelectedGiftee(giftee)} />
+                            <NewGifteeForm key={-1} giftList={selectedGiftList} onGifteeCreated={(giftee) => setSelectedGiftee(giftee)} />
                         </List>
                     </Grid>
 

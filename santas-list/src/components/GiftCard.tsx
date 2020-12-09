@@ -51,10 +51,10 @@ const GiftCard: FC<Props> = ({ giftList, onClick }) => {
 
       </CardHeader>
       <CardContent>
-        <p style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center" }}>
           <CardGiftcardRoundedIcon />
           <p>{giftList.recipients?.map(r => r.name).join(', ')}</p>
-        </p>
+        </div>
       </CardContent>
       <CardActions>
 

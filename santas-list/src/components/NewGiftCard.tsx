@@ -62,7 +62,7 @@ const NewGiftCard: FC = () => {
     <Card className={classes.fullSizeCard}>
       <CardHeader title="Create new gift list!" />
       <CardContent>
-        <p style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center" }}>
           <CardGiftcardRoundedIcon />
           <br />
           <AddIcon />
@@ -78,7 +78,7 @@ const NewGiftCard: FC = () => {
             }}
             helperText={error}
           />
-        </p>
+        </div>
       </CardContent>
       <CardActions>
         <Button variant="text" color="primary" onClick={handleSubmit}>
