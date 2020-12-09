@@ -1,6 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import { GiftList } from "../data/DataTypes";
 import { useState } from "react";
 import GifteeListItem from "../components/GifteeListItem";
@@ -16,6 +16,7 @@ import FormControl from "@material-ui/core/FormControl/FormControl";
 import { AccountCircle } from "@material-ui/icons";
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import NoteIcon from '@material-ui/icons/Note';
+import UserContext from "../context/UserContext"
 
 
 
@@ -28,14 +29,14 @@ const useStyles = makeStyles({
 
 
 const lists: GiftList[] = [
-    { id: "1", name: "Christmas 2021", recipients: [{ id: "1", name: "Joe", note: "No idea", budget: 100 }] },
-    { id: "2", name: "Bar mitzvah", recipients: [] },
-    { id: "3", name: "Wedding", recipients: [] },
-    { id: "4", name: "Christmas", recipients: [] },
-    { id: "5", name: "Christmas 2020", recipients: [] },
-    { id: "6", name: "Dunno", recipients: [] },
-    { id: "7", name: "Me", recipients: [] },
-    { id: "8", name: "Me again", recipients: [] }
+    { id: "1", name: "Christmas 2021", recipients: [{ id: "1", name: "Joe", note: "No idea", budget: 100, gift: [] }], user: "test" },
+    { id: "2", name: "Bar mitzvah", recipients: [], user: "test" },
+    { id: "3", name: "Wedding", recipients: [], user: "test" },
+    { id: "4", name: "Christmas", recipients: [], user: "test" },
+    { id: "5", name: "Christmas 2020", recipients: [], user: "test" },
+    { id: "6", name: "Dunno", recipients: [], user: "test" },
+    { id: "7", name: "Me", recipients: [], user: "test" },
+    { id: "8", name: "Me again", recipients: [], user: "test" }
 ];
 
 
@@ -43,6 +44,7 @@ const GiftLists: FC = () => {
     const classes = useStyles();
 
 
+    const { user } = useContext(UserContext);
     const [list, setList] = useState<GiftList>();
     const [error, setError] = useState<string>("");
     const [newListingName, setNewListingName] = useState<string>("");

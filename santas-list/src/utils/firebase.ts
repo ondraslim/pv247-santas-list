@@ -5,6 +5,7 @@ import 'firebase/auth';
 
 import { Gift, GiftList, Giftee, GiftListStats, UserStats } from '../data/DataTypes'
 
+
   const firebaseConfig = {
     apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
     authDomain: "santa-s-list-92869.firebaseapp.com",
@@ -23,6 +24,9 @@ if (!firebase.apps.length) {
 // Firestore database
 const db = firebase.firestore();
 
+// Simplified user type for referencing users
+export type User = Pick<firebase.User, 'uid' | 'email'>;
+
 // Each list has "user" field that holds email of the user it belongs to
 export const giftListsCollection = db.collection(
   'lists',
@@ -34,32 +38,62 @@ export const giftListCount = async() => {
   return snapshot.size;  
 }
 
+// Get gifts for giftee within given list
+export const getGifts = async (listName: string, gifteeName: string, user: User) => {
+  return await giftListsCollection.where("name", "==", listName).get().then(async snapshot => {    
+    let gifts: Array<Gift>= [];
+    await Promise.all(snapshot.docs.map(async doc => {
+      if (doc.get("user") === user.email) {
+        await doc.ref.collection('recipients').where("name", "==", gifteeName).get().then(async sn => {
+          await Promise.all(sn.docs.map(async d => {
+            await d.ref.collection('gifts').get().then(async dc => {
+              dc.forEach(g => {
+                let gft: Gift = {id: g.id, name:g.get("name"), url: g.get("url"), price: g.get("price")};
+                gifts.push(gft)             
+              })
+            })          
+          }))                
+        }) 
+      }           
+    }))        
+    return gifts;   
+  })}
 
-// Returns stats for given list [max budget, min budget, giftee count]
-export const listStats = async (name: string) => {
+
+
+
+// Returns stats for given list 
+export const listStats = async (name: string, user: User) => {
   return await giftListsCollection.where("name", "==", name).get().then(
     async snapshot => {
       let max_count = 0;
-      let min_count = 0;
+      let min_count = 100000000000;
       let giftee_count = 0;
+      let min_name = "";
+      let max_name = "";
+      let total_count = 0;
       await Promise.all(snapshot.docs.map(async doc => {
-        await doc.ref.collection('recipients').get().then(sn => {
-          giftee_count += sn.size
-          sn.forEach(d => {
-            let m = d.get("budget")
-            if (m > max_count) {
-              max_count = m;
-            }
-            if (m < min_count) {
-              min_count = m;
-            }
+        if (doc.get("user") === user.email) {
+          await doc.ref.collection('recipients').get().then(sn => {
+            giftee_count += sn.size
+            sn.forEach(d => {
+              let m = d.get("budget");    
+              total_count += m;
+              if (m > max_count) {
+                max_count = m;
+                max_name = d.get("name");
+              }
+              if (m <= min_count) {
+                min_count = m;
+                min_name = d.get("name");
+              }            
+            })        
           })
-        })
+        }        
     }))
-    const stats: GiftListStats = {gifteeCount: giftee_count, maxCount: max_count, minCount: min_count}
+    const stats: GiftListStats = {gifteeCount: giftee_count, maxCount: max_count, minCount: min_count, maxName: max_name, minName: min_name, avgCount: (total_count / giftee_count)}
     return stats;
-  })
-}
+  })}
 
 // Returns list count and giftees count for user
 export const statsForUser = async (user: User) => {
@@ -76,6 +110,55 @@ export const statsForUser = async (user: User) => {
   })
 }
 
+// Add/modify (with merge) given list
+export const setGiftList = async (giftList: GiftList) => {
+  await giftListsCollection.doc(giftList.id).set({
+    name: giftList.name,
+    recipients: giftList.recipients,
+    user: giftList.user,
+  }, {merge: true})
+}
+  
+
+// Add/modify (with merge) given giftee within given list
+export const setGiftee = async (listName: string, giftee: Giftee, user: User) => {
+  await giftListsCollection.where("name", "==", listName).get().then(async snapshot => {
+    await Promise.all(snapshot.docs.map(async doc => {
+      if (user.email === doc.get("user")) {
+        await doc.ref.collection('recipients').doc(giftee.id).set({
+          name: giftee.name,
+          note: giftee.note,
+          budget: giftee.budget,
+          gift: giftee.gift,
+        }, {merge: true});
+      }
+    }))
+  })
+}
+
+
+// Add/modify (with merge) given gift within given list for given giftee
+export const setGift = async (listName: string, gifteeName: string, gift: Gift, user: User) => {
+  await giftListsCollection.where("name", "==", listName).get().then( async snapshot => {
+    await Promise.all(snapshot.docs.map(async doc => {
+      if (user.email === doc.get("user")) {
+        await doc.ref.collection('recipients').where("name", "==", gifteeName).get().then(async sn => {
+          await Promise.all(sn.docs.map(async d => {
+            await d.ref.collection('gifts').doc(gift.id).set({
+              name: gift.name,
+              price: gift.price,
+              url: gift.url
+            }, {merge: true});
+          }))
+        })
+      }      
+    }))
+  })
+}
+
+
+
+
 // Return documents of lists for given user
 export const getUserGiftLists = (user: User) => {
   return giftListsCollection.where("user", "==", user.email).get()
@@ -85,15 +168,6 @@ export const getUserGiftLists = (user: User) => {
 export const getGiftListGiftees = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('recipients') as firebase.firestore.CollectionReference<Giftee>
 }
-
-// Given gift list return list of gifts in it's subcollection (to be used to stats)
-export const getGiftListGifts = (list: GiftList) => {
-  return giftListsCollection.doc(list.id).collection('gifts') as firebase.firestore.CollectionReference<Gift>
-}
-
-
-// Simplified user type for referencing users
-export type User = Pick<firebase.User, 'uid' | 'email'>;
 
 
 // Hook providing logged in user information
