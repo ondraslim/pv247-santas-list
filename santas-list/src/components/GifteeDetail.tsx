@@ -28,7 +28,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
 
     const onAddGift = () => {
         let updatedGiftee = { ...giftee };
-        updatedGiftee.gifts.push({ id: uuidv4(), name: "" });
+        updatedGiftee.gifts.push({ id: uuidv4(), name: "", price: 0, url: "" });
         setGiftee(updatedGiftee);
     }
 

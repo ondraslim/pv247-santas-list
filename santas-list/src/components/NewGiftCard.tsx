@@ -46,7 +46,6 @@ const NewGiftCard: FC = () => {
         id: uuidv4(),
         name: newListingName,
         user: user!.uid,
-        gifts: [],
         recipients: []
       };
 

@@ -43,7 +43,7 @@ const Home: FC = () => {
     const { user } = useContext(UserContext);
 
     const g:Gift = {id: "1", name: "test gift", url: "testURL", price: 0}
-    const gft: Giftee = {id: "1", name: "test person", note: "test note", budget: 10, gift: []}
+    const gft: Giftee = {id: "1", name: "test person", note: "test note", budget: 10, gifts: []}
     const l: GiftList = {id: "1", name: "test gift list", user: "maryjane@santa.com", recipients: [gft]}
 
     const [gifts, setGifts] = useState<Array<Gift>>([])

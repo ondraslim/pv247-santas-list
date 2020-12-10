@@ -56,7 +56,7 @@ const GifteeGift: FC<Props> = ({ gift, updateGift, onDelete }) => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <TextField
             fullWidth
             id="gift-note-input"
@@ -73,7 +73,7 @@ const GifteeGift: FC<Props> = ({ gift, updateGift, onDelete }) => {
               ),
             }}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
