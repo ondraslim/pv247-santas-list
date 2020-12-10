@@ -17,7 +17,9 @@ import { v4 as uuidv4 } from 'uuid';
 const useStyles = makeStyles({
   fullSizeCard: {
     height: "100%",
-    width: "100%",
+    width: "100%",    
+    borderStyle: "solid",
+    borderWidth: "medium",
   },
 });
 

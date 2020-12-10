@@ -38,27 +38,32 @@ export const giftListCount = async() => {
   return snapshot.size;
 }
 
-// Get gifts for giftee within given list
-export const getGifts = async (listName: string, gifteeName: string, user: User) => {
-  return await giftListsCollection.where("name", "==", listName).get().then(async snapshot => {    
-    let gifts: Array<Gift>= [];
-    await Promise.all(snapshot.docs.map(async doc => {
+
+export const getLists = async (user: User) => {
+  return await giftListsCollection.where("user", "==", user.email).get().then(async snapshot => {
+    let lists: Array<GiftList> = []; 
+    await Promise.all(snapshot.docs.map(async doc => {      
       if (doc.get("user") === user.email) {
-        await doc.ref.collection('recipients').where("name", "==", gifteeName).get().then(async sn => {
+        let giftees: Array<Giftee> = [];
+        await doc.ref.collection('recipients').get().then(async sn => {
           await Promise.all(sn.docs.map(async d => {
+            let gifts: Array<Gift> = [];
             await d.ref.collection('gifts').get().then(async dc => {
               dc.forEach(g => {
                 let gft: Gift = {id: g.id, name:g.get("name"), url: g.get("url"), price: g.get("price")};
                 gifts.push(gft)             
               })
-            })          
-          }))                
-        }) 
-      }           
-    }))        
-    return gifts;   
+            }) 
+            let gftee: Giftee = {id: d.id, name: d.get("name"), budget: d.get("budget"), note: d.get("note"), gifts: gifts}
+            giftees.push(gftee)
+          }))
+        })
+        let lst: GiftList = {id: doc.id, name: doc.get("name"), user: user.email ?? "", recipients: giftees};
+        lists.push(lst);
+      }     
+    }))    
+    return lists
   })}
-
 
 
 
@@ -168,11 +173,6 @@ export const getUserGiftLists = (user: User) => {
 export const getGiftListGiftees = (list: GiftList) => {
   return giftListsCollection.doc(list.id).collection('recipients') as firebase.firestore.CollectionReference<Giftee>
 }
-// Given gift list return list of recipients in it's subcollection
-export const getGiftListRecipients = (list: GiftList) => {
-  return giftListsCollection.doc(list.id).collection('recipients').get();
-}
-
 
 export const createNewGiftList = (list: GiftList) => {
   return giftListsCollection.doc(list.id).set(list);
