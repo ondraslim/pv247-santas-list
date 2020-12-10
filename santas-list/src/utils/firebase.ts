@@ -129,7 +129,7 @@ export const setGiftee = async (listName: string, giftee: Giftee, user: User) =>
           name: giftee.name,
           note: giftee.note,
           budget: giftee.budget,
-          gift: giftee.gift,
+          gift: giftee.gifts,
         }, {merge: true});
       }
     }))

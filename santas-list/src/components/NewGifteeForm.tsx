@@ -24,6 +24,8 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated }) => {
         const newGiftee = {
             id: uuidv4(),
             name: newGifteeName,
+            budget: 0,
+            note: "",
             gifts: []
         };
 

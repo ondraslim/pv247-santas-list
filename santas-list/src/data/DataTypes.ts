@@ -13,7 +13,7 @@ export type Giftee = {
   name: string;
   note: string;
   budget: number;
-  gift: Gift[];
+  gifts: Gift[];
 }
 
 export type GiftList = {
