@@ -4,7 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import tree from './tree.png';
 
 import React, { FC, useState, useContext, useMemo } from "react";
-import { statsForUser, listStats, getGifts, setGift, setGiftee, setGiftList } from "../utils/firebase"
+import { statsForUser, listStats, setGift, setGiftee, setGiftList, getLists } from "../utils/firebase"
 import UserContext from "../context/UserContext"
 import { GiftListStats, UserStats, Gift, Giftee, GiftList } from "../data/DataTypes"
 
@@ -13,18 +13,22 @@ const Home: FC = () => {
     const [giftListStats, setGiftListStats] = useState<GiftListStats>({gifteeCount: -1, maxCount: -1, minCount: -1, maxName: "", minName: "", avgCount: 0});
     const [chosenList, setChosenList] = useState<string>("Gyda's 23rd birthday");
     const { user } = useContext(UserContext);
+    const [giftLists, setGiftLists] = useState<GiftList[]>([]);
 
     const g:Gift = {id: "1", name: "test gift", url: "testURL", price: 0}
     const gft: Giftee = {id: "1", name: "test person", note: "test note", budget: 10, gifts: []}
     const l: GiftList = {id: "1", name: "test gift list", user: "maryjane@santa.com", recipients: [gft]}
 
-    const [gifts, setGifts] = useState<Array<Gift>>([])
-
+   
     useMemo(() => {
         if (user?.email) {
             statsForUser(user).then(val => {
                 setUserStats(val)
-        })}
+            })
+            getLists(user).then(val => {
+                setGiftLists(val);
+            })
+        }
     }, [user])
 
     useMemo(() => {
@@ -40,9 +44,7 @@ const Home: FC = () => {
             listStats(chosenList, user).then(val => {
                 setGiftListStats(val);
             })
-            getGifts(chosenList, "Gyda Haraldsdottir", user).then(val => {
-                setGifts(val);        
-            })            
+                     
         } 
     },[chosenList, user])
    
@@ -72,15 +74,13 @@ const Home: FC = () => {
                 <br />
                 Chosen list: { chosenList } and nr. of people on chosen list: { giftListStats.gifteeCount } and min budget for this list: { giftListStats.minCount } for { giftListStats.minName } and max: { giftListStats.maxCount } for { giftListStats.maxName }. Average budget: { giftListStats.avgCount }.
                 <br />
-                Get gifts name for Gyda Haraldsdottir: { gifts[1]?.name }
-                <br />
-                Get gifts name for { gft.name }: { gifts[0]?.name }
-                <br />
                 Gift { g.name } added via method
                 <br />
                 Giftee { gft.name } added via method 
                 <br />
                 Gift list { l.name } added via method
+                <br />
+                { giftLists[1]?.name }, { giftLists[0]?.user }
                 </p>
             )}       
         </div>

@@ -55,6 +55,30 @@ const ourTheme = createMuiTheme({
             main: green[900],
         },
     },
+    overrides: {
+        MuiButton: {
+            root: {
+                '&:hover': {
+                    backgroundColor: red[600]
+                }
+            }
+        },
+        MuiCard: {
+            root: {
+                height: "100%",
+                width: "100%",
+                borderStyle: "solid",
+                borderWidth: "medium",
+            }
+        },
+        MuiCardHeader: {
+            root: {
+                backgroundColor: green[100],
+                color: 'black',
+            }
+        }
+    },
+    
 });
 
 

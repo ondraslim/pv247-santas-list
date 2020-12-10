@@ -6,14 +6,14 @@ import { useState } from "react";
 import GifteeListItem from "../components/GifteeListItem";
 import GiftCard from "../components/GiftCard";
 import List from "@material-ui/core/List";
-import { giftListsCollection, updateGiftList } from "../utils/firebase";
+import { giftListsCollection, updateGiftList, getLists } from "../utils/firebase";
 import NewGiftCard from "../components/NewGiftCard";
 import GifteeDetail from "../components/GifteeDetail";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Tooltip, IconButton } from "@material-ui/core";
 import NewGifteeForm from "../components/NewGifteeForm";
 import UserContext from "../context/UserContext";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 
 
 const Lists: FC = () => {
@@ -37,6 +37,14 @@ const Lists: FC = () => {
         );
         return () => unsubscribe();
     }, [user]);
+
+    useMemo(() => {
+        if (user?.email) {
+            getLists(user).then(val => {
+                setGiftLists(val);
+            })
+        }
+    }, [user])
 
     console.log(giftLists);
 
@@ -76,7 +84,7 @@ const Lists: FC = () => {
     const title = selectedGiftList?.name ?? "Your Gift Lists";
     return (
         <div>
-            <Typography variant="h2">{title}</Typography>
+            <Typography variant="h3" align="center">{title}</Typography>
             {error && <p>error</p>  /* TOOD:show error on download */}
             {
                 selectedGiftList &&
@@ -93,10 +101,10 @@ const Lists: FC = () => {
                             </Tooltip>
                             Giftees
                         </Typography>
-                        <List>
+                        <List style={{borderStyle: "solid"}}>
                             {
                                 selectedGiftList.recipients && selectedGiftList.recipients.map(rec => (
-                                    <GifteeListItem key={rec.id} giftee={rec} onClick={onGifteeClick} onDelete={onGifteeDelete} />
+                                    <GifteeListItem key={rec.id} giftee={rec} onClick={onGifteeClick} onDelete={onGifteeDelete}/>
                                 ))
                             }
                             <NewGifteeForm key={-1} giftList={selectedGiftList} onGifteeCreated={(giftee) => setSelectedGiftee(giftee)} />
@@ -119,7 +127,7 @@ const Lists: FC = () => {
                     </Grid>
                     {giftLists.map(l => (
                         <Grid item xs={12} sm={6} md={4} lg={3}>
-                            <GiftCard key={l.id} onClick={onGiftListClick} giftList={l} />
+                            <GiftCard key={l.id} onClick={onGiftListClick} giftList={l}/>
                         </Grid>
                     ))}
                 </Grid>

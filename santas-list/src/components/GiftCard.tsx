@@ -9,17 +9,7 @@ import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardActions from "@material-ui/core/CardActions/CardActions";
-import { makeStyles } from "@material-ui/styles";
 import { giftListsCollection } from "../utils/firebase";
-
-
-
-const useStyles = makeStyles({
-  fullSizeCard: {
-    height: "100%",
-    width: "100%",
-  },
-});
 
 
 type Props = {
@@ -27,9 +17,7 @@ type Props = {
   onClick: (giftListId: string) => void;
 };
 
-
 const GiftCard: FC<Props> = ({ giftList, onClick }) => {
-  const classes = useStyles();
 
   console.log(giftList);
 
@@ -39,7 +27,7 @@ const GiftCard: FC<Props> = ({ giftList, onClick }) => {
   }
 
   return (
-    <Card onClick={() => onClick(giftList.id)} className={classes.fullSizeCard}>
+    <Card onClick={() => onClick(giftList.id)}>
       <CardHeader title={giftList.name}
         action={
           <Tooltip title="Delete this list.">
