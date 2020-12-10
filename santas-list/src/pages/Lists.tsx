@@ -84,7 +84,11 @@ const Lists: FC = () => {
     const title = selectedGiftList?.name ?? "Your Gift Lists";
     return (
         <div>
+            <p>
+            <br />
             <Typography variant="h3" align="center">{title}</Typography>
+            <br />
+            </p>            
             {error && <p>error</p>  /* TOOD:show error on download */}
             {
                 selectedGiftList &&

@@ -8,7 +8,6 @@ import GifteeGift from "./GifteeGift";
 import { v4 as uuidv4 } from 'uuid';
 
 
-
 type Props = {
     selectedGiftee: Giftee;
     onSaveChanges: (updatedGiftee: Giftee) => void;

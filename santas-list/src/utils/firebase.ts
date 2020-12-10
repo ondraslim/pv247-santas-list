@@ -69,21 +69,21 @@ export const getLists = async (user: User) => {
 
 // Returns stats for given list 
 export const listStats = async (name: string, user: User) => {
+  let max_count: number = 0;
+  let min_count: number = 100000000000;
+  let giftee_count: number = 0;
+  let min_name: string = "";
+  let max_name: string = "";
+  let total_count: number = 0;
   return await giftListsCollection.where("name", "==", name).get().then(
-    async snapshot => {
-      let max_count = 0;
-      let min_count = 100000000000;
-      let giftee_count = 0;
-      let min_name = "";
-      let max_name = "";
-      let total_count = 0;
+    async snapshot => {      
       await Promise.all(snapshot.docs.map(async doc => {
         if (doc.get("user") === user.email) {
           await doc.ref.collection('recipients').get().then(sn => {
             giftee_count += sn.size
             sn.forEach(d => {
               let m = d.get("budget");    
-              total_count += m;
+              total_count = +m + +total_count;
               if (m > max_count) {
                 max_count = m;
                 max_name = d.get("name");
@@ -95,7 +95,7 @@ export const listStats = async (name: string, user: User) => {
             })        
           })
         }        
-    }))
+    }))   
     const stats: GiftListStats = {gifteeCount: giftee_count, maxCount: max_count, minCount: min_count, maxName: max_name, minName: min_name, avgCount: (total_count / giftee_count)}
     return stats;
   })}

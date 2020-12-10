@@ -34,7 +34,7 @@ const GifteeGift: FC<Props> = ({ gift, updateGift, onDelete }) => {
               }
             />
           </FormControl>
-          <Tooltip title="Delete this giftee">
+          <Tooltip title="Delete this gift">
             <IconButton onClick={() => onDelete(gift.id)}>
               <DeleteIcon />
             </IconButton>

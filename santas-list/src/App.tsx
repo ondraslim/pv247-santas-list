@@ -59,7 +59,12 @@ const ourTheme = createMuiTheme({
         MuiButton: {
             root: {
                 '&:hover': {
-                    backgroundColor: red[600]
+                    backgroundColor: red[600],
+                }
+            },
+            outlinedPrimary: {
+                '&:hover': {
+                    backgroundColor: red[600],
                 }
             }
         },
@@ -69,12 +74,19 @@ const ourTheme = createMuiTheme({
                 width: "100%",
                 borderStyle: "solid",
                 borderWidth: "medium",
+                backgroundColor: green[50],
             }
         },
         MuiCardHeader: {
             root: {
-                backgroundColor: green[100],
+                backgroundColor: green[200],
                 color: 'black',
+            }
+        },
+        MuiList: {
+            root: {                
+                backgroundColor:green[50],
+                
             }
         }
     },
