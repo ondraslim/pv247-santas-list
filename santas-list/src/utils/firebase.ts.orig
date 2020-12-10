@@ -5,6 +5,7 @@ import 'firebase/auth';
 
 import { Gift, GiftList, Giftee, GiftListStats, UserStats } from '../data/DataTypes'
 
+<<<<<<< HEAD
 
   const firebaseConfig = {
     apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
@@ -15,7 +16,18 @@ import { Gift, GiftList, Giftee, GiftListStats, UserStats } from '../data/DataTy
     messagingSenderId: "219098905244",
     appId: "1:219098905244:web:18bcac0a5146e83d9e8b59"
   };
+=======
+>>>>>>> origin/main
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
+  authDomain: "santa-s-list-92869.firebaseapp.com",
+  databaseURL: "https://santa-s-list-92869.firebaseio.com",
+  projectId: "santa-s-list-92869",
+  storageBucket: "santa-s-list-92869.appspot.com",
+  messagingSenderId: "219098905244",
+  appId: "1:219098905244:web:18bcac0a5146e83d9e8b59"
+};
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -31,6 +43,7 @@ export type User = Pick<firebase.User, 'uid' | 'email'>;
 export const giftListsCollection = db.collection(
   'lists',
 ) as firebase.firestore.CollectionReference<GiftList>;
+
 
 // Promise of number of all lists
 export const giftListCount = async() => {
@@ -174,6 +187,13 @@ export const getGiftListRecipients = (list: GiftList) => {
 }
 
 
+<<<<<<< HEAD
+=======
+// Given gift list return list of gifts in it's subcollection (to be used to stats)
+export const getGiftListGifts = (list: GiftList) => {
+  return giftListsCollection.doc(list.id).collection('gifts') as firebase.firestore.CollectionReference<Gift>
+}
+
 export const createNewGiftList = (list: GiftList) => {
   return giftListsCollection.doc(list.id).set(list);
 }
@@ -183,6 +203,10 @@ export const updateGiftList = (list: GiftList) => {
 }
 
 
+
+// Simplified user type for referencing users
+export type User = Pick<firebase.User, 'uid' | 'email'>;
+>>>>>>> origin/main
 
 // Hook providing logged in user information
 export const useLoggedInUser = () => {

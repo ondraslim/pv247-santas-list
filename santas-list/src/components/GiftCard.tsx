@@ -10,28 +10,40 @@ import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardActions from "@material-ui/core/CardActions/CardActions";
 import { makeStyles } from "@material-ui/styles";
+import { giftListsCollection } from "../utils/firebase";
+
+
 
 const useStyles = makeStyles({
   fullSizeCard: {
     height: "100%",
     width: "100%",
-    },
+  },
 });
 
+
 type Props = {
-  listing: GiftList;
-  onClick: (listingId: string) => void;
+  giftList: GiftList;
+  onClick: (giftListId: string) => void;
 };
 
-const ListCard: FC<Props> = ({ listing, onClick }) => {
+
+const GiftCard: FC<Props> = ({ giftList, onClick }) => {
   const classes = useStyles();
-  
+
+  console.log(giftList);
+
+  const deleteGiftList = () => {
+    console.log("Deleting GiftList: " + { ...giftList });
+    giftListsCollection.doc(giftList.id).delete();
+  }
+
   return (
-    <Card onClick={() => onClick(listing.id)} className={classes.fullSizeCard}>
-      <CardHeader title={listing.name}
+    <Card onClick={() => onClick(giftList.id)} className={classes.fullSizeCard}>
+      <CardHeader title={giftList.name}
         action={
           <Tooltip title="Delete this list.">
-            <IconButton onClick={() => { console.log("click card delete") /* TODO: db.listings.remove...  */ }}>
+            <IconButton onClick={deleteGiftList}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -39,9 +51,10 @@ const ListCard: FC<Props> = ({ listing, onClick }) => {
 
       </CardHeader>
       <CardContent>
-        <CardGiftcardRoundedIcon />
-        {/* TODO: Typography, nowrap */}
-        <p>{listing.recipients.map(r => r.name).join(', ')}</p>
+        <div style={{ textAlign: "center" }}>
+          <CardGiftcardRoundedIcon />
+          <p>{giftList.recipients?.map(r => r.name).join(', ')}</p>
+        </div>
       </CardContent>
       <CardActions>
 
@@ -50,4 +63,4 @@ const ListCard: FC<Props> = ({ listing, onClick }) => {
   )
 };
 
-export default ListCard;
+export default GiftCard;

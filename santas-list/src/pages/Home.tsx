@@ -6,13 +6,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
+import React, { FC, useState, useContext, useMemo } from "react";
+import { statsForUser, listStats, getGifts, setGift, setGiftee, setGiftList } from "../utils/firebase"
+import UserContext from "../context/UserContext"
+import { GiftListStats, UserStats, Gift, Giftee, GiftList } from "../data/DataTypes"
 
 import tree from './tree.png';
-
-import React, { FC } from "react";
-import { makeStyles } from '@material-ui/styles';
-
-
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     app: {
@@ -37,49 +37,77 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Home: FC = () => {
-    const classes = useStyles();
+    const [userStats, setUserStats] = useState<UserStats>({giftListCount: -1, gifteeCount:-1})
+    const [giftListStats, setGiftListStats] = useState<GiftListStats>({gifteeCount: -1, maxCount: -1, minCount: -1, maxName: "", minName: "", avgCount: 0});
+    const [chosenList, setChosenList] = useState<string>("Gyda's 23rd birthday");
+    const { user } = useContext(UserContext);
 
+    const g:Gift = {id: "1", name: "test gift", url: "testURL", price: 0}
+    const gft: Giftee = {id: "1", name: "test person", note: "test note", budget: 10, gift: []}
+    const l: GiftList = {id: "1", name: "test gift list", user: "maryjane@santa.com", recipients: [gft]}
+
+    const [gifts, setGifts] = useState<Array<Gift>>([])
+
+    useMemo(() => {
+        if (user?.email) {
+            statsForUser(user).then(val => {
+                setUserStats(val)
+        })}
+    }, [user])
+
+    useMemo(() => {
+        if (user?.email) {            
+            setGiftee(chosenList, gft, user);            
+            setGift(chosenList, "test", g, user);
+            setGiftList(l);
+        }
+    }, [user, chosenList])
+    
+    useMemo(() => {
+        if (user?.email) {    
+            listStats(chosenList, user).then(val => {
+                setGiftListStats(val);
+            })
+            getGifts(chosenList, "Gyda Haraldsdottir", user).then(val => {
+                setGifts(val);        
+            })            
+        } 
+    },[chosenList, user])
+   
+    
     return (
         <div className="App">
-            <Grid container spacing={3} className={classes.app}>
-                <Grid item xs={12} container>
-                    <Grid item xs container direction="row" spacing={3}>
-                        <Grid item className={classes.grid}>
-                            <Grid item xs container direction="column" spacing={5}>
-                                <Grid item>
-                                    <Card style={{ backgroundColor: 'purple', minHeight: '33vh'}} className={classes.card}>
-                                        <CardContent>
-                                            <Typography>
-                                                TOTAL STATS
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                                    <Grid item>
-                                    <Card style={{ backgroundColor: 'green', minHeight:'33vh'}} className={classes.card}>
-                                        <CardContent>
-                                            <Typography>
-                                                LIST STATS
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Hidden smDown>
-                                    <Grid item className={classes.grid} lg={4} xs={4}>
-                                        <Card style={{ backgroundColor: 'blue', minHeight: '70vh' }} className={classes.card}>
-                                        <CardContent>
-                                        <CardMedia image='./tree.png' className={classes.media}>
-                                        </CardMedia>
-
-                                        </CardContent>
-                                        </Card>
-                                    </Grid>
-                                </Hidden>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+            <Grid container justify="center" alignItems="center" direction="column">
+                <Grid item xs={12}>
+                    <Card >
+                        <CardContent>
+                            <img src={tree} className="App-logo" alt="tree" />
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
+            {(user === undefined || userStats.gifteeCount === -1) ? (
+                <p>
+                    Loading...
+                </p>
+            ) : (
+                <p>
+                    
+                Nr. of lists: { userStats.giftListCount } and nr. of giftees on them: { userStats.gifteeCount }
+                <br />
+                Chosen list: { chosenList } and nr. of people on chosen list: { giftListStats.gifteeCount } and min budget for this list: { giftListStats.minCount } for { giftListStats.minName } and max: { giftListStats.maxCount } for { giftListStats.maxName }. Average budget: { giftListStats.avgCount }.
+                <br />
+                Get gifts name for Gyda Haraldsdottir: { gifts[1]?.name }
+                <br />
+                Get gifts name for { gft.name }: { gifts[0]?.name }
+                <br />
+                Gift { g.name } added via method
+                <br />
+                Giftee { gft.name } added via method 
+                <br />
+                Gift list { l.name } added via method
+                </p>
+            )} 
         </div>
     );
 };
