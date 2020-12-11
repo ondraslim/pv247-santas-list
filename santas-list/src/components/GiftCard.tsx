@@ -17,9 +17,8 @@ type Props = {
   onDelete: (giftList: GiftList) => void;
 };
 
+
 const GiftCard: FC<Props> = ({ giftList, onClick, onDelete }) => {
-
-
 
   const deleteGiftList = (event: any) => {
     event.stopPropagation();

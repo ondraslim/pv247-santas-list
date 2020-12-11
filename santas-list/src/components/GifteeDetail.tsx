@@ -37,8 +37,6 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, onGiftDelete, 
         setGiftee(updatedGiftee);
     }
 
-    
-
     const handleSubmit = () => {
         if (!giftee.budget) {
             setError("Giftee's budget is required.")
@@ -68,6 +66,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, onGiftDelete, 
         onSaveChanges(giftee);
     };
 
+    
     return (
         <>
             {error &&

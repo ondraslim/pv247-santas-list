@@ -13,22 +13,25 @@ import { GiftList } from "../data/DataTypes";
 import { v4 as uuidv4 } from 'uuid';
 import UserContext from "../context/UserContext";
 
-type Props = {
-  giftLists: GiftList[];
-  setGiftListsState: (g: GiftList[]) => void;
-};
+
 
 const useStyles = makeStyles({
   fullSizeCard: {
     height: "100%",
-    width: "100%",    
+    width: "100%",
     borderStyle: "solid",
     borderWidth: "medium",
   },
 });
 
 
-const NewGiftCard: FC<Props> = ({giftLists, setGiftListsState}) => {
+type Props = {
+  giftLists: GiftList[];
+  setGiftListsState: (g: GiftList[]) => void;
+};
+
+
+const NewGiftCard: FC<Props> = ({ giftLists, setGiftListsState }) => {
   const classes = useStyles();
 
   const [error, setError] = useState<string>("");
@@ -55,16 +58,16 @@ const NewGiftCard: FC<Props> = ({giftLists, setGiftListsState}) => {
         recipients: []
       };
 
-    try {           
+      try {
         await setGiftList(newGiftList).then(() => {
           setGiftListsState([...giftLists, newGiftList]);
           setNewListingName("");
-        } 
+        }
         );
       } catch (err) {
         setError(err.what);
       }
-      }      
+    }
   };
 
   return (
@@ -77,7 +80,7 @@ const NewGiftCard: FC<Props> = ({giftLists, setGiftListsState}) => {
           <AddIcon />
 
           <TextField
-            error={error ? true : false} // TODO: how to convert to bool?
+            error={error ? true : false}
             id="listing-new-name"
             placeholder="my awesome gift list..."
             value={newListingName}

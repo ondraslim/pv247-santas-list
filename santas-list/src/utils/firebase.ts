@@ -6,15 +6,15 @@ import 'firebase/auth';
 import { Gift, GiftList, Giftee, GiftListStats, UserStats } from '../data/DataTypes'
 
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
-    authDomain: "santa-s-list-92869.firebaseapp.com",
-    databaseURL: "https://santa-s-list-92869.firebaseio.com",
-    projectId: "santa-s-list-92869",
-    storageBucket: "santa-s-list-92869.appspot.com",
-    messagingSenderId: "219098905244",
-    appId: "1:219098905244:web:18bcac0a5146e83d9e8b59"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBgMpZHjVvrSRrAfyCpeiRHu2Cwgfse3Ls",
+  authDomain: "santa-s-list-92869.firebaseapp.com",
+  databaseURL: "https://santa-s-list-92869.firebaseio.com",
+  projectId: "santa-s-list-92869",
+  storageBucket: "santa-s-list-92869.appspot.com",
+  messagingSenderId: "219098905244",
+  appId: "1:219098905244:web:18bcac0a5146e83d9e8b59"
+};
 
 
 if (!firebase.apps.length) {
@@ -33,7 +33,7 @@ export const giftListsCollection = db.collection(
 ) as firebase.firestore.CollectionReference<GiftList>;
 
 // Promise of number of all lists
-export const giftListCount = async() => {
+export const giftListCount = async () => {
   const snapshot = await giftListsCollection.get()
   return snapshot.size;
 }
@@ -41,8 +41,8 @@ export const giftListCount = async() => {
 
 export const getLists = async (user: User) => {
   return await giftListsCollection.where("user", "==", user.email).get().then(async snapshot => {
-    let lists: Array<GiftList> = []; 
-    await Promise.all(snapshot.docs.map(async doc => {      
+    let lists: Array<GiftList> = [];
+    await Promise.all(snapshot.docs.map(async doc => {
       if (doc.get("user") === user.email) {
         let giftees: Array<Giftee> = [];
         await doc.ref.collection('recipients').get().then(async sn => {
@@ -50,20 +50,21 @@ export const getLists = async (user: User) => {
             let gifts: Array<Gift> = [];
             await d.ref.collection('gifts').get().then(async dc => {
               dc.forEach(g => {
-                let gft: Gift = {id: g.id, name:g.get("name"), url: g.get("url"), price: g.get("price")};
-                gifts.push(gft)             
+                let gft: Gift = { id: g.id, name: g.get("name"), url: g.get("url"), price: g.get("price") };
+                gifts.push(gft)
               })
-            }) 
-            let gftee: Giftee = {id: d.id, name: d.get("name"), budget: d.get("budget"), note: d.get("note"), gifts: gifts}
+            })
+            let gftee: Giftee = { id: d.id, name: d.get("name"), budget: d.get("budget"), note: d.get("note"), gifts: gifts }
             giftees.push(gftee)
           }))
         })
-        let lst: GiftList = {id: doc.id, name: doc.get("name"), user: user.email ?? "", recipients: giftees};
+        let lst: GiftList = { id: doc.id, name: doc.get("name"), user: user.email ?? "", recipients: giftees };
         lists.push(lst);
-      }     
-    }))    
+      }
+    }))
     return lists
-  })}
+  })
+}
 
 
 
@@ -75,14 +76,15 @@ export const listStats = async (name: string, user: User) => {
   let min_name: string = "";
   let max_name: string = "";
   let total_count: number = 0;
+  
   return await giftListsCollection.where("name", "==", name).get().then(
-    async snapshot => {      
+    async snapshot => {
       await Promise.all(snapshot.docs.map(async doc => {
         if (doc.get("user") === user.email) {
           await doc.ref.collection('recipients').get().then(sn => {
             giftee_count += sn.size
             sn.forEach(d => {
-              let m = d.get("budget");    
+              let m = d.get("budget");
               total_count = +m + +total_count;
               if (m > max_count) {
                 max_count = m;
@@ -91,14 +93,15 @@ export const listStats = async (name: string, user: User) => {
               if (m <= min_count) {
                 min_count = m;
                 min_name = d.get("name");
-              }            
-            })        
+              }
+            })
           })
-        }        
-    }))   
-    const stats: GiftListStats = {gifteeCount: giftee_count, maxCount: max_count, minCount: min_count, maxName: max_name, minName: min_name, avgCount: (total_count / giftee_count)}
-    return stats;
-  })}
+        }
+      }))
+      const stats: GiftListStats = { gifteeCount: giftee_count, maxCount: max_count, minCount: min_count, maxName: max_name, minName: min_name, avgCount: (total_count / giftee_count) }
+      return stats;
+    })
+}
 
 // Returns list count and giftees count for user
 export const statsForUser = async (user: User) => {
@@ -107,10 +110,10 @@ export const statsForUser = async (user: User) => {
     let list_count = snapshot.size
     await Promise.all(snapshot.docs.map(async (doc) => {
       await doc.ref.collection('recipients').get().then(sn =>
-        total_count += sn.size      
-        )
+        total_count += sn.size
+      )
     }))
-    const stats: UserStats = {giftListCount: list_count, gifteeCount: total_count}
+    const stats: UserStats = { giftListCount: list_count, gifteeCount: total_count }
     return stats;
   })
 }
@@ -120,7 +123,7 @@ export const setGiftList = async (giftList: GiftList) => {
   await giftListsCollection.doc(giftList.id).set({
     name: giftList.name,
     user: giftList.user,
-  }, {merge: true})
+  }, { merge: true })
 }
 
 // Delete given list
@@ -143,18 +146,18 @@ export const deleteGift = async (giftId: string, giftee: Giftee, giftListId: str
     })
   });
 }
-  
+
 
 // Add/modify (with merge) given giftee within given list
 export const setGiftee = async (listName: string, giftee: Giftee, user: User) => {
   await giftListsCollection.where("name", "==", listName).get().then(async snapshot => {
     await Promise.all(snapshot.docs.map(async doc => {
       if (user.email === doc.get("user")) {
-        await doc.ref.collection('recipients').doc(giftee.id).set({          
+        await doc.ref.collection('recipients').doc(giftee.id).set({
           name: giftee.name,
           note: giftee.note,
-          budget: giftee.budget,          
-        }, {merge: true}).then(async () => {
+          budget: giftee.budget,
+        }, { merge: true }).then(async () => {
           await doc.ref.collection('recipients').where("name", "==", giftee.name).get().then(async sn => {
             await Promise.all(sn.docs.map(async d => {
               giftee.gifts.forEach(gift => {
@@ -162,12 +165,12 @@ export const setGiftee = async (listName: string, giftee: Giftee, user: User) =>
                   name: gift.name,
                   price: gift.price,
                   url: gift.url
-                }, {merge: true});
-              })              
+                }, { merge: true });
+              })
             }))
           })
-        }         
-        );        
+        }
+        );
       }
     }))
   })
