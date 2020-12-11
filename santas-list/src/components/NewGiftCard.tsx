@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FC } from "react";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 import Card from "@material-ui/core/Card/Card";
@@ -8,11 +8,15 @@ import { makeStyles } from "@material-ui/styles";
 import { TextField, Button } from "@material-ui/core";
 import CardGiftcardRoundedIcon from '@material-ui/icons/CardGiftcardRounded';
 import AddIcon from '@material-ui/icons/Add';
-import { createNewGiftList, useLoggedInUser } from "../utils/firebase";
+import { setGiftList } from "../utils/firebase";
 import { GiftList } from "../data/DataTypes";
 import { v4 as uuidv4 } from 'uuid';
+import UserContext from "../context/UserContext";
 
-
+type Props = {
+  giftLists: GiftList[];
+  setGiftListsState: (g: GiftList[]) => void;
+};
 
 const useStyles = makeStyles({
   fullSizeCard: {
@@ -24,13 +28,13 @@ const useStyles = makeStyles({
 });
 
 
-const NewGiftCard: FC = () => {
+const NewGiftCard: FC<Props> = ({giftLists, setGiftListsState}) => {
   const classes = useStyles();
 
   const [error, setError] = useState<string>("");
   const [newListingName, setNewListingName] = useState<string>("");
 
-  const user = useLoggedInUser();
+  const { user } = useContext(UserContext);
 
   const handleSubmit = async () => {
     if (!newListingName) {
@@ -43,20 +47,24 @@ const NewGiftCard: FC = () => {
       return;
     }
 
-    try {
+    if (user?.email) {
       const newGiftList: GiftList = {
         id: uuidv4(),
         name: newListingName,
-        user: user!.uid,
+        user: user.email,
         recipients: []
       };
 
-      console.log("creating new list " + { ...newGiftList });
-
-      await createNewGiftList(newGiftList);
-    } catch (err) {
-      setError(err.what);
-    }
+    try {           
+        await setGiftList(newGiftList).then(() => {
+          giftLists.push(newGiftList);
+          setGiftListsState(giftLists);
+        } 
+        );
+      } catch (err) {
+        setError(err.what);
+      }
+      }      
   };
 
   return (

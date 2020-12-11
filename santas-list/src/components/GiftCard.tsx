@@ -19,10 +19,9 @@ type Props = {
 
 const GiftCard: FC<Props> = ({ giftList, onClick }) => {
 
-  console.log(giftList);
+  
 
   const deleteGiftList = () => {
-    console.log("Deleting GiftList: " + { ...giftList });
     giftListsCollection.doc(giftList.id).delete();
   }
 

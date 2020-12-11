@@ -6,7 +6,7 @@ import { useState } from "react";
 import GifteeListItem from "../components/GifteeListItem";
 import GiftCard from "../components/GiftCard";
 import List from "@material-ui/core/List";
-import { giftListsCollection, updateGiftList, getLists } from "../utils/firebase";
+import { getLists, setGiftee, deleteGiftee, deleteGift } from "../utils/firebase";
 import NewGiftCard from "../components/NewGiftCard";
 import GifteeDetail from "../components/GifteeDetail";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -22,21 +22,8 @@ const Lists: FC = () => {
     const [selectedGiftList, setSelectedGiftList] = useState<GiftList>();
     const [selectedGiftee, setSelectedGiftee] = useState<Giftee>();
     const { user } = useContext(UserContext);
+    const [change, setChange] = useState<number>(0);
 
-    useEffect(() => {
-        const unsubscribe = giftListsCollection.onSnapshot(
-            snapshot => {
-                setGiftLists(
-                    snapshot
-                        .docs
-                        .filter(doc => doc.data().user === user?.email)
-                        .map(doc => { return { ...doc.data(), id: doc.id } })
-                );
-            },
-            err => setError(err.message),
-        );
-        return () => unsubscribe();
-    }, [user]);
 
     useMemo(() => {
         if (user?.email) {
@@ -46,49 +33,102 @@ const Lists: FC = () => {
         }
     }, [user])
 
-    console.log(giftLists);
-
-
+    useEffect(() => {
+        if (user?.email) {
+            getLists(user).then(val => {
+                setGiftLists(val);                
+            })
+        }
+    }, [user, change])
+ 
     const onGiftListClick = async (giftListId: string) => {
-        console.log("click on giftList: " + giftListId);
         setSelectedGiftList(() => giftLists!.find(l => l.id === giftListId));
     };
 
     const onGifteeClick = (gifteeId: string) => {
-        console.log("click on giftee: " + gifteeId);
         setSelectedGiftee(selectedGiftList?.recipients?.find(l => l.id === gifteeId));
     };
 
     const onGifteeDelete = (gifteeId: string) => {
-        console.log("delete giftee: " + gifteeId);
-        selectedGiftList!.recipients = selectedGiftList!.recipients.filter(r => r.id !== gifteeId);
-
-        updateGiftList(selectedGiftList!)
-            .catch((error: Error) => {
-                setError("Couldn't update the giftee.");
+        if (selectedGiftList?.id) {
+            let updatedLists: GiftList[] = giftLists;
+            let updatedList: GiftList = selectedGiftList; 
+            updatedList!.recipients = selectedGiftList!.recipients.filter(r => r.id !== gifteeId);
+              
+        
+            deleteGiftee(gifteeId, selectedGiftList).then(() => {
+                updatedLists.forEach((item, index) => {
+                    if (item.id === selectedGiftList.id) {     
+                        updatedLists.splice(index, 1);
+                    }
+                })
+                setGiftLists([...updatedLists]);                
+                setSelectedGiftee(undefined);
+                setChange((ch) => (ch+1)%100);
+            }).catch((error: Error) => {
+                setError("Couldn't delete the giftee.");
                 console.log(error.message);
-            });
+                 })
+        }
+                
     };
 
-    const onSaveGifteeChanges = (updatedGiftee: Giftee) => {
-        console.log(updatedGiftee);
-        selectedGiftList!.recipients = selectedGiftList!.recipients.map(r => r.id === updatedGiftee.id ? updatedGiftee : r);
+    const onGiftDelete = (giftId: string) => {
+        if (selectedGiftee?.id && selectedGiftList?.id) {
+            let updatedLists: GiftList[] = [...giftLists];
+            let updatedList: GiftList = {...selectedGiftList};            
+            let updatedGiftee = { ...selectedGiftee };
+            updatedGiftee.gifts = selectedGiftee.gifts.filter(g => g.id !== giftId);
+            updatedList!.recipients = selectedGiftList!.recipients.map(r => r.id === updatedGiftee.id ? updatedGiftee : r);
+            
 
-        updateGiftList(selectedGiftList!)
-            .catch((error: Error) => {
+            deleteGift(giftId, selectedGiftee, selectedGiftList.id).then(() => {
+                updatedLists.forEach((item, index) => {
+                    if (item.id === selectedGiftList.id) {     
+                        updatedLists.splice(index, 1);
+                    }
+                })
+                updatedLists.push(updatedList);
+                setGiftLists([...updatedLists]);        
+                setChange((ch) => (ch+1)%100);
+            }).catch((error: Error) => {
+                setError("Couldn't delete the gift.");
+                console.log(error.message);
+             })
+        }
+
+    }
+
+    const onSaveGifteeChanges = (updatedGiftee: Giftee) => {    
+         if (user?.email && selectedGiftList?.id) {
+            let updatedLists: GiftList[] = giftLists;
+            let updatedList: GiftList = selectedGiftList; 
+            updatedList!.recipients = selectedGiftList!.recipients.map(r => r.id === updatedGiftee.id ? updatedGiftee : r);
+          
+            setGiftee(selectedGiftList.name, updatedGiftee, user).then(() => {
+                updatedLists.forEach((item, index) => {
+                    if (item.id === selectedGiftList.id) {     
+                        updatedLists.splice(index, 1);
+                    }
+                })
+                updatedLists.push(updatedList);
+                setGiftLists([...updatedLists]);
+                setChange((ch) => (ch+1)%100);
+            }).catch((error: Error) => {
                 setError("Couldn't update the giftee.");
                 console.log(error.message);
-            });
+            }) 
+        }            
     }
 
     const title = selectedGiftList?.name ?? "Your Gift Lists";
     return (
         <div>
-            <p>
+            
             <br />
             <Typography variant="h3" align="center">{title}</Typography>
             <br />
-            </p>            
+                    
             {error && <p>error</p>  /* TOOD:show error on download */}
             {
                 selectedGiftList &&
@@ -115,9 +155,9 @@ const Lists: FC = () => {
                         </List>
                     </Grid>
 
-                    {selectedGiftee &&
-                        <Grid item container xs={12} md={6} spacing={5}>
-                            <GifteeDetail selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} />
+                    {selectedGiftee &&                        
+                        <Grid item container xs={12} md={6} spacing={5}>                            
+                            <GifteeDetail selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} onGiftDelete={onGiftDelete} change={change} />
                         </Grid>
                     }
                 </Grid>
@@ -127,7 +167,7 @@ const Lists: FC = () => {
                 !selectedGiftList &&
                 <Grid container direction='row' spacing={3}>
                     <Grid item xs={12} sm={6} md={4} lg={3}>
-                        <NewGiftCard />
+                        <NewGiftCard giftLists={giftLists} setGiftListsState={setGiftLists}/>
                     </Grid>
                     {giftLists.map(l => (
                         <Grid item xs={12} sm={6} md={4} lg={3}>

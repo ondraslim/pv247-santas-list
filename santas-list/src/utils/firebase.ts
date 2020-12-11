@@ -119,9 +119,29 @@ export const statsForUser = async (user: User) => {
 export const setGiftList = async (giftList: GiftList) => {
   await giftListsCollection.doc(giftList.id).set({
     name: giftList.name,
-    recipients: giftList.recipients,
     user: giftList.user,
   }, {merge: true})
+}
+
+// Delete given list
+export const deleteGiftList = async (giftList: GiftList) => {
+  await giftListsCollection.doc(giftList.id).delete();
+}
+
+// Delete given giftee from given list
+export const deleteGiftee = async (gifteeId: string, giftList: GiftList) => {
+  await giftListsCollection.doc(giftList.id).get().then(async doc => {
+    await doc.ref.collection('recipients').doc(gifteeId).delete();
+  });
+}
+
+// Delete given gift for given giftee within given gift list
+export const deleteGift = async (giftId: string, giftee: Giftee, giftListId: string) => {
+  await giftListsCollection.doc(giftListId).get().then(async doc => {
+    await doc.ref.collection('recipients').doc(giftee.id).get().then(async d => {
+      await d.ref.collection('gifts').doc(giftId).delete();
+    })
+  });
 }
   
 
@@ -130,56 +150,27 @@ export const setGiftee = async (listName: string, giftee: Giftee, user: User) =>
   await giftListsCollection.where("name", "==", listName).get().then(async snapshot => {
     await Promise.all(snapshot.docs.map(async doc => {
       if (user.email === doc.get("user")) {
-        await doc.ref.collection('recipients').doc(giftee.id).set({
+        await doc.ref.collection('recipients').doc(giftee.id).set({          
           name: giftee.name,
           note: giftee.note,
-          budget: giftee.budget,
-          gift: giftee.gifts,
-        }, {merge: true});
+          budget: giftee.budget,          
+        }, {merge: true}).then(async () => {
+          await doc.ref.collection('recipients').where("name", "==", giftee.name).get().then(async sn => {
+            await Promise.all(sn.docs.map(async d => {
+              giftee.gifts.forEach(gift => {
+                d.ref.collection('gifts').doc(gift.id).set({
+                  name: gift.name,
+                  price: gift.price,
+                  url: gift.url
+                }, {merge: true});
+              })              
+            }))
+          })
+        }         
+        );        
       }
     }))
   })
-}
-
-
-// Add/modify (with merge) given gift within given list for given giftee
-export const setGift = async (listName: string, gifteeName: string, gift: Gift, user: User) => {
-  await giftListsCollection.where("name", "==", listName).get().then( async snapshot => {
-    await Promise.all(snapshot.docs.map(async doc => {
-      if (user.email === doc.get("user")) {
-        await doc.ref.collection('recipients').where("name", "==", gifteeName).get().then(async sn => {
-          await Promise.all(sn.docs.map(async d => {
-            await d.ref.collection('gifts').doc(gift.id).set({
-              name: gift.name,
-              price: gift.price,
-              url: gift.url
-            }, {merge: true});
-          }))
-        })
-      }      
-    }))
-  })
-}
-
-
-
-
-// Return documents of lists for given user
-export const getUserGiftLists = (user: User) => {
-  return giftListsCollection.where("user", "==", user.email).get();
-}
-
-// Given gift list return list of recipients in it's subcollection
-export const getGiftListGiftees = (list: GiftList) => {
-  return giftListsCollection.doc(list.id).collection('recipients') as firebase.firestore.CollectionReference<Giftee>
-}
-
-export const createNewGiftList = (list: GiftList) => {
-  return giftListsCollection.doc(list.id).set(list);
-}
-
-export const updateGiftList = (list: GiftList) => {
-  return giftListsCollection.doc(list.id).update(list);
 }
 
 

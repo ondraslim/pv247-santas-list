@@ -4,7 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import tree from './tree.png';
 
 import React, { FC, useState, useContext, useMemo } from "react";
-import { statsForUser, listStats, setGift, setGiftee, setGiftList, getLists } from "../utils/firebase"
+import { statsForUser, listStats, setGiftee, setGiftList, getLists } from "../utils/firebase"
 import UserContext from "../context/UserContext"
 import { GiftListStats, UserStats, Gift, Giftee, GiftList } from "../data/DataTypes"
 
@@ -33,8 +33,7 @@ const Home: FC = () => {
 
     useMemo(() => {
         if (user?.email) {            
-            setGiftee(chosenList, gft, user);            
-            setGift(chosenList, "test", g, user);
+            setGiftee(chosenList, gft, user);          
             setGiftList(l);
         }
     }, [user, chosenList])

@@ -1,8 +1,7 @@
-import { FormControl, FormHelperText, Grid, IconButton, Input, InputAdornment, InputLabel, TextField, Tooltip } from "@material-ui/core";
+import { FormControl, Grid, IconButton, Input, InputAdornment, InputLabel, Tooltip } from "@material-ui/core";
 import React, { FC, } from "react";
 import CardGiftcardRoundedIcon from '@material-ui/icons/CardGiftcardRounded';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import NoteIcon from '@material-ui/icons/Note';
 import { Gift } from "../data/DataTypes";
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -12,6 +11,7 @@ type Props = {
   gift: Gift;
   updateGift: (gift: Gift) => void;
   onDelete: (giftId: string) => void;
+  change: number;
 };
 
 
@@ -34,11 +34,7 @@ const GifteeGift: FC<Props> = ({ gift, updateGift, onDelete }) => {
               }
             />
           </FormControl>
-          <Tooltip title="Delete this gift">
-            <IconButton onClick={() => onDelete(gift.id)}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
+          
         </Grid>
         <Grid item xs={12} md={6}>
           <FormControl variant="filled">
@@ -55,7 +51,13 @@ const GifteeGift: FC<Props> = ({ gift, updateGift, onDelete }) => {
               }
             />
           </FormControl>
+          <Tooltip title="Delete this gift">
+            <IconButton onClick={() => onDelete(gift.id)}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
         </Grid>
+        
         {/* <Grid item xs={12}>
           <TextField
             fullWidth
@@ -75,6 +77,7 @@ const GifteeGift: FC<Props> = ({ gift, updateGift, onDelete }) => {
           />
         </Grid> */}
       </Grid>
+
     </>
   );
 };
