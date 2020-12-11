@@ -18,6 +18,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import UserContext from '../context/UserContext';
 import { signOut } from '../utils/firebase';
+import HomeIcon from '@material-ui/icons/Home';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import InfoIcon from '@material-ui/icons/Info';
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+
 
 
 
@@ -29,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     link: {
         textDecoration: "none",
         color: red[900],
+        fontSize: '20',
     },
 
     title: {
@@ -37,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
     button: {
         borderRadius: '2px',
+        backgroundColor: 'lightgrey',
     },
 
     list: {
@@ -98,45 +108,45 @@ const MenuDrawerLeft: FC = () => {
                         </ListItem>
                         <Divider />
                         <ListItem button onClick={handleDrawerClose} divider alignItems='center'>
-                            <Button fullWidth>
+                        <ListItemIcon> <HomeIcon/></ListItemIcon>
                                 <Link className={classes.link} to="/"><b>Home</b></Link>
-                            </Button>
+                            
                         </ListItem>
                         <ListItem button onClick={handleDrawerClose} divider>
-                            <Button fullWidth>
+                            <ListItemIcon> <InfoIcon/> </ListItemIcon>
                                 <Link className={classes.link} to="/about/"><b>About</b></Link>
-                            </Button>
+                            
                         </ListItem>
                         <ListItem button onClick={handleDrawerClose}>
-                            <Button fullWidth>
+                            <ListItemIcon> <CardGiftcardIcon></CardGiftcardIcon>  </ListItemIcon>
                                 <Link className={classes.link} to="/list/"><b>Gift Lists</b></Link>
-                            </Button>
+                        
                         </ListItem>
                         <Divider />
                         <Divider />
                         <ListItem button onClick={() => { handleDrawerClose(); signOut() }}>
-                            <Button fullWidth>
+                            <ListItemIcon> <ExitToAppIcon /> </ListItemIcon>
                                 <Link className={classes.link} to="/login/"><b>Logout</b></Link>
-                            </Button>
+                            
                         </ListItem>
                         <Divider />
                     </>}
                     {user == null && <>
-                        <ListItem button key={-1} onClick={handleDrawerClose} divider>
-                            <Button fullWidth>
-                                <Link className={classes.link} to="/about/"><b>About</b></Link>
-                            </Button>
+                        <ListItem button divider>
+                            <ListItemIcon> <InfoIcon/> </ListItemIcon>
+                                <Link className={classes.link} to="/about/" onClick={handleDrawerClose}><b>About</b></Link>
+                            
                         </ListItem>
                         <Divider />
                         <ListItem button onClick={handleDrawerClose} divider>
-                            <Button fullWidth>
+                            <ListItemIcon> <AccountCircleIcon /> </ListItemIcon>
                                 <Link className={classes.link} to="/login/"><b>Login</b></Link>
-                            </Button>
+                        
                         </ListItem>
                         <ListItem button onClick={handleDrawerClose} divider>
-                            <Button fullWidth>
+                            <ListItemIcon> <PersonAddIcon /> </ListItemIcon>
                                 <Link className={classes.link} to="/register/"><b>Register</b></Link>
-                            </Button>
+                            
                         </ListItem>
                     </>}
                 </List>
