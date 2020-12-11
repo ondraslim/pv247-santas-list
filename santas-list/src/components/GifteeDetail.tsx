@@ -74,7 +74,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, onGiftDelete, 
                     <FormHelperText error>{error}</FormHelperText>
                 </Grid>
             }
-            <Grid item md={6}>
+            <Grid item md={12}>
                     <Box m="0.1rem"></Box>
                  </Grid>
             <Grid item xs={12} md={6}>                

@@ -152,7 +152,7 @@ const Lists: FC = () => {
                                     <ArrowBackIcon />
                                 </IconButton>
                             </Tooltip>
-                            Giftees
+                            Gift Lists
                         </Typography>
                         <List style={{ borderStyle: "solid" }}>
                             {
