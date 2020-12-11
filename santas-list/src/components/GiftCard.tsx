@@ -9,20 +9,21 @@ import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardActions from "@material-ui/core/CardActions/CardActions";
-import { giftListsCollection } from "../utils/firebase";
 
 
 type Props = {
   giftList: GiftList;
   onClick: (giftListId: string) => void;
+  onDelete: (giftList: GiftList) => void;
 };
 
-const GiftCard: FC<Props> = ({ giftList, onClick }) => {
+const GiftCard: FC<Props> = ({ giftList, onClick, onDelete }) => {
 
-  
 
-  const deleteGiftList = () => {
-    giftListsCollection.doc(giftList.id).delete();
+
+  const deleteGiftList = (event: any) => {
+    event.stopPropagation();
+    onDelete(giftList);
   }
 
   return (
@@ -30,7 +31,7 @@ const GiftCard: FC<Props> = ({ giftList, onClick }) => {
       <CardHeader title={giftList.name}
         action={
           <Tooltip title="Delete this list.">
-            <IconButton onClick={deleteGiftList}>
+            <IconButton onClick={e => deleteGiftList(e)}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>

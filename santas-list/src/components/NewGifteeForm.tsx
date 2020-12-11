@@ -21,6 +21,7 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated }) => {
     const onCreateNewGiftee = () => {
         if (!newGifteeName) {
             setError("The name is required!");
+            return;
         }
 
         const newGiftee = {

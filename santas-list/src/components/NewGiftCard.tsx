@@ -57,8 +57,8 @@ const NewGiftCard: FC<Props> = ({giftLists, setGiftListsState}) => {
 
     try {           
         await setGiftList(newGiftList).then(() => {
-          giftLists.push(newGiftList);
-          setGiftListsState(giftLists);
+          setGiftListsState([...giftLists, newGiftList]);
+          setNewListingName("");
         } 
         );
       } catch (err) {
