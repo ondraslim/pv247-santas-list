@@ -59,14 +59,14 @@ const ourTheme = createMuiTheme({
         MuiButton: {
             root: {
                 '&:hover': {
-                    backgroundColor: red[600]
+                    backgroundColor: red[400]
                 }
             }
         },
         MuiCard: {
             root: {
-                height: "100%",
-                width: "100%",
+                //height: "100%",
+                //width: "100%",
                 borderStyle: "solid",
                 borderWidth: "medium",
             }
