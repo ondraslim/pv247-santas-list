@@ -12,10 +12,12 @@ import Alert from '@material-ui/lab/Alert';
 type Props = {
     selectedGiftee: Giftee;
     onSaveChanges: (updatedGiftee: Giftee) => void;
+    setChange: (n: number) => void;
+    setChangesSaved: (b: boolean) => void;
 };
 
 
-const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
+const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, setChangesSaved }) => {
     const [giftee, setGiftee] = useState<Giftee>(selectedGiftee);
     const [error, setError] = useState<string>("");
     const [giftsError, setGiftsError] = useState<string>("");
@@ -26,18 +28,24 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
 
 
     const onAddGift = () => {
+        setChange(9);
+        setChangesSaved(false);
         let updatedGiftee = { ...giftee };
         updatedGiftee.gifts.push({ id: uuidv4(), name: "", price: 0, url: "" });
         setGiftee(updatedGiftee);
     }
 
     const onGiftDelete = (giftId: string) => {
+        setChange(9);
+        setChangesSaved(false);
         let updatedGiftee = { ...giftee };
         updatedGiftee.gifts = updatedGiftee.gifts.filter(g => g.id !== giftId);
         setGiftee(updatedGiftee);
     }
 
     const onGiftUpdate = (gift: Gift) => {
+        setChange(9);
+        setChangesSaved(false);
         let updatedGiftee = { ...giftee };
         updatedGiftee.gifts = updatedGiftee.gifts.map(g => g.id === gift.id ? gift : g);
         setGiftee(updatedGiftee);
@@ -68,7 +76,8 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
                 return;
             }
         }
-
+        let e: string = "";
+        setError(e);
         onSaveChanges(giftee);
     };
 
@@ -85,7 +94,9 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
                     <Input
                         id="input-with-icon-adornment"
                         value={giftee.name}
-                        onChange={e => setGiftee(g => {
+                        onChange={e => setGiftee(g => {  
+                            setChange(1);    
+                            setChangesSaved(false);                      
                             setError("");
                             return { ...g, name: e.target.value }
                         })}
@@ -105,6 +116,8 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
                         type="number"
                         value={giftee.budget ?? 0}
                         onChange={e => setGiftee(g => {
+                            setChange(1);
+                            setChangesSaved(false);
                             setError("");
                             return { ...g, budget: +e.target.value }
                         })}
@@ -122,7 +135,12 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
                     id="note"
                     label="Note"
                     value={giftee?.note ?? ""}
-                    onChange={e => setGiftee(g => { return { ...g, note: e.target.value }; })}
+                    onChange={e => {
+                        console.log("?")
+                        setChange(1);
+                        setChangesSaved(false);
+                        setGiftee(g => { return { ...g, note: e.target.value }; 
+                        })}}
                     multiline
                     variant="outlined"
                     InputProps={{
@@ -143,7 +161,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
 
                 <Grid item container xs={12}>
                     {giftee.gifts && giftee.gifts.map(g => (
-                        <GifteeGift key={g.id} gift={g} onGiftChange={onGiftUpdate} onGiftDelete={onGiftDelete} />
+                        <GifteeGift key={g.id} gift={g} onGiftChange={onGiftUpdate} onGiftDelete={onGiftDelete}/>
                     ))}
                 </Grid>
                 <Grid item>

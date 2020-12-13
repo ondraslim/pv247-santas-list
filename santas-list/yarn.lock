@@ -2561,6 +2561,13 @@ ajv@^6.1.0, ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.3, ajv@^6.12.4, ajv@^6.12.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+alert@^5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/alert/-/alert-5.0.7.tgz#7f200d89945d7b9af022f295ea0d482f9dff1757"
+  integrity sha512-5Mz5syjY7BqEVSnl4v8uvt1YcBGaF8+3BHCOG9rAYvxU75WyMKEwMAdYyo0N0b6FSxIPqKTKN2bP8b/Vp/6C/w==
+  dependencies:
+    is-program-installed "2.1.3"
+
 alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
@@ -6632,6 +6639,11 @@ is-potential-custom-element-name@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-potential-custom-element-name/-/is-potential-custom-element-name-1.0.0.tgz#0c52e54bcca391bb2c494b21e8626d7336c6e397"
   integrity sha1-DFLlS8yjkbssSUsh6GJtczbG45c=
+
+is-program-installed@2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/is-program-installed/-/is-program-installed-2.1.3.tgz#13f35c1e503be9ec102c9e45676c255d266ad5df"
+  integrity sha512-7BH49liu1X2pQCcMhd1q61y9vsBO2FRctquC6GmQ/mFZkKtLh335nks9s9jNqOXJif7Yc91Nmpx5cvtollX8gQ==
 
 is-regex@^1.0.4, is-regex@^1.1.1:
   version "1.1.1"

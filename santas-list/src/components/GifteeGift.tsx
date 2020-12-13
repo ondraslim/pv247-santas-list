@@ -24,7 +24,8 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
             <Input
               id="gift-name-input"
               value={gift.name}
-              onChange={e => onGiftChange({ ...gift, name: e.target.value })}
+              onChange={e => {
+                onGiftChange({ ...gift, name: e.target.value })}}
               startAdornment={
                 <InputAdornment position="start">
                   <CardGiftcardRoundedIcon />
@@ -41,7 +42,8 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
               id="gift-price-adornment"
               type="number"
               value={gift.price ?? ""}
-              onChange={e => onGiftChange({ ...gift, price: +e.target.value })}
+              onChange={e => {
+                onGiftChange({ ...gift, price: +e.target.value })}}
               startAdornment={
                 <InputAdornment position="start">
                   <AttachMoneyIcon />
@@ -50,7 +52,8 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
             />
           </FormControl>
           <Tooltip title="Delete this gift">
-            <IconButton onClick={() => onGiftDelete(gift.id)}>
+            <IconButton onClick={() => {
+              onGiftDelete(gift.id)}}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>

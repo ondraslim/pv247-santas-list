@@ -11,10 +11,11 @@ import UserContext from "../context/UserContext"
 type Props = {
     giftList: GiftList;
     onGifteeCreated: (giftee: Giftee) => void;
+    setChange: (n: number) => void;
 };
 
 
-const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated }) => {
+const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
     const { user } = useContext(UserContext);
     const [newGifteeName, setNewGifteeName] = useState<string>("");
     const [error, setError] = useState<string>("");
@@ -33,6 +34,7 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated }) => {
             gifts: []
         };
 
+        setChange(3);
         giftList.recipients.push(newGiftee);
 
         if (user?.email) {

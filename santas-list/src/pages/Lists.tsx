@@ -44,7 +44,8 @@ const Lists: FC = () => {
         }
     }, [user, change])
 
-    const onGiftListClick = async (giftListId: string) => {
+     const onGiftListClick = async (giftListId: string) => {
+         setChangesSaved(false);
         setSelectedGiftList(() => giftLists!.find(l => l.id === giftListId));
     };
 
@@ -60,8 +61,14 @@ const Lists: FC = () => {
     };
 
     const onGifteeClick = (gifteeId: string) => {
-        setSelectedGiftee(selectedGiftList?.recipients?.find(l => l.id === gifteeId));
-        setChangesSaved(false);
+        if (change === 0 || selectedGiftee === undefined || changesSaved) {
+            setSelectedGiftee(selectedGiftList?.recipients?.find(l => l.id === gifteeId));
+            setChangesSaved(false);
+            setChange(0);
+            setError("");
+        } else {
+            setError("Unsaved changes");
+        }             
     };
 
     const onGifteeDelete = (gifteeId: string) => {
@@ -91,6 +98,7 @@ const Lists: FC = () => {
     };
 
     const onSaveGifteeChanges = (updatedGiftee: Giftee) => {
+        setChange((ch) => (ch + 1) % 100);
         if (user?.email && selectedGiftList?.id) {
             let updatedLists: GiftList[] = giftLists;
             let updatedList: GiftList = selectedGiftList;
@@ -104,7 +112,7 @@ const Lists: FC = () => {
                 })
                 updatedLists.push(updatedList);
                 setGiftLists([...updatedLists]);
-                setChange((ch) => (ch + 1) % 100);
+                setError("");                
                 setChangesSaved(true);
             }).catch((error: Error) => {
                 setError("Couldn't update the giftee.");
@@ -112,6 +120,20 @@ const Lists: FC = () => {
                 setChangesSaved(false);
             })
         }
+    }
+
+    const onBackButton = () => {
+        console.log(changesSaved);    
+        console.log(selectedGiftee); 
+        console.log(change)
+            if (selectedGiftee === undefined || changesSaved || change === 0) {
+                setSelectedGiftList(undefined);
+                setSelectedGiftee(undefined); 
+                setChangesSaved(false);
+                setError("")
+        } else {
+                setError("Unsaved changes");
+        }     
     }
 
     const title = selectedGiftList?.name ?? "Your Gift Lists";
@@ -130,10 +152,7 @@ const Lists: FC = () => {
                     <Grid item xs={12} md={6}>
                         <Typography variant="h5">
                             <Tooltip title="Go back">
-                                <IconButton onClick={() => {
-                                    setSelectedGiftList(undefined);
-                                    setSelectedGiftee(undefined);
-                                }}>
+                                <IconButton onClick={onBackButton}>
                                     <ArrowBackIcon />
                                 </IconButton>
                             </Tooltip>
@@ -145,12 +164,12 @@ const Lists: FC = () => {
                                     <GifteeListItem key={rec.id} giftee={rec} onClick={onGifteeClick} onDelete={onGifteeDelete} />
                                 ))
                             }
-                            <NewGifteeForm key={-1} giftList={selectedGiftList} onGifteeCreated={(giftee) => setSelectedGiftee(giftee)} />
+                            <NewGifteeForm key={-1} giftList={selectedGiftList} onGifteeCreated={(giftee) => setSelectedGiftee(giftee)} setChange={setChange} />
                         </List>
                     </Grid>
 
                     {selectedGiftee &&
-                        <GifteeDetail selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} />
+                        <GifteeDetail selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} setChange={setChange} setChangesSaved={setChangesSaved} />
                     }
                 </Grid>
             }
