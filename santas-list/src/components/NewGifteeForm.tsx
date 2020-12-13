@@ -41,6 +41,7 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
             setGiftee(giftList.name, newGiftee, user).then(() => {
                 setNewGifteeName("");
                 onGifteeCreated(newGiftee);
+                setError("");
             }).catch((error: Error) => {
                 setError("New giftee coudn't be created.");
                 console.log(error.message)
@@ -60,7 +61,10 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
                         label="New Giftee"
                         error={error ? true : false}
                         value={newGifteeName}
-                        onChange={e => setNewGifteeName(e.target.value)}
+                        onChange={e => {
+                            setNewGifteeName(e.target.value);
+                            setError("");
+                        }}
                         variant="outlined"
                         helperText={error}
                         InputProps={{
