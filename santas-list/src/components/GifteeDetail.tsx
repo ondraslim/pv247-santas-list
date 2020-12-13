@@ -26,7 +26,6 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
         setGiftee(selectedGiftee);
     }, [selectedGiftee]);
 
-
     const onAddGift = () => {
         setChange(9);
         setChangesSaved(false);
@@ -76,8 +75,8 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
                 return;
             }
         }
-        let e: string = "";
-        setError(e);
+        setError("");
+        setGiftsError("");
         onSaveChanges(giftee);
     };
 
@@ -85,7 +84,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
     return (
         <Grid item container xs={12} md={6} spacing={5}>
             <Grid item md={12}>
-                <Typography variant="h5" align="center">{giftee.name}</Typography>
+                <Typography variant="h5" align="center">Detail</Typography>
             </Grid>
             {error && <Grid item xs={12}><Alert severity="error">{error}</Alert></Grid>}
             <Grid item xs={12} md={6}>
