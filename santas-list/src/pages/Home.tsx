@@ -23,6 +23,8 @@ import Avatar from '@material-ui/core/Avatar';
 import PeopleIcon from '@material-ui/icons/People';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import PersonIcon from '@material-ui/icons/Person';
+import icon from './insightsIcon.png';
 
 import React, { FC, useState, useContext, useMemo } from "react";
 import { statsForUser, listStats, setGift, setGiftee, setGiftList, getLists } from "../utils/firebase"
@@ -41,21 +43,25 @@ const useStyles = makeStyles(theme => ({
     },
 
     grid: {
-        flex: '1 0 auto',
+        flex: 'auto',
     },
 
     card: {
         boxShadow: '0 3px 5px 2px rgba(56, 56, 56, 0.83)',
-        backgroundColor: 'WhiteSmoke'
+        backgroundColor: 'WhiteSmoke',
     },
 
     media: {
-        height: 140,
+        height: '25vh'
     },
 
     listItem: {
         backgroundColor: 'primary',
-    }
+    },
+
+    formControl: {
+        minWidth: '130px',
+    },
 
 }));
 
@@ -103,9 +109,11 @@ const Home: FC = () => {
 
     function giftListNames() {
         let tempNames: string[] = [];
+        tempNames.push("");
         giftLists.forEach(list => {
             tempNames.push(list.name);
         })
+
         return tempNames;
     };
 
@@ -114,9 +122,13 @@ const Home: FC = () => {
     return (
         <div className="App">
             {(user === undefined || userStats.gifteeCount === -1) ? (
-                <p>
-                    Loading...
-                </p>
+                <Grid container direction="column" style={{ margin: '5px' }}>
+                    <Grid item xs={12}>
+                        <Typography align="center" color='primary' variant="h5">
+                            Loading...
+                    </Typography>
+                    </Grid>
+                </Grid>
             ) : (
                     <Grid container direction="column" style={{ margin: '5px' }}>
                         <Grid item xs={12}>
@@ -147,7 +159,7 @@ const Home: FC = () => {
                                                                             </ListItemAvatar>
                                                                             <ListItemText primary="Number of gist lists" secondary={userStats.giftListCount} />
                                                                         </ListItem>
-                                                                        <ListItem button>
+                                                                        <ListItem button className={classes.listItem}>
                                                                             <ListItemAvatar>
                                                                                 <Avatar>
                                                                                     <PeopleIcon />
@@ -159,8 +171,9 @@ const Home: FC = () => {
                                                                 </Grid>
                                                                 <Hidden xsDown>
                                                                     <Grid item md={4} sm={4}>
-                                                                        <EqualizerIcon style={{ fontSize: '20vmin', color: 'grey' }} />
 
+                                                                        <CardMedia image={icon} className={classes.media}>
+                                                                        </CardMedia>
                                                                     </Grid>
                                                                 </Hidden>
 
@@ -171,39 +184,124 @@ const Home: FC = () => {
                                                 <Grid item>
                                                     <Card style={{ minHeight: '40vh' }} className={classes.card}>
                                                         <CardContent>
-                                                            <Typography>
-                                                                LIST STATS
-                                                    </Typography>
-                                                            <FormControl>
-                                                                <InputLabel id="demo-mutiple-name-label">Name</InputLabel>
-                                                                <Select
-                                                                    value={chosenList}
-                                                                    onChange={e => setChosenList(e.target.value as string)}
-                                                                    input={<Input />}
-                                                                >
-                                                                    {giftListNames().map((name) => (
-                                                                        <MenuItem key={name} value={name}>
-                                                                            {name}
-                                                                        </MenuItem>
-                                                                    ))}
-                                                                </Select>
-                                                            </FormControl>
-                                                            {(chosenList !== '') ? (
-                                                                <p>
-                                                                    ta-daaaaa
-                                                                </p>
-                                                            ) : (
-                                                                    <p>
-                                                                        nope
-                                                                    </p>
-                                                                )
-                                                            }
+                                                            <Grid container >
+                                                                <Grid item xs={12}>
+                                                                    <Grid container direction="row" >
+                                                                        <Grid item xs={6} sm={6} md={6}>
+                                                                            <Typography variant='h5' color="secondary">
+                                                                                <i>Check your stats for chosen giftlist!</i>
+                                                                            </Typography>
+                                                                        </Grid>
+                                                                        <Grid item xs={8} md={4} sm={4}>
+                                                                            <FormControl className={classes.formControl}>
+                                                                                <InputLabel>Choose giftlist</InputLabel>
+                                                                                <Select
+                                                                                    value={chosenList}
+                                                                                    onChange={e => setChosenList(e.target.value as string)}
+                                                                                    input={<Input />}
+                                                                                >
+                                                                                    {giftListNames().map((name) => (
+                                                                                        <MenuItem key={name} value={name} style={{ height: '35px' }}>
+                                                                                            {name}
+                                                                                        </MenuItem>
+                                                                                    ))}
+                                                                                </Select>
+                                                                            </FormControl>
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                </Grid>
+                                                                {(chosenList !== '') && <>
+                                                                    <Grid item xs={12}>
+                                                                        <Grid container direction="row">
+                                                                            <Grid item xs={6} md={6} sm={6}>
+                                                                                <Grid container direction="column">
+                                                                                    <Grid item>
+                                                                                        <List>
+                                                                                            <ListItem button className={classes.listItem}>
+                                                                                                <Hidden only={'xs'}>
+                                                                                                    <ListItemAvatar>
+                                                                                                        <Avatar>
+                                                                                                            <PeopleIcon />
+                                                                                                        </Avatar>
+                                                                                                    </ListItemAvatar>
+                                                                                                </Hidden>
+                                                                                                <ListItemText primary="Number of giftees" secondary={giftListStats.gifteeCount} />
+                                                                                            </ListItem>
+                                                                                            <ListItem button className={classes.listItem}>
+                                                                                                <Hidden only={'xs'}>
+                                                                                                    <ListItemAvatar>
+                                                                                                        <Avatar>
+                                                                                                            <PersonIcon />
+                                                                                                        </Avatar>
+                                                                                                    </ListItemAvatar>
+                                                                                                </Hidden>
+                                                                                                <ListItemText primary="Low-budget giftee" secondary={giftListStats.minName} />
+                                                                                            </ListItem>
+                                                                                            <ListItem button className={classes.listItem}>
+                                                                                                <Hidden only={'xs'}>
+                                                                                                    <ListItemAvatar>
+                                                                                                        <Avatar>
+                                                                                                            <ShowChartIcon />
+                                                                                                        </Avatar>
+                                                                                                    </ListItemAvatar>
+                                                                                                </Hidden>
+                                                                                                <ListItemText primary="The lowest budget" secondary={giftListStats.minCount} />
+                                                                                            </ListItem>
+                                                                                        </List>
+                                                                                    </Grid>
+                                                                                </Grid>
+
+                                                                            </Grid>
+                                                                            <Grid item xs={6} md={6} sm={6}>
+                                                                                <Grid container direction="column">
+                                                                                    <Grid item>
+                                                                                        <List>
+                                                                                            <ListItem button className={classes.listItem}>
+                                                                                                <Hidden only={'xs'}>
+                                                                                                    <ListItemAvatar>
+                                                                                                        <Avatar>
+                                                                                                            <ShowChartIcon />
+                                                                                                        </Avatar>
+                                                                                                    </ListItemAvatar>
+                                                                                                </Hidden>
+                                                                                                <ListItemText primary="Average budget" secondary={giftListStats.avgCount} />
+                                                                                            </ListItem>
+                                                                                            <ListItem button className={classes.listItem}>
+                                                                                                <Hidden only={'xs'}>
+                                                                                                    <ListItemAvatar>
+                                                                                                        <Avatar>
+                                                                                                            <PersonIcon />
+                                                                                                        </Avatar>
+                                                                                                    </ListItemAvatar>
+                                                                                                </Hidden>
+                                                                                                <ListItemText primary="Big-budget giftee" secondary={giftListStats.maxName} />
+                                                                                            </ListItem>
+                                                                                            <ListItem button className={classes.listItem}>
+                                                                                                <Hidden only={'xs'}>
+                                                                                                    <ListItemAvatar>
+                                                                                                        <Avatar>
+                                                                                                            <ShowChartIcon />
+                                                                                                        </Avatar>
+                                                                                                    </ListItemAvatar>
+                                                                                                </Hidden>
+                                                                                                <ListItemText primary="The highest budget" secondary={giftListStats.maxCount} />
+                                                                                            </ListItem>
+                                                                                        </List>
+                                                                                    </Grid>
+
+                                                                                </Grid>
+
+                                                                            </Grid>
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                </> }
+                                                            </Grid>
                                                         </CardContent>
                                                     </Card>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
-                                        <Hidden smDown>
+                                        {/*<Hidden smDown>
                                             <Grid item className={classes.grid} lg={4} xs={4}>
                                                 <Card style={{ backgroundColor: 'blue', minHeight: '70vh' }} className={classes.card}>
                                                     <CardContent>
@@ -213,7 +311,7 @@ const Home: FC = () => {
                                                     </CardContent>
                                                 </Card>
                                             </Grid>
-                                        </Hidden>
+                                        </Hidden>*/}
                                     </Grid>
                                 </Grid>
                             </Grid>
