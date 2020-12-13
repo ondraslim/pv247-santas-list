@@ -9,24 +9,22 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 type Props = {
   gift: Gift;
-  updateGift: (gift: Gift) => void;
-  onDelete: (giftId: string) => void;
-  change: number;
+  onGiftChange: (gift: Gift) => void;
+  onGiftDelete: (giftId: string) => void;
 };
 
 
-const GifteeGift: FC<Props> = ({ gift, updateGift, onDelete }) => {
-
-  return (
+const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
+    return (
     <>
-      <Grid item container xs={12} md={12} justify="space-between">
+      <Grid item container xs={12} justify="space-between">
         <Grid item xs={12} md={6}>
           <FormControl>
             <InputLabel htmlFor="gift-name-input">Name</InputLabel>
             <Input
               id="gift-name-input"
               value={gift.name}
-              onChange={e => updateGift({ ...gift, name: e.target.value })}
+              onChange={e => onGiftChange({ ...gift, name: e.target.value })}
               startAdornment={
                 <InputAdornment position="start">
                   <CardGiftcardRoundedIcon />
@@ -43,7 +41,7 @@ const GifteeGift: FC<Props> = ({ gift, updateGift, onDelete }) => {
               id="gift-price-adornment"
               type="number"
               value={gift.price ?? ""}
-              onChange={e => updateGift({ ...gift, price: +e.target.value })}
+              onChange={e => onGiftChange({ ...gift, price: +e.target.value })}
               startAdornment={
                 <InputAdornment position="start">
                   <AttachMoneyIcon />
@@ -52,32 +50,12 @@ const GifteeGift: FC<Props> = ({ gift, updateGift, onDelete }) => {
             />
           </FormControl>
           <Tooltip title="Delete this gift">
-            <IconButton onClick={() => onDelete(gift.id)}>
+            <IconButton onClick={() => onGiftDelete(gift.id)}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
         </Grid>
-        
-        {/* <Grid item xs={12}>
-          <TextField
-            fullWidth
-            id="gift-note-input"
-            label="Note"
-            value={gift.note ?? ""}
-            onChange={e => updateGift({ ...gift, note: e.target.value })}
-            multiline
-            variant="outlined"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <NoteIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid> */}
       </Grid>
-
     </>
   );
 };

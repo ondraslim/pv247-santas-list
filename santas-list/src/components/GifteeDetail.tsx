@@ -6,17 +6,16 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import NoteIcon from '@material-ui/icons/Note';
 import GifteeGift from "./GifteeGift";
 import { v4 as uuidv4 } from 'uuid';
- 
+import Alert from '@material-ui/lab/Alert';
+
 
 type Props = {
-    change: number;
     selectedGiftee: Giftee;
     onSaveChanges: (updatedGiftee: Giftee) => void;
-    onGiftDelete: (giftId: string) => void;
 };
 
 
-const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, onGiftDelete, change}) => {
+const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
     const [giftee, setGiftee] = useState<Giftee>(selectedGiftee);
     const [error, setError] = useState<string>("");
     const [giftsError, setGiftsError] = useState<string>("");
@@ -25,9 +24,16 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, onGiftDelete, 
         setGiftee(selectedGiftee);
     }, [selectedGiftee]);
 
+
     const onAddGift = () => {
         let updatedGiftee = { ...giftee };
         updatedGiftee.gifts.push({ id: uuidv4(), name: "", price: 0, url: "" });
+        setGiftee(updatedGiftee);
+    }
+
+    const onGiftDelete = (giftId: string) => {
+        let updatedGiftee = { ...giftee };
+        updatedGiftee.gifts = updatedGiftee.gifts.filter(g => g.id !== giftId);
         setGiftee(updatedGiftee);
     }
 
@@ -66,18 +72,14 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, onGiftDelete, 
         onSaveChanges(giftee);
     };
 
-    
+
     return (
-        <>
-            {error &&
-                <Grid item xs={12}>
-                    <FormHelperText error>{error}</FormHelperText>
-                </Grid>
-            }
+        <Grid item container xs={12} md={6} spacing={5}>
             <Grid item md={12}>
-                    <Box m="0.1rem"></Box>
-                 </Grid>
-            <Grid item xs={12} md={6}>                
+                <Typography variant="h5" align="center">{giftee.name}</Typography>
+            </Grid>
+            {error && <Grid item xs={12}><Alert severity="error">{error}</Alert></Grid>}
+            <Grid item xs={12} md={6}>
                 <FormControl>
                     <InputLabel htmlFor="input-with-icon-adornment">Name</InputLabel>
                     <Input
@@ -136,14 +138,12 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, onGiftDelete, 
                 <Grid item xs={12}>
                     <Typography variant="h4">Gifts</Typography>
                 </Grid>
-                {giftsError &&
-                    <Grid item xs={12}>
-                        <FormHelperText error>{giftsError}</FormHelperText>
-                    </Grid>
-                }
+
+                {giftsError && <Grid item xs={12}><Alert severity="error">{giftsError}</Alert></Grid>}
+
                 <Grid item container xs={12}>
                     {giftee.gifts && giftee.gifts.map(g => (
-                        <GifteeGift key={g.id} gift={g} updateGift={onGiftUpdate} onDelete={onGiftDelete} change={change} />
+                        <GifteeGift key={g.id} gift={g} onGiftChange={onGiftUpdate} onGiftDelete={onGiftDelete} />
                     ))}
                 </Grid>
                 <Grid item>
@@ -154,14 +154,13 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, onGiftDelete, 
                         Add New Gift
                     </Button>
                 </Grid>
-            </Grid>                       
+            </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" color="primary" onClick={handleSubmit} fullWidth>
                     Save changes
                 </Button>
             </Grid>
-            
-        </>
+        </Grid>
     );
 };
 
