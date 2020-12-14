@@ -11,9 +11,14 @@ useEffect(() =>{
 }, [])
 
 return <div>
-    <Typography variant="h3" align="center">
-    Welcome to the Gift List!
-    </Typography>
+    <p>
+       <br />
+       <Typography variant="h3" align="center">
+        Welcome to the Gift List!
+        </Typography>
+       <br /> 
+    </p>
+    
 <p>Here you can create your own custom Gift Lists. Christmas, birthdays, anniversaries - whatever you need!
 You can add people to each of your lists. And not only people! Do you want to have a Gift List for your dog's Adoption Day? You can!</p>
 <p>You can note your budget as well as other comments to each entry.

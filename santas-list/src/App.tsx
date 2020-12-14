@@ -8,7 +8,7 @@ import {
 
 
 import Container from "@material-ui/core/Container";
-import { MuiThemeProvider, createMuiTheme, makeStyles } from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 import Hidden from '@material-ui/core/Hidden';
@@ -27,24 +27,6 @@ import MenuDrawerLeft from "./components/MenuDrawerLeft";
 import BasicMenu from "./components/BasicMenu";
 
 
-
-
-const useStyles = makeStyles((theme) => ({
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-
-    link: {
-        textDecoration: "none",
-        color: "white",
-    },
-
-    title: {
-        flexGrow: 1,
-    },
-
-}));
-
 const ourTheme = createMuiTheme({
     palette: {
         primary: {
@@ -59,7 +41,12 @@ const ourTheme = createMuiTheme({
         MuiButton: {
             root: {
                 '&:hover': {
-                    backgroundColor: red[600]
+                    backgroundColor: red[600],
+                }
+            },
+            containedPrimary: {
+                '&:hover': {
+                    backgroundColor: red[600],
                 }
             }
         },
@@ -69,21 +56,43 @@ const ourTheme = createMuiTheme({
                 width: "100%",
                 borderStyle: "solid",
                 borderWidth: "medium",
+                borderColor: green[900],
+                backgroundColor: green[50],
             }
         },
         MuiCardHeader: {
             root: {
-                backgroundColor: green[100],
+                backgroundColor: green[200],
                 color: 'black',
             }
-        }
+        },
+        MuiList: {
+            root: {                
+                backgroundColor:green[50],
+                borderWidth: 'medium',
+                borderStyle: 'solid',
+                borderColor: green[900],
+            }
+        },
+        MuiTypography: {
+            h3: {
+                fontSize: '2.8rem',
+                textDecoration: 'underline',
+                textDecorationColor: green[900]
+            },
+            h4: {
+                fontSize: '2.2rem',
+            },
+            h5: {
+                fontSize: '1.6rem',
+            }
+        },
     },
     
 });
 
 
 function App() {
-    const classes = useStyles();
 
     // Login state
     const user = useLoggedInUser();

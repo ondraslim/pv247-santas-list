@@ -6,7 +6,7 @@ import { useState } from "react";
 import GifteeListItem from "../components/GifteeListItem";
 import GiftCard from "../components/GiftCard";
 import List from "@material-ui/core/List";
-import { giftListsCollection, updateGiftList, getLists } from "../utils/firebase";
+import { getLists, setGiftee, deleteGiftee, deleteGiftList } from "../utils/firebase";
 import NewGiftCard from "../components/NewGiftCard";
 import GifteeDetail from "../components/GifteeDetail";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -14,125 +14,180 @@ import { Tooltip, IconButton } from "@material-ui/core";
 import NewGifteeForm from "../components/NewGifteeForm";
 import UserContext from "../context/UserContext";
 import { useContext, useMemo } from "react";
+import Alert from '@material-ui/lab/Alert';
+
 
 
 const Lists: FC = () => {
     const [giftLists, setGiftLists] = useState<GiftList[]>([]);
     const [error, setError] = useState<string>("");
+    const [changesSaved, setChangesSaved] = useState<boolean>(false);
     const [selectedGiftList, setSelectedGiftList] = useState<GiftList>();
     const [selectedGiftee, setSelectedGiftee] = useState<Giftee>();
     const { user } = useContext(UserContext);
+    const [change, setChange] = useState<number>(0);
 
-    useEffect(() => {
-        const unsubscribe = giftListsCollection.onSnapshot(
-            snapshot => {
-                setGiftLists(
-                    snapshot
-                        .docs
-                        .filter(doc => doc.data().user === user?.email)
-                        .map(doc => { return { ...doc.data(), id: doc.id } })
-                );
-            },
-            err => setError(err.message),
-        );
-        return () => unsubscribe();
-    }, [user]);
 
     useMemo(() => {
         if (user?.email) {
             getLists(user).then(val => {
                 setGiftLists(val);
-            })
+            });
         }
     }, [user])
 
-    console.log(giftLists);
+    useEffect(() => {
+        if (user?.email) {
+            getLists(user).then(val => {
+                setGiftLists(val);
+            });
+        }
+    }, [user, change])
 
-
-    const onGiftListClick = async (giftListId: string) => {
-        console.log("click on giftList: " + giftListId);
+     const onGiftListClick = async (giftListId: string) => {
+         setChangesSaved(false);
         setSelectedGiftList(() => giftLists!.find(l => l.id === giftListId));
     };
 
+    const onGiftListDelete = async (giftList: GiftList) => {
+        try {
+            await deleteGiftList(giftList);
+            setChange((ch) => (ch + 1) % 100);
+            setChangesSaved(true);
+        } catch (error) {
+            console.log(error.message);
+            setChangesSaved(false);
+        }
+    };
+
     const onGifteeClick = (gifteeId: string) => {
-        console.log("click on giftee: " + gifteeId);
-        setSelectedGiftee(selectedGiftList?.recipients?.find(l => l.id === gifteeId));
+        if (change === 0 || selectedGiftee === undefined || changesSaved) {
+            setSelectedGiftee(selectedGiftList?.recipients?.find(l => l.id === gifteeId));
+            setChangesSaved(false);
+            setChange(0);
+            setError("");
+        } else {
+            setError("Unsaved changes");
+        }             
     };
 
     const onGifteeDelete = (gifteeId: string) => {
-        console.log("delete giftee: " + gifteeId);
-        selectedGiftList!.recipients = selectedGiftList!.recipients.filter(r => r.id !== gifteeId);
+        if (selectedGiftList?.id) {
+            let updatedLists: GiftList[] = giftLists;
+            let updatedList: GiftList = selectedGiftList;
+            updatedList!.recipients = selectedGiftList!.recipients.filter(r => r.id !== gifteeId);
 
-        updateGiftList(selectedGiftList!)
-            .catch((error: Error) => {
-                setError("Couldn't update the giftee.");
+
+            deleteGiftee(gifteeId, selectedGiftList).then(() => {
+                updatedLists.forEach((item, index) => {
+                    if (item.id === selectedGiftList.id) {
+                        updatedLists.splice(index, 1);
+                    }
+                })
+                setGiftLists([...updatedLists]);
+                setSelectedGiftee(undefined);
+                setChange((ch) => (ch + 1) % 100);
+                setChangesSaved(true);
+            }).catch((error: Error) => {
+                setError("Couldn't delete the giftee.");
                 console.log(error.message);
-            });
+                setChangesSaved(false);
+            })
+        }
+
     };
 
     const onSaveGifteeChanges = (updatedGiftee: Giftee) => {
-        console.log(updatedGiftee);
-        selectedGiftList!.recipients = selectedGiftList!.recipients.map(r => r.id === updatedGiftee.id ? updatedGiftee : r);
+        setChange((ch) => (ch + 1) % 100);
+        if (user?.email && selectedGiftList?.id) {
+            let updatedLists: GiftList[] = giftLists;
+            let updatedList: GiftList = selectedGiftList;
+            updatedList!.recipients = selectedGiftList!.recipients.map(r => r.id === updatedGiftee.id ? updatedGiftee : r);
 
-        updateGiftList(selectedGiftList!)
-            .catch((error: Error) => {
+            setGiftee(selectedGiftList.name, updatedGiftee, user).then(() => {
+                updatedLists.forEach((item, index) => {
+                    if (item.id === selectedGiftList.id) {
+                        updatedLists.splice(index, 1);
+                    }
+                })
+                updatedLists.push(updatedList);
+                setGiftLists([...updatedLists]);
+                setError("");                
+                setChangesSaved(true);
+            }).catch((error: Error) => {
                 setError("Couldn't update the giftee.");
                 console.log(error.message);
-            });
+                setChangesSaved(false);
+            })
+        }
+    }
+
+    const onBackButton = () => {
+        console.log(changesSaved);    
+        console.log(selectedGiftee); 
+        console.log(change)
+            if (selectedGiftee === undefined || changesSaved || change === 0) {
+                setSelectedGiftList(undefined);
+                setSelectedGiftee(undefined); 
+                setChangesSaved(false);
+                setError("")
+        } else {
+                setError("Unsaved changes");
+        }     
     }
 
     const title = selectedGiftList?.name ?? "Your Gift Lists";
     return (
-        <div>
-            <Typography variant="h3" align="center">{title}</Typography>
-            {error && <p>error</p>  /* TOOD:show error on download */}
+        <Grid container spacing={5} xs={12}>
+            <Grid item xs={12}>
+                <Typography variant="h3" align="center">{title}</Typography>
+            </Grid>
+
+            {error && <Grid item xs={12}><Alert severity="error">{error}</Alert></Grid>}
+            {changesSaved && <Grid item xs={12}><Alert severity="success">Changes were saved.</Alert></Grid>}
+
             {
                 selectedGiftList &&
-                <Grid container spacing={5}>
+                <Grid item container spacing={5}>
                     <Grid item xs={12} md={6}>
                         <Typography variant="h5">
                             <Tooltip title="Go back">
-                                <IconButton onClick={() => {
-                                    setSelectedGiftList(undefined);
-                                    setSelectedGiftee(undefined);
-                                }}>
+                                <IconButton onClick={onBackButton}>
                                     <ArrowBackIcon />
                                 </IconButton>
                             </Tooltip>
-                            Giftees
+                            Gift Lists
                         </Typography>
-                        <List style={{borderStyle: "solid"}}>
+                        <List style={{ borderStyle: "solid" }}>
                             {
                                 selectedGiftList.recipients && selectedGiftList.recipients.map(rec => (
-                                    <GifteeListItem key={rec.id} giftee={rec} onClick={onGifteeClick} onDelete={onGifteeDelete}/>
+                                    <GifteeListItem key={rec.id} giftee={rec} onClick={onGifteeClick} onDelete={onGifteeDelete} />
                                 ))
                             }
-                            <NewGifteeForm key={-1} giftList={selectedGiftList} onGifteeCreated={(giftee) => setSelectedGiftee(giftee)} />
+                            <NewGifteeForm key={-1} giftList={selectedGiftList} onGifteeCreated={(giftee) => setSelectedGiftee(giftee)} setChange={setChange} />
                         </List>
                     </Grid>
 
                     {selectedGiftee &&
-                        <Grid item container xs={12} md={6} spacing={5}>
-                            <GifteeDetail selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} />
-                        </Grid>
+                        <GifteeDetail selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} setChange={setChange} setChangesSaved={setChangesSaved} />
                     }
                 </Grid>
             }
 
             {
                 !selectedGiftList &&
-                <Grid container direction='row' spacing={3}>
+                <Grid item container direction='row' spacing={5}>
                     <Grid item xs={12} sm={6} md={4} lg={3}>
-                        <NewGiftCard />
+                        <NewGiftCard giftLists={giftLists} setGiftListsState={setGiftLists} />
                     </Grid>
                     {giftLists.map(l => (
                         <Grid item xs={12} sm={6} md={4} lg={3}>
-                            <GiftCard key={l.id} onClick={onGiftListClick} giftList={l}/>
+                            <GiftCard key={l.id} onClick={onGiftListClick} onDelete={onGiftListDelete} giftList={l} />
                         </Grid>
                     ))}
                 </Grid>
             }
-        </div >
+        </Grid>
     );
 };
 
