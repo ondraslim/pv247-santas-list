@@ -55,7 +55,7 @@ const ourTheme = createMuiTheme({
                 height: "100%",
                 width: "100%",
                 borderStyle: "solid",
-                borderWidth: "1px",
+                borderWidth: "medium",
                 borderColor: green[900],
                 backgroundColor: green[50],
             }
