@@ -32,6 +32,13 @@ const en = {
     "gifteeGift": {
       "name": "Name",
       "price": "Price",
+      "delete": "Delete this gift",
+    },
+
+    "giftCard": {
+      "name": "Name",
+      "price": "Price",
+      "delete": "Delete this list",
     },
   }
 };
