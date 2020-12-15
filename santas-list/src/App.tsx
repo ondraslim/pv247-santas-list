@@ -52,10 +52,10 @@ const ourTheme = createMuiTheme({
         },
         MuiCard: {
             root: {
-                //height: "100%",
-                //width: "100%",
+                height: "100%",
+                width: "100%",
                 borderStyle: "solid",
-                borderWidth: "medium",
+                borderWidth: "1px",
                 borderColor: green[900],
                 backgroundColor: green[50],
             }
