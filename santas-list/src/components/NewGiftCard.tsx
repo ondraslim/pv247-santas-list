@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FC } from "react";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 import Card from "@material-ui/core/Card/Card";
@@ -8,29 +8,36 @@ import { makeStyles } from "@material-ui/styles";
 import { TextField, Button } from "@material-ui/core";
 import CardGiftcardRoundedIcon from '@material-ui/icons/CardGiftcardRounded';
 import AddIcon from '@material-ui/icons/Add';
-import { createNewGiftList, useLoggedInUser } from "../utils/firebase";
+import { setGiftList } from "../utils/firebase";
 import { GiftList } from "../data/DataTypes";
 import { v4 as uuidv4 } from 'uuid';
+import UserContext from "../context/UserContext";
 
 
 
 const useStyles = makeStyles({
   fullSizeCard: {
     height: "100%",
-    width: "100%",    
+    width: "100%",
     borderStyle: "solid",
     borderWidth: "medium",
   },
 });
 
 
-const NewGiftCard: FC = () => {
+type Props = {
+  giftLists: GiftList[];
+  setGiftListsState: (g: GiftList[]) => void;
+};
+
+
+const NewGiftCard: FC<Props> = ({ giftLists, setGiftListsState }) => {
   const classes = useStyles();
 
   const [error, setError] = useState<string>("");
   const [newListingName, setNewListingName] = useState<string>("");
 
-  const user = useLoggedInUser();
+  const { user } = useContext(UserContext);
 
   const handleSubmit = async () => {
     if (!newListingName) {
@@ -43,19 +50,23 @@ const NewGiftCard: FC = () => {
       return;
     }
 
-    try {
+    if (user?.email) {
       const newGiftList: GiftList = {
         id: uuidv4(),
         name: newListingName,
-        user: user!.uid,
+        user: user.email,
         recipients: []
       };
 
-      console.log("creating new list " + { ...newGiftList });
-
-      await createNewGiftList(newGiftList);
-    } catch (err) {
-      setError(err.what);
+      try {
+        await setGiftList(newGiftList).then(() => {
+          setGiftListsState([...giftLists, newGiftList]);
+          setNewListingName("");
+        }
+        );
+      } catch (err) {
+        setError(err.what);
+      }
     }
   };
 
@@ -69,7 +80,7 @@ const NewGiftCard: FC = () => {
           <AddIcon />
 
           <TextField
-            error={error ? true : false} // TODO: how to convert to bool?
+            error={error ? true : false}
             id="listing-new-name"
             placeholder="my awesome gift list..."
             value={newListingName}

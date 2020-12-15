@@ -1,4 +1,4 @@
-import { Grid, FormControl, InputLabel, Input, InputAdornment, TextField, Button, FormHelperText, Typography } from "@material-ui/core";
+import { Grid, FormControl, InputLabel, Input, InputAdornment, TextField, Button, FormHelperText, Typography, Box } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import React, { FC, useState, useEffect } from "react";
 import { Gift, Giftee } from "../data/DataTypes";
@@ -6,16 +6,18 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import NoteIcon from '@material-ui/icons/Note';
 import GifteeGift from "./GifteeGift";
 import { v4 as uuidv4 } from 'uuid';
-
+import Alert from '@material-ui/lab/Alert';
 
 
 type Props = {
     selectedGiftee: Giftee;
     onSaveChanges: (updatedGiftee: Giftee) => void;
+    setChange: (n: number) => void;
+    setChangesSaved: (b: boolean) => void;
 };
 
 
-const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
+const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, setChangesSaved }) => {
     const [giftee, setGiftee] = useState<Giftee>(selectedGiftee);
     const [error, setError] = useState<string>("");
     const [giftsError, setGiftsError] = useState<string>("");
@@ -24,23 +26,27 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
         setGiftee(selectedGiftee);
     }, [selectedGiftee]);
 
-    console.log(giftee);
-
     const onAddGift = () => {
+        setChange(9);
+        setChangesSaved(false);
         let updatedGiftee = { ...giftee };
         updatedGiftee.gifts.push({ id: uuidv4(), name: "", price: 0, url: "" });
         setGiftee(updatedGiftee);
     }
 
-    const onGiftUpdate = (gift: Gift) => {
+    const onGiftDelete = (giftId: string) => {
+        setChange(9);
+        setChangesSaved(false);
         let updatedGiftee = { ...giftee };
-        updatedGiftee.gifts = updatedGiftee.gifts.map(g => g.id === gift.id ? gift : g);
+        updatedGiftee.gifts = updatedGiftee.gifts.filter(g => g.id !== giftId);
         setGiftee(updatedGiftee);
     }
 
-    const onGiftDelete = (giftId: string) => {
+    const onGiftUpdate = (gift: Gift) => {
+        setChange(9);
+        setChangesSaved(false);
         let updatedGiftee = { ...giftee };
-        updatedGiftee.gifts = giftee.gifts.filter(g => g.id !== giftId);
+        updatedGiftee.gifts = updatedGiftee.gifts.map(g => g.id === gift.id ? gift : g);
         setGiftee(updatedGiftee);
     }
 
@@ -69,24 +75,27 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
                 return;
             }
         }
-
+        setError("");
+        setGiftsError("");
         onSaveChanges(giftee);
     };
 
+
     return (
-        <>
-            {error &&
-                <Grid item xs={12}>
-                    <FormHelperText error>{error}</FormHelperText>
-                </Grid>
-            }
+        <Grid item container xs={12} md={6} spacing={5}>
+            <Grid item md={12}>
+                <Typography variant="h5" align="center">Detail</Typography>
+            </Grid>
+            {error && <Grid item xs={12}><Alert severity="error">{error}</Alert></Grid>}
             <Grid item xs={12} md={6}>
                 <FormControl>
                     <InputLabel htmlFor="input-with-icon-adornment">Name</InputLabel>
                     <Input
                         id="input-with-icon-adornment"
                         value={giftee.name}
-                        onChange={e => setGiftee(g => {
+                        onChange={e => setGiftee(g => {  
+                            setChange(1);    
+                            setChangesSaved(false);                      
                             setError("");
                             return { ...g, name: e.target.value }
                         })}
@@ -106,6 +115,8 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
                         type="number"
                         value={giftee.budget ?? 0}
                         onChange={e => setGiftee(g => {
+                            setChange(1);
+                            setChangesSaved(false);
                             setError("");
                             return { ...g, budget: +e.target.value }
                         })}
@@ -123,7 +134,12 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
                     id="note"
                     label="Note"
                     value={giftee?.note ?? ""}
-                    onChange={e => setGiftee(g => { return { ...g, note: e.target.value }; })}
+                    onChange={e => {
+                        console.log("?")
+                        setChange(1);
+                        setChangesSaved(false);
+                        setGiftee(g => { return { ...g, note: e.target.value }; 
+                        })}}
                     multiline
                     variant="outlined"
                     InputProps={{
@@ -139,15 +155,16 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
                 <Grid item xs={12}>
                     <Typography variant="h4">Gifts</Typography>
                 </Grid>
-                {giftsError &&
-                    <Grid item xs={12}>
-                        <FormHelperText error>{giftsError}</FormHelperText>
-                    </Grid>
-                }
+
+                {giftsError && <Grid item xs={12}><Alert severity="error">{giftsError}</Alert></Grid>}
+
                 <Grid item container xs={12}>
                     {giftee.gifts && giftee.gifts.map(g => (
-                        <GifteeGift key={g.id} gift={g} updateGift={onGiftUpdate} onDelete={onGiftDelete} />
+                        <GifteeGift key={g.id} gift={g} onGiftChange={onGiftUpdate} onGiftDelete={onGiftDelete}/>
                     ))}
+                </Grid>
+                <Grid item>
+                    <Box m="2rem"></Box>
                 </Grid>
                 <Grid item xs={12}>
                     <Button variant="contained" color="primary" onClick={onAddGift} fullWidth>
@@ -155,14 +172,12 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges }) => {
                     </Button>
                 </Grid>
             </Grid>
-
-
-            <Grid item md={12}>
+            <Grid item xs={12}>
                 <Button variant="contained" color="primary" onClick={handleSubmit} fullWidth>
                     Save changes
                 </Button>
             </Grid>
-        </>
+        </Grid>
     );
 };
 

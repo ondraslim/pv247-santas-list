@@ -24,10 +24,11 @@ import PeopleIcon from '@material-ui/icons/People';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import PersonIcon from '@material-ui/icons/Person';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import icon from './insightsIcon.png';
 
 import React, { FC, useState, useContext, useMemo } from "react";
-import { statsForUser, listStats, setGift, setGiftee, setGiftList, getLists } from "../utils/firebase"
+import { statsForUser, listStats, setGiftee, setGiftList, getLists } from "../utils/firebase"
 import UserContext from "../context/UserContext"
 import { GiftListStats, UserStats, Gift, Giftee, GiftList } from "../data/DataTypes"
 import { makeStyles } from '@material-ui/styles';
@@ -93,7 +94,7 @@ const Home: FC = () => {
     useMemo(() => {
         if (user?.email) {
             setGiftee(chosenList, gft, user);
-            setGift(chosenList, "test", g, user);
+            //setGift(chosenList, "test", g, user);
             setGiftList(l);
         }
     }, [user, chosenList])

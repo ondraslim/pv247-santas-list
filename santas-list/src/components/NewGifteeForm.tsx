@@ -1,24 +1,29 @@
-import { Button, Grid, InputAdornment, ListItem, TextField } from "@material-ui/core";
+import { Button, Grid, InputAdornment, ListItem, TextField, Box } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
-import React, { FC, useState } from "react";
+import React, { FC, useState, useContext } from "react";
 import { Giftee, GiftList } from "../data/DataTypes";
 import { v4 as uuidv4 } from 'uuid';
-import { updateGiftList } from "../utils/firebase";
+import { setGiftee } from "../utils/firebase";
+import UserContext from "../context/UserContext"
+
 
 
 type Props = {
     giftList: GiftList;
     onGifteeCreated: (giftee: Giftee) => void;
+    setChange: (n: number) => void;
 };
 
 
-const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated }) => {
+const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
+    const { user } = useContext(UserContext);
     const [newGifteeName, setNewGifteeName] = useState<string>("");
     const [error, setError] = useState<string>("");
 
     const onCreateNewGiftee = () => {
         if (!newGifteeName) {
             setError("The name is required!");
+            return;
         }
 
         const newGiftee = {
@@ -29,29 +34,37 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated }) => {
             gifts: []
         };
 
+        setChange(3);
         giftList.recipients.push(newGiftee);
 
-        updateGiftList(giftList)
-            .then(() => {
+        if (user?.email) {
+            setGiftee(giftList.name, newGiftee, user).then(() => {
                 setNewGifteeName("");
                 onGifteeCreated(newGiftee);
-            })
-            .catch((error: Error) => {
+                setError("");
+            }).catch((error: Error) => {
                 setError("New giftee coudn't be created.");
                 console.log(error.message)
-            });
+            });    
+        }
+
+        
+            
     };
 
     return (
         <ListItem>
-            <Grid container xs={12}>
+            <Grid container>
                 <Grid item xs={12}>
                     <TextField
                         fullWidth
                         label="New Giftee"
                         error={error ? true : false}
                         value={newGifteeName}
-                        onChange={e => setNewGifteeName(e.target.value)}
+                        onChange={e => {
+                            setNewGifteeName(e.target.value);
+                            setError("");
+                        }}
                         variant="outlined"
                         helperText={error}
                         InputProps={{
@@ -62,6 +75,9 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated }) => {
                             ),
                         }}
                     />
+                </Grid>
+                <Grid item>
+                    <Box m="2rem"></Box>
                 </Grid>
                 <Grid item xs={12}>
                     <Button variant="contained" color="primary" onClick={onCreateNewGiftee} fullWidth>
