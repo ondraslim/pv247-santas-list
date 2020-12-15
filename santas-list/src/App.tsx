@@ -108,7 +108,7 @@ function App() {
                         <MenuDrawerLeft/>
                     </Hidden>
 
-                    {user === null && <Redirect to='/login' />}
+                    {user === null && <Redirect to='/about' />}
 
                     <main className="App">
                         <Container maxWidth="lg">
