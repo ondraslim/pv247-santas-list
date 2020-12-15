@@ -140,6 +140,7 @@ const Lists: FC = () => {
     return (
         <Grid container spacing={5} xs={12}>
             <Grid item xs={12}>
+                <br />
                 <Typography variant="h3" align="center">{title}</Typography>
             </Grid>
 
