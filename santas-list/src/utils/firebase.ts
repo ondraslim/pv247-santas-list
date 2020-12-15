@@ -102,7 +102,13 @@ export const listStats = async (name: string, user: User) => {
           })
         }
       }))
-      const stats: GiftListStats = { gifteeCount: giftee_count, maxCount: max_count, minCount: min_count, maxName: max_name, minName: min_name, avgCount: avg_Count }
+      let avgCount = 0;
+      if (giftee_count === 0) {
+        min_count = 0;
+      } else {
+        avgCount = (total_count / giftee_count);
+      }
+      const stats: GiftListStats = { gifteeCount: giftee_count, maxCount: max_count, minCount: min_count, maxName: max_name, minName: min_name, avgCount};
       return stats;
     })
 }
