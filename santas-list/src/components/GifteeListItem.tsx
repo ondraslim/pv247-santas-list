@@ -6,6 +6,7 @@ import CardGiftcardRoundedIcon from '@material-ui/icons/CardGiftcardRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Giftee } from "../data/DataTypes";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+import { useTranslation } from 'react-i18next';
 
 
 type Props = {
@@ -20,6 +21,8 @@ const GifteeListItem: FC<Props> = ({ giftee, onClick, onDelete }) => {
   // onDelete(giftee.id);
   // }
 
+  const { t } = useTranslation();
+
   return (
     <ListItem onClick={() => onClick(giftee.id)} >
       <ListItemAvatar>
@@ -31,7 +34,7 @@ const GifteeListItem: FC<Props> = ({ giftee, onClick, onDelete }) => {
         primary={giftee.name}
         secondary={giftee.note} />
       <ListItemSecondaryAction>
-        <Tooltip title="Delete this giftee">
+        <Tooltip title={t('gifteeListItem.delete').toString()}>
           <IconButton onClick={() =>  onDelete(giftee.id)}>
             <DeleteIcon />
           </IconButton>
