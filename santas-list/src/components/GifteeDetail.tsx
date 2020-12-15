@@ -27,8 +27,8 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
         setGiftee(selectedGiftee);
 
         // TODO: test purposes, remove
-        searchOnline("baby pet kangaroo")
-            .then(response => console.log(response.items));
+        // searchOnline("baby pet kangaroo")
+        //     .then(response => console.log(response.items));
 
     }, [selectedGiftee]);
 
