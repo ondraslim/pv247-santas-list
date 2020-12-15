@@ -76,6 +76,7 @@ export const listStats = async (name: string, user: User) => {
   let min_name: string = "";
   let max_name: string = "";
   let total_count: number = 0;
+  let avg_Count: number = 0;
   
   return await giftListsCollection.where("name", "==", name).get().then(
     async snapshot => {
@@ -95,6 +96,9 @@ export const listStats = async (name: string, user: User) => {
                 min_name = d.get("name");
               }
             })
+            if (giftee_count !== 0) {
+              avg_Count = (total_count / giftee_count);
+            }
           })
         }
       }))
