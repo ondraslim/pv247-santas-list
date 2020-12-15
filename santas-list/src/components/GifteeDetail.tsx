@@ -1,4 +1,4 @@
-import { Grid, FormControl, InputLabel, Input, InputAdornment, TextField, Button, FormHelperText, Typography, Box } from "@material-ui/core";
+import { Grid, FormControl, InputLabel, Input, InputAdornment, TextField, Button, Typography, Box } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import React, { FC, useState, useEffect } from "react";
 import { Gift, Giftee } from "../data/DataTypes";
@@ -7,6 +7,7 @@ import NoteIcon from '@material-ui/icons/Note';
 import GifteeGift from "./GifteeGift";
 import { v4 as uuidv4 } from 'uuid';
 import Alert from '@material-ui/lab/Alert';
+import { searchOnline } from "../utils/api";
 
 
 type Props = {
@@ -24,6 +25,11 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
 
     useEffect(() => {
         setGiftee(selectedGiftee);
+
+        // TODO: test purposes, remove
+        searchOnline("baby pet kangaroo")
+            .then(response => console.log(response.items));
+
     }, [selectedGiftee]);
 
     const onAddGift = () => {
@@ -79,7 +85,6 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
         setGiftsError("");
         onSaveChanges(giftee);
     };
-
 
     return (
         <Grid item container xs={12} md={6} spacing={5}>
