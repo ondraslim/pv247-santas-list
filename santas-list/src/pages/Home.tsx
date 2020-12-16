@@ -19,7 +19,6 @@ import PeopleIcon from '@material-ui/icons/People';
 import PersonIcon from '@material-ui/icons/Person';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import icon from './insightsIcon.png';
-import green from '@material-ui/core/colors/green';
 
 import React, { FC, useState, useContext, useMemo } from "react";
 import { statsForUser, listStats, getLists } from "../utils/firebase"
@@ -37,33 +36,14 @@ const useStyles = makeStyles({
         margin: '1px',
     },
 
-    grid: {
-        flex: 'auto',
-    },
-
     card: {
-        boxShadow: '0 3px 5px 2px rgba(56, 56, 56, 0.83)',
         borderWidth: '1px',
     },
-
-    media: {
-        height: '25vh'
-    },
-
-    listItem: {
-        '&:hover': {
-            backgroundColor: green[100],
-        }
-    },
-
+   
     list: {
         borderStyle: 'none',
+        boxShadow: 'none',
     },
-
-    formControl: {
-        minWidth: '130px',
-    },
-
 });
 
 
@@ -117,25 +97,26 @@ const Home: FC = () => {
                 </Grid>
             ) : (
                     <Grid container direction="column" style={{ margin: '5px' }}>
-                        <Grid item xs={12}>
-                            <Typography align="center" color='primary' variant="h4">
+                        <Grid item xs={12}>                        
+                            <br />
+                            <Typography variant="h3" align="center">
                                 Welcome<Hidden xsDown>, {user?.email}</Hidden> !
-                            </Typography>
+                            </Typography>                        
                         </Grid>
                         <Grid item xs={12} justify='flex-start'>
                             <Grid container spacing={1} className={classes.app}>
-                                <Grid item className={classes.grid}>
+                                <Grid item >
                                     <Grid item xs container direction="column" spacing={2}>
                                         <Grid item>
                                             <Card style={{ minHeight: '30vh' }} className={classes.card}>
                                                 <CardContent>
                                                     <Grid container spacing={2} alignItems="center">
                                                         <Grid item xs={12} md={8} sm={8}>
-                                                            <Typography variant='h5' color="secondary">
-                                                                <i>Check your overall statistics!</i>
+                                                            <Typography variant='h5'>
+                                                                Check your overall statistics!
                                                             </Typography>
                                                             <List className={classes.list}>
-                                                                <ListItem className={classes.listItem}>
+                                                                <ListItem>
                                                                     <ListItemAvatar>
                                                                         <Avatar>
                                                                             <ShowChartIcon />
@@ -143,7 +124,7 @@ const Home: FC = () => {
                                                                     </ListItemAvatar>
                                                                     <ListItemText primary="Number of gist lists" secondary={userStats.giftListCount} />
                                                                 </ListItem>
-                                                                <ListItem className={classes.listItem}>
+                                                                <ListItem>
                                                                     <ListItemAvatar>
                                                                         <Avatar>
                                                                             <PeopleIcon />
@@ -155,7 +136,7 @@ const Home: FC = () => {
                                                         </Grid>
                                                         <Hidden xsDown>
                                                             <Grid item md={4} sm={4}>
-                                                                <CardMedia image={icon} className={classes.media}>
+                                                                <CardMedia image={icon}>
                                                                 </CardMedia>
                                                             </Grid>
                                                         </Hidden>
@@ -170,12 +151,12 @@ const Home: FC = () => {
                                                         <Grid item xs={12}>
                                                             <Grid container direction="row" >
                                                                 <Grid item xs={6} sm={6} md={6}>
-                                                                    <Typography variant='h5' color="secondary">
-                                                                        <i>Check your stats for chosen giftlist!</i>
+                                                                    <Typography variant='h5'>
+                                                                        Check your stats for chosen giftlist!
                                                                     </Typography>
                                                                 </Grid>
                                                                 <Grid item xs={8} md={4} sm={4}>
-                                                                    <FormControl className={classes.formControl}>
+                                                                    <FormControl>
                                                                         <InputLabel>Choose giftlist</InputLabel>
                                                                         <Select
                                                                             value={chosenList}
@@ -204,7 +185,7 @@ const Home: FC = () => {
                                                                         <Grid container direction="column">
                                                                             <Grid item>
                                                                                 <List className={classes.list}>
-                                                                                    <ListItem className={classes.listItem}>
+                                                                                    <ListItem>
                                                                                         <Hidden only={'xs'}>
                                                                                             <ListItemAvatar>
                                                                                                 <Avatar>
@@ -214,7 +195,7 @@ const Home: FC = () => {
                                                                                         </Hidden>
                                                                                         <ListItemText primary="Number of giftees" secondary={giftListStats.gifteeCount} />
                                                                                     </ListItem>
-                                                                                    <ListItem className={classes.listItem}>
+                                                                                    <ListItem>
                                                                                         <Hidden only={'xs'}>
                                                                                             <ListItemAvatar>
                                                                                                 <Avatar>
@@ -224,7 +205,7 @@ const Home: FC = () => {
                                                                                         </Hidden>
                                                                                         <ListItemText primary="Low-budget giftee" secondary={giftListStats.minName} />
                                                                                     </ListItem>
-                                                                                    <ListItem className={classes.listItem}>
+                                                                                    <ListItem>
                                                                                         <Hidden only={'xs'}>
                                                                                             <ListItemAvatar>
                                                                                                 <Avatar>
@@ -242,7 +223,7 @@ const Home: FC = () => {
                                                                         <Grid container direction="column">
                                                                             <Grid item>
                                                                                 <List className={classes.list}>
-                                                                                    <ListItem className={classes.listItem}>
+                                                                                    <ListItem>
                                                                                         <Hidden only={'xs'}>
                                                                                             <ListItemAvatar>
                                                                                                 <Avatar>
@@ -252,7 +233,7 @@ const Home: FC = () => {
                                                                                         </Hidden>
                                                                                         <ListItemText primary="Average budget" secondary={giftListStats.avgCount} />
                                                                                     </ListItem>
-                                                                                    <ListItem className={classes.listItem}>
+                                                                                    <ListItem>
                                                                                         <Hidden only={'xs'}>
                                                                                             <ListItemAvatar>
                                                                                                 <Avatar>
@@ -262,7 +243,7 @@ const Home: FC = () => {
                                                                                         </Hidden>
                                                                                         <ListItemText primary="Big-budget giftee" secondary={giftListStats.maxName} />
                                                                                     </ListItem>
-                                                                                    <ListItem className={classes.listItem}>
+                                                                                    <ListItem>
                                                                                         <Hidden only={'xs'}>
                                                                                             <ListItemAvatar>
                                                                                                 <Avatar>

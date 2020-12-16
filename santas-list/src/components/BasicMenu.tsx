@@ -64,7 +64,7 @@ const BasicMenu: FC = () => {
                             m='auto'
                             alignItems="center"
                             justifyContent="center">
-                            <Typography variant="h5">
+                            <Typography variant="h4">
                                 Santa's list
                                 </Typography>
                         </Box>

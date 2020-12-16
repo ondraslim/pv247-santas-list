@@ -153,7 +153,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
             </Grid>
             <Grid item container xs={12}>
                 <Grid item xs={12}>
-                    <Typography variant="h4">Gifts</Typography>
+                    <Typography variant="h5" align="center">Gifts</Typography>
                 </Grid>
 
                 {giftsError && <Grid item xs={12}><Alert severity="error">{giftsError}</Alert></Grid>}
