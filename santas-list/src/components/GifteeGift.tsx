@@ -5,34 +5,21 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { Gift } from "../data/DataTypes";
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import Dialog, { DialogProps } from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import SearchIcon from '@material-ui/icons/Search';
 import InfoIcon from '@material-ui/icons/Info';
 import { Item, searchOnline } from "../utils/api";
-import { forEachChild } from "typescript";
-
-
 
 
 type Props = {
@@ -67,10 +54,6 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
 
   const handleClickOpen = () => {
     searchOnline(searchName).then(response => {
-      /*let tempGifts: Item[] = [];
-      response.items.forEach(item => {
-        tempGifts.push(title: item.title, link: item.link, imgLink: item.pagemap.cse_image)
-      })*/
       setGifts(response.items); console.log(response.items);
     });
 
@@ -129,8 +112,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
               </Tooltip>
             </Grid>
           </Grid>
-        </Grid>
-        
+        </Grid>   
         
         {!giftItem ? (
           <Grid item md={6} lg={6} xs={12}>

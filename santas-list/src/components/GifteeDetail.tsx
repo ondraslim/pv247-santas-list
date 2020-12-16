@@ -26,10 +26,6 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
     useEffect(() => {
         setGiftee(selectedGiftee);
 
-        // TODO: test purposes, remove
-       /* searchOnline("baby pet kangaroo")
-            .then(response => console.log(response.items));*/
-
     }, [selectedGiftee]);
 
     const onAddGift = () => {
