@@ -5,29 +5,29 @@ const en = {
       "price" : "Precio"
     },
     "gifteeListItem" : {
-      "delete" : "Delete this giftee"
+      "delete" : "Eliminar este beneficiario"
     },
     "lists" : {
       "back" : "Regresa",
-      "giftLists" : "Gift Lists",
-      "giftee_delete_error" : "Couldn't delete the giftee.",
-      "giftee_update_error" : "Couldn't update the giftee.",
-      "saved_changes" : "Changes were saved.",
-      "title" : "Your Gift Lists",
+      "giftLists" : "Listas de Regalos",
+      "giftee_delete_error" : "No se pudo eliminar el regalo.",
+      "giftee_update_error" : "No se pudo actualizar el regalo.",
+      "saved_changes" : "Cambios no guardados",
+      "title" : "Tus Listas de Regalos",
       "unsaved_changes" : "Cambios no guardados"
     },
     "newGiftCard" : {
-      "awesome_gift_list" : "my awesome gift list...",
+      "awesome_gift_list" : "mi impresionante lista de regalos...",
       "create_new_btn" : "Crear nueva lista",
-      "create_new_title" : "Create new gift list!",
-      "error_logged_users_only" : "Only logged in users can create new git lists!",
-      "name_required" : "The name is required!"
+      "create_new_title" : "¡Crea una nueva lista de regalos!",
+      "error_logged_users_only" : "¡Solo los usuarios conectados pueden crear nuevas listas de regalo!",
+      "name_required" : "¡El nombre es obligatorio!"
     },
     "newGifteeForm" : {
-      "create_error" : "New giftee coudn't be created.",
+      "create_error" : "No se creará un nuevo regalo.",
       "create_new" : "Crear nuevo",
-      "name_required" : "The name is required!",
-      "new_giftee" : "New Giftee"
+      "name_required" : "¡El nombre es obligatorio!",
+      "new_giftee" : "Nuevo Regalo"
     },
     "unsaved_changes" : "Cambios sin guardar"
   }

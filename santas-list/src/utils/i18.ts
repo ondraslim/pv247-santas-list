@@ -4,9 +4,14 @@ import { initReactI18next } from 'react-i18next';
 import en from "../localization/en";
 import es from "../localization/es";
 import fr from "../localization/fr";
+import cs from "../localization/cs";
+import de from "../localization/de";
+import it from "../localization/it";
+import pt from "../localization/pt";
+import ru from "../localization/ru";
 
 const resources = {
-    en, es, fr
+    en, es, fr, cs, de, it, pt, ru
 }
 
 i18n
