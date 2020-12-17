@@ -1,5 +1,5 @@
 import { FormControl, Grid, IconButton, Input, InputAdornment, InputLabel, Tooltip } from "@material-ui/core";
-import React, { FC, useEffect, useState, } from "react";
+import React, { FC, useState, } from "react";
 import CardGiftcardRoundedIcon from '@material-ui/icons/CardGiftcardRounded';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { Gift } from "../data/DataTypes";
@@ -8,7 +8,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 
 import AddIcon from '@material-ui/icons/Add';
-import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import CloseIcon from '@material-ui/icons/Close';
@@ -36,25 +35,25 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
- /* const item5: Item = { title: "title 5", imgLink: "https://i.ibb.co/94GvWcr/insights-Icon.png", link: "https://google.com" };
-  const item6: Item = { title: "title 6", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
-  const item4: Item = { title: "title 4", imgLink: "https://i.ibb.co/94GvWcr/insights-Icon.png", link: "https://google.com" };
-  const item1: Item = { title: "title 1", imgLink: "https://i.ibb.co/94GvWcr/insights-Icon.png", link: "https://google.com" };
-  const item2: Item = { title: "title 2", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
-  const item3: Item = { title: "title 3", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
-  const item7: Item = { title: "title 7", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
-  const item8: Item = { title: "title 8", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };*/
-
-  const [open, setOpen] = React.useState(false);
-  const [searchName, setSearch] = useState<string>("default");
-  const [gifts, setGifts] = useState<Item[]>([]);
-  const [giftItem, setGiftItem] = useState<Item | undefined>(undefined);
+  /* const item5: Item = { title: "title 5", imgLink: "https://i.ibb.co/94GvWcr/insights-Icon.png", link: "https://google.com" };
+   const item6: Item = { title: "title 6", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
+   const item4: Item = { title: "title 4", imgLink: "https://i.ibb.co/94GvWcr/insights-Icon.png", link: "https://google.com" };
+   const item1: Item = { title: "title 1", imgLink: "https://i.ibb.co/94GvWcr/insights-Icon.png", link: "https://google.com" };
+   const item2: Item = { title: "title 2", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
+   const item3: Item = { title: "title 3", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
+   const item7: Item = { title: "title 7", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
+   const item8: Item = { title: "title 8", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };*/
+  
   const defaultImg: string = "https://i.ibb.co/2P0DfdP/Daco-4409798.png";
 
+  const [open, setOpen] = React.useState(false);
+  const [searchName, setSearch] = useState<string>("");
+  const [searchResult, setSearchResult] = useState<Item[]>([]);
 
-  const handleClickOpen = () => {
+  const handleSearchClicked = () => {
     searchOnline(searchName).then(response => {
-      setGifts(response.items); console.log(response.items);
+      setSearchResult(response.items);
+      console.log(response.items);
     });
 
     setOpen(true);
@@ -63,6 +62,15 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleSearchItemClicked = (item: Item) => {
+    onGiftChange({ ...gift, name: item.title, url: item.link, imgUrl: item.pagemap.cse_image[0]?.src ?? defaultImg });
+    setOpen(false);
+  }
+
+  const onGiftSearchReset = () => {
+    onGiftChange({ ...gift, url: "", imgUrl: "" });
+  }
 
   return (
     <>
@@ -112,48 +120,53 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
               </Tooltip>
             </Grid>
           </Grid>
-        </Grid>   
-        
-        {!giftItem ? (
-          <Grid item md={6} lg={6} xs={12}>
-            <Grid container>
-              <Grid item>
-                <FormControl>
-                  <InputLabel htmlFor="gift-name-input">Search</InputLabel>
-                  <Input
-                    id="gift-name-input"
-                    value={searchName}
-                    onChange={e => setSearch(e.target.value)}
-                  />
-                </FormControl>
-                <Tooltip title="Search">
-                  <IconButton onClick={() => {
-                    handleClickOpen()
-                  }}>
-                    <SearchIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-            </Grid>
-          </Grid>
-        ) :
-          (
+        </Grid>
+
+        {gift.url && gift.imgUrl
+          ? (
             <Grid item md={6} lg={6} xs={12}>
               <Grid container>
                 <Grid item>
                   <GridList cols={1} cellHeight={150}>
-                    <GridListTile key={giftItem.imgLink}>
-                      <img src={giftItem.pagemap.cse_image.length > 0 ? giftItem.pagemap.cse_image[0].src : defaultImg} alt={giftItem.title} onClick={() => window.open(giftItem.link, "_blank")}/>
+                    <GridListTile key={gift.imgUrl}>
+                      <img
+                        src={gift.imgUrl ? gift.imgUrl : defaultImg}
+                        alt={gift.name}
+                        onClick={() => window.open(gift.url, "_blank")}
+                        width="100%"/>
                       <GridListTileBar
-                        title={giftItem.title}
+                        title={gift.name}
                         actionIcon={
-                          <IconButton onClick={() => console.log("DELETE")} color='primary'>
+                          <IconButton onClick={onGiftSearchReset} color='primary'>
                             <DeleteIcon />
                           </IconButton>
                         }
                       />
                     </GridListTile>
                   </GridList>
+                </Grid>
+              </Grid>
+            </Grid>
+          ) :
+          (
+            <Grid item md={6} lg={6} xs={12}>
+              <Grid container>
+                <Grid item>
+                  <FormControl>
+                    <InputLabel htmlFor="gift-name-input">Search</InputLabel>
+                    <Input
+                      id="gift-name-input"
+                      value={searchName}
+                      onChange={e => setSearch(e.target.value)}
+                    />
+                  </FormControl>
+                  <Tooltip title="Search">
+                    <IconButton onClick={() => {
+                      handleSearchClicked()
+                    }}>
+                      <SearchIcon />
+                    </IconButton>
+                  </Tooltip>
                 </Grid>
               </Grid>
             </Grid>
@@ -169,7 +182,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
           </Toolbar>
         </AppBar>
         <GridList cellHeight={180}>
-          {gifts.map((tile) => (
+          {searchResult.map((tile) => (
             <GridListTile key={tile.title}>
               <img src={tile.pagemap.cse_image.length > 0 ? tile.pagemap.cse_image[0].src : defaultImg} alt={tile.title} />
               <GridListTileBar
@@ -179,7 +192,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
                     <IconButton onClick={() => window.open(tile.link, "_blank")} color='primary'>
                       <InfoIcon />
                     </IconButton>
-                    <IconButton onClick={() => { setGiftItem(tile); setOpen(false); }} color='primary'>
+                    <IconButton onClick={() => handleSearchItemClicked(tile)} color='primary'>
                       <AddIcon />
                     </IconButton>
                   </div>

@@ -109,7 +109,8 @@ const Lists: FC = () => {
                     if (item.id === selectedGiftList.id) {
                         updatedLists.splice(index, 1);
                     }
-                })
+                });
+                
                 updatedLists.push(updatedList);
                 setGiftLists([...updatedLists]);
                 setError("");                

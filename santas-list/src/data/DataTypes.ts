@@ -6,6 +6,7 @@ export type Gift = {
   name: string;
   price: number;
   url: string;
+  imgUrl: string;
 };
 
 export type Giftee = {
