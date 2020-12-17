@@ -14,6 +14,7 @@ const resources = {
     en, es, fr, cs, de, it, pt, ru
 }
 
+
 i18n
   .use(initReactI18next)
   .init({

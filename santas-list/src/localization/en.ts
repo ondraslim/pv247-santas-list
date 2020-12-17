@@ -22,7 +22,7 @@ const en = {
       "create_new_title": "Create new gift list!",
       "name_required": "The name is required!",
       "awesome_gift_list": "my awesome gift list...",
-      "error_logged_users_only": "Only logged in users can create new git lists!",
+      "error_logged_users_only": "Only logged in users can create new gift lists!",
     },
 
     "gifteeListItem": {

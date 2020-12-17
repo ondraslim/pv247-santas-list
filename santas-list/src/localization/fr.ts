@@ -20,7 +20,7 @@ const en = {
       "awesome_gift_list" : "mon Gift List génial...",
       "create_new_btn" : "Créer une nouvelle liste",
       "create_new_title" : "Créer une nouvelle Gift List!",
-      "error_logged_users_only" : "Only logged in users can create new git lists!",
+      "error_logged_users_only" : "Only logged in users can create new gift lists!",
       "name_required" : "Le nom est obligatoire !"
     },
     "newGifteeForm" : {
