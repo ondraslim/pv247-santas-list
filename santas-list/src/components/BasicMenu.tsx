@@ -16,6 +16,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Divider from '@material-ui/core/Divider';
 import UserContext from "../context/UserContext";
 import { signOut } from "../utils/firebase";
+import LocMenu from "./LocMenu";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -101,7 +102,9 @@ const BasicMenu: FC = () => {
                         </Button>
                         <Divider />
                         <MenuItem onClick={() => { handleClose(); signOut() }}>Logout</MenuItem>
-                    </Menu>
+                    </Menu>                    
+                        <LocMenu />
+                    
                 </>}
 
                 {user === null && <>
@@ -111,7 +114,7 @@ const BasicMenu: FC = () => {
                         justifyContent="center">
                         <Typography variant='h5'>
                             Santa's list
-                                </Typography>
+                        </Typography>
                     </Box>
                     <Button className={classes.menuButton}>
                         <Link className={classes.link} to="/login/"><b>Login</b></Link>

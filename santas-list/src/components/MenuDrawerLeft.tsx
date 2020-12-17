@@ -18,6 +18,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import UserContext from '../context/UserContext';
 import { signOut } from '../utils/firebase';
+import LocMenu from "./LocMenu";
 
 
 
@@ -74,7 +75,8 @@ const MenuDrawerLeft: FC = () => {
                     </IconButton>
                     <Typography variant="h5" noWrap>
                         Santa's list
-            </Typography>
+                    </Typography>                    
+                    <LocMenu/>
                 </Toolbar>
             </AppBar>
             <Drawer

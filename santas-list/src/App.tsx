@@ -27,6 +27,7 @@ import MenuDrawerLeft from "./components/MenuDrawerLeft";
 import BasicMenu from "./components/BasicMenu";
 
 
+
 const ourTheme = createMuiTheme({
     palette: {
         primary: {
@@ -106,7 +107,7 @@ function App() {
                     </Hidden>
                     <Hidden smUp>
                         <MenuDrawerLeft/>
-                    </Hidden>
+                    </Hidden>                
 
                     {user === null && <Redirect to='/login' />}
 
@@ -121,6 +122,7 @@ function App() {
                             </Switch>
                         </Container>
                     </main>
+                    
                 </Router>
             </UserContext.Provider>
         </MuiThemeProvider>
