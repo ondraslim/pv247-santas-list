@@ -50,7 +50,7 @@ export const getLists = async (user: User) => {
             let gifts: Array<Gift> = [];
             await d.ref.collection('gifts').get().then(async dc => {
               dc.forEach(g => {
-                let gft: Gift = { id: g.id, name: g.get("name"), url: g.get("url"), price: g.get("price") };
+                let gft: Gift = { id: g.id, name: g.get("name"), url: g.get("url"), price: g.get("price"), imgUrl: g.get("imgUrl") };
                 gifts.push(gft)
               })
             })
@@ -76,7 +76,7 @@ export const listStats = async (name: string, user: User) => {
   let min_name: string = "";
   let max_name: string = "";
   let total_count: number = 0;
-  
+
   return await giftListsCollection.where("name", "==", name).get().then(
     async snapshot => {
       await Promise.all(snapshot.docs.map(async doc => {
@@ -164,7 +164,8 @@ export const setGiftee = async (listName: string, giftee: Giftee, user: User) =>
                 d.ref.collection('gifts').doc(gift.id).set({
                   name: gift.name,
                   price: gift.price,
-                  url: gift.url
+                  url: gift.url,
+                  imgUrl: gift.imgUrl,
                 }, { merge: true });
               })
             }))

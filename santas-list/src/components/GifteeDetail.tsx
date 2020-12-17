@@ -32,7 +32,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
         setChange(9);
         setChangesSaved(false);
         let updatedGiftee = { ...giftee };
-        updatedGiftee.gifts.push({ id: uuidv4(), name: "", price: 0, url: "" });
+        updatedGiftee.gifts.push({ id: uuidv4(), name: "", price: 0, url: "", imgUrl: "" });
         setGiftee(updatedGiftee);
     }
 
