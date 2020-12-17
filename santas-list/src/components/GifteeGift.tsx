@@ -54,10 +54,12 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
 
   const handleClickOpen = () => {
     searchOnline(searchName).then(response => {
-      setGifts(response.items); console.log(response.items);
+      setGifts(response.items); 
+      console.log(response.items);
+      setOpen(true);
     });
 
-    setOpen(true);
+    
   };
 
   const handleClose = () => {
