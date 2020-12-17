@@ -139,9 +139,9 @@ export const deleteGiftee = async (gifteeId: string, giftList: GiftList) => {
 }
 
 // Delete given gift for given giftee within given gift list
-export const deleteGift = async (giftId: string, giftee: Giftee, giftListId: string) => {
+export const deleteGift = async (giftId: string, gifteeId: string, giftListId: string) => {
   await giftListsCollection.doc(giftListId).get().then(async doc => {
-    await doc.ref.collection('recipients').doc(giftee.id).get().then(async d => {
+    await doc.ref.collection('recipients').doc(gifteeId).get().then(async d => {
       await d.ref.collection('gifts').doc(giftId).delete();
     })
   });

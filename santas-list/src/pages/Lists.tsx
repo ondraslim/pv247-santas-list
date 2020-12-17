@@ -170,7 +170,7 @@ const Lists: FC = () => {
                     </Grid>
 
                     {selectedGiftee &&
-                        <GifteeDetail selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} setChange={setChange} setChangesSaved={setChangesSaved} />
+                        <GifteeDetail selectedGiftListId={selectedGiftList.id} selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} setChange={setChange} setChangesSaved={setChangesSaved} />
                     }
                 </Grid>
             }
