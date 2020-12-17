@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     },
     card: {
         boxShadow: '0 3px 5px 2px rgba(56, 56, 56, 0.83)',
-        maxWidth: '50vw',
+        maxWidth: '700px',
     },
 
     text: {
@@ -47,8 +47,6 @@ const Login: FC = () => {
     const { user } = useContext(UserContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-  
-    // Since firebase returns informative error messages we can show them directly
     const [error, setError] = useState<string>();
   
     const isLoggedIn = user !== null;
