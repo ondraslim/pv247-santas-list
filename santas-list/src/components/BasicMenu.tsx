@@ -1,4 +1,4 @@
-import React, { FC, useContext,} from "react";
+import React, { FC, useContext, } from "react";
 import {
     Link,
 } from "react-router-dom";
@@ -17,6 +17,7 @@ import Divider from '@material-ui/core/Divider';
 import UserContext from "../context/UserContext";
 import { signOut } from "../utils/firebase";
 import LocMenu from "./LocMenu";
+import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,9 +33,11 @@ const useStyles = makeStyles((theme) => ({
 
 const BasicMenu: FC = () => {
     const classes = useStyles();
-    const { user } = useContext(UserContext);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+
+    const { user } = useContext(UserContext);
+    const { t } = useTranslation();
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -49,30 +52,27 @@ const BasicMenu: FC = () => {
             <Toolbar>
                 {user && <>
                     <Button className={classes.menuButton}>
-                        <Link className={classes.link} to="/"><b>Home</b></Link>
+                        <Link className={classes.link} to="/"><b>{t('menu.home')}</b></Link>
                     </Button>
                 </>}
                 <Button className={classes.menuButton}>
-                    <Link className={classes.link} to="/about/"><b>About</b></Link>
+                    <Link className={classes.link} to="/about/"><b>{t('menu.about')}</b></Link>
                 </Button>
 
                 {user && <>
                     <Box display='flex' flexGrow={1}>
                         <Button className={classes.menuButton}>
-                            <Link className={classes.link} to="/list/"><b>Gift Lists</b></Link>
+                            <Link className={classes.link} to="/list/"><b>{t('menu.gift_lists')}</b></Link>
                         </Button>
                         <Box display="flex"
                             m='auto'
                             alignItems="center"
                             justifyContent="center">
                             <Typography variant="h5">
-                                Santa's list
-                                </Typography>
+                                {t('menu.app_name')}
+                            </Typography>
                         </Box>
                     </Box>
-                    {/*<Button className={classes.menuButton} onClick={signOut}>
-                                    <Link className={classes.link} to="/"><b>Logout</b></Link>
-                            </Button>*/}
                     <IconButton
                         aria-label="account of current user"
                         aria-controls="menu-appbar"
@@ -101,10 +101,10 @@ const BasicMenu: FC = () => {
                             {user.email}
                         </Button>
                         <Divider />
-                        <MenuItem onClick={() => { handleClose(); signOut() }}>Logout</MenuItem>
-                    </Menu>                    
-                        <LocMenu />
-                    
+                        <MenuItem onClick={() => { handleClose(); signOut() }}>{t('menu.logout')}</MenuItem>
+                    </Menu>
+                    <LocMenu />
+
                 </>}
 
                 {user === null && <>
@@ -113,14 +113,14 @@ const BasicMenu: FC = () => {
                         alignItems="center"
                         justifyContent="center">
                         <Typography variant='h5'>
-                            Santa's list
+                            {t('menu.app_name')}
                         </Typography>
                     </Box>
                     <Button className={classes.menuButton}>
-                        <Link className={classes.link} to="/login/"><b>Login</b></Link>
+                        <Link className={classes.link} to="/login/"><b>{t('menu.login')}</b></Link>
                     </Button>
                     <Button className={classes.menuButton}>
-                        <Link className={classes.link} to="/register/"><b>Register</b></Link>
+                        <Link className={classes.link} to="/register/"><b>{t('menu.register')}</b></Link>
                     </Button>
 
                 </>}

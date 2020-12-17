@@ -1,5 +1,38 @@
 const en = {
   "translation": {
+    "menu": {
+      "home": "Home",
+      "about": "About",
+      "gift_lists": "Gift Lists",
+      "app_name": "Santa's List",
+      "logout": "Logout",
+      "login": "Login",
+      "register": "Register",
+    },
+
+    "home": {
+      "loaging": "loading...",
+    },
+
+    "register": {
+      "register": "Register",
+      "email": "Email",
+      "password": "Password",
+      "password_conf": "Confirm password",
+      "already_registered": "Already registered?",
+      "sign_in": "Sign in",
+      "err_pswds_match": "Passwords do not match",
+    },
+
+    "login": {
+      "sign_in": "Sign in",
+      "login": "Login",
+      "email": "Email",
+      "password": "Password",
+      "new_user": "New user?",
+      "register": "Register here",
+    },
+
     "lists": {
       "unsaved_changes": "Unsaved changes",
       "saved_changes": "Changes were saved.",

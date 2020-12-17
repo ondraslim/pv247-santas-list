@@ -7,13 +7,18 @@ import React, { FC, useState, useContext, useMemo } from "react";
 import { statsForUser, listStats, setGiftee, setGiftList, getLists } from "../utils/firebase"
 import UserContext from "../context/UserContext"
 import { GiftListStats, UserStats, Gift, Giftee, GiftList } from "../data/DataTypes"
+import { useTranslation } from 'react-i18next';
+
+
 
 const Home: FC = () => {
     const [userStats, setUserStats] = useState<UserStats>({giftListCount: -1, gifteeCount:-1})
     const [giftListStats, setGiftListStats] = useState<GiftListStats>({gifteeCount: -1, maxCount: -1, minCount: -1, maxName: "", minName: "", avgCount: 0});
     const [chosenList, setChosenList] = useState<string>("Gyda's 23rd birthday");
-    const { user } = useContext(UserContext);
     const [giftLists, setGiftLists] = useState<GiftList[]>([]);
+
+    const { user } = useContext(UserContext);
+    const { t } = useTranslation();
 
     const g:Gift = {id: "1", name: "test gift", url: "testURL", price: 0}
     const gft: Giftee = {id: "1", name: "test person", note: "test note", budget: 10, gifts: []}
@@ -46,10 +51,6 @@ const Home: FC = () => {
                      
         } 
     },[chosenList, user])
-   
-   
-   
-
     
     return (
         <div className="App">
@@ -64,7 +65,7 @@ const Home: FC = () => {
             </Grid>
             {(user === undefined || userStats.gifteeCount === -1) ? (
                 <p>
-                    Loading...
+                    {t('home.loading')}
                 </p>
             ) : (
                 <p>

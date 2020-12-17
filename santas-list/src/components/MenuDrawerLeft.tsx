@@ -19,6 +19,7 @@ import red from '@material-ui/core/colors/red';
 import UserContext from '../context/UserContext';
 import { signOut } from '../utils/firebase';
 import LocMenu from "./LocMenu";
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -52,6 +53,7 @@ const MenuDrawerLeft: FC = () => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const { user } = useContext(UserContext);
+    const { t } = useTranslation();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -74,9 +76,9 @@ const MenuDrawerLeft: FC = () => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h5" noWrap>
-                        Santa's list
-                    </Typography>                    
-                    <LocMenu/>
+                        {t('menu.app_name')}
+                    </Typography>
+                    <LocMenu />
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -101,24 +103,24 @@ const MenuDrawerLeft: FC = () => {
                         <Divider />
                         <ListItem button onClick={handleDrawerClose} divider alignItems='center'>
                             <Button fullWidth>
-                                <Link className={classes.link} to="/"><b>Home</b></Link>
+                                <Link className={classes.link} to="/"><b>{t('menu.home')}</b></Link>
                             </Button>
                         </ListItem>
                         <ListItem button onClick={handleDrawerClose} divider>
                             <Button fullWidth>
-                                <Link className={classes.link} to="/about/"><b>About</b></Link>
+                                <Link className={classes.link} to="/about/"><b>{t('menu.about')}</b></Link>
                             </Button>
                         </ListItem>
                         <ListItem button onClick={handleDrawerClose}>
                             <Button fullWidth>
-                                <Link className={classes.link} to="/list/"><b>Gift Lists</b></Link>
+                                <Link className={classes.link} to="/list/"><b>{t('menu.gift_lists')}</b></Link>
                             </Button>
                         </ListItem>
                         <Divider />
                         <Divider />
                         <ListItem button onClick={() => { handleDrawerClose(); signOut() }}>
                             <Button fullWidth>
-                                <Link className={classes.link} to="/login/"><b>Logout</b></Link>
+                                <Link className={classes.link} to="/login/"><b>{t('menu.logout')}</b></Link>
                             </Button>
                         </ListItem>
                         <Divider />
@@ -126,18 +128,18 @@ const MenuDrawerLeft: FC = () => {
                     {user == null && <>
                         <ListItem button key={-1} onClick={handleDrawerClose} divider>
                             <Button fullWidth>
-                                <Link className={classes.link} to="/about/"><b>About</b></Link>
+                                <Link className={classes.link} to="/about/"><b>{t('menu.about')}</b></Link>
                             </Button>
                         </ListItem>
                         <Divider />
                         <ListItem button onClick={handleDrawerClose} divider>
                             <Button fullWidth>
-                                <Link className={classes.link} to="/login/"><b>Login</b></Link>
+                                <Link className={classes.link} to="/login/"><b>{t('menu.login')}</b></Link>
                             </Button>
                         </ListItem>
                         <ListItem button onClick={handleDrawerClose} divider>
                             <Button fullWidth>
-                                <Link className={classes.link} to="/register/"><b>Register</b></Link>
+                                <Link className={classes.link} to="/register/"><b>{t('menu.register')}</b></Link>
                             </Button>
                         </ListItem>
                     </>}
