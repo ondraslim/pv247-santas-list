@@ -149,7 +149,7 @@ const Lists: FC = () => {
 
             {
                 selectedGiftList &&
-                <Grid item container spacing={5}>
+                <Grid item xs={12} container spacing={5}>
                     <Grid item xs={12} md={6}>
                         <Typography variant="h5">
                             <Tooltip title="Go back">
@@ -177,7 +177,7 @@ const Lists: FC = () => {
 
             {
                 !selectedGiftList &&
-                <Grid item container direction='row' spacing={5}>
+                <Grid item xs={12} container direction='row' spacing={5}>
                     <Grid item xs={12} sm={6} md={4} lg={3}>
                         <NewGiftCard giftLists={giftLists} setGiftListsState={setGiftLists} />
                     </Grid>
