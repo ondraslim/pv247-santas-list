@@ -139,7 +139,7 @@ const Lists: FC = () => {
 
     const title = selectedGiftList?.name ?? "Your Gift Lists";
     return (
-        <Grid container spacing={5} xs={12}>
+        <Grid container spacing={2} xs={12}>
             <Grid item xs={12}>
                 <Typography variant="h3" align="center">{title}</Typography>
             </Grid>

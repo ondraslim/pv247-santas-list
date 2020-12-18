@@ -7,7 +7,6 @@ import NoteIcon from '@material-ui/icons/Note';
 import GifteeGift from "./GifteeGift";
 import { v4 as uuidv4 } from 'uuid';
 import Alert from '@material-ui/lab/Alert';
-import { searchOnline } from "../utils/api";
 import { deleteGift } from "../utils/firebase";
 
 
@@ -91,7 +90,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
     };
 
     return (
-        <Grid item container xs={12} md={6} spacing={5}>
+        <Grid item container xs={12} md={6} spacing={3}>
             <Grid item md={12}>
                 <Typography variant="h5" align="center">Detail</Typography>
             </Grid>
