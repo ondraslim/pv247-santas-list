@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     },
     card: {
         boxShadow: '0 3px 5px 2px rgba(56, 56, 56, 0.83)',
-        maxWidth: '50vw'
+        maxWidth: '700px',
     },
 
     text: {

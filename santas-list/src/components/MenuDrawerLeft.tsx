@@ -29,11 +29,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 
 
-const useStyles = makeStyles((theme) => ({
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-
+const useStyles = makeStyles({
     link: {
         textDecoration: "none",
         color: red[900],
@@ -46,15 +42,19 @@ const useStyles = makeStyles((theme) => ({
 
     button: {
         borderRadius: '2px',
-        backgroundColor: 'lightgrey',
+        backgroundColor: 'darkgrey',
+        '&:hover': {
+            backgroundColor: 'white',
+        }
     },
 
     list: {
-        backgroundColor: 'primary',
-        color: 'green',
+        backgroundColor: 'white',
+        borderStyle: 'none',
+        boxShadow: 'none',
     }
 
-}));
+});
 
 
 const MenuDrawerLeft: FC = () => {
@@ -99,7 +99,7 @@ const MenuDrawerLeft: FC = () => {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>
+                <List className={classes.list}>
                     {user && <>
                         <ListItem alignItems='flex-start'>
                             <Button disabled style={{ color: "darkgrey" }}>
@@ -107,46 +107,45 @@ const MenuDrawerLeft: FC = () => {
                             </Button>
                         </ListItem>
                         <Divider />
-                        <ListItem button onClick={handleDrawerClose} divider alignItems='center'>
-                        <ListItemIcon> <HomeIcon/></ListItemIcon>
-                                <Link className={classes.link} to="/"><b>Home</b></Link>
-                            
+                        <ListItem divider alignItems='center'>
+                            <ListItemIcon> <HomeIcon /></ListItemIcon>
+                            <Link className={classes.link} to="/" onClick={handleDrawerClose}><b>Home</b></Link>
+
                         </ListItem>
-                        <ListItem button onClick={handleDrawerClose} divider>
-                            <ListItemIcon> <InfoIcon/> </ListItemIcon>
-                                <Link className={classes.link} to="/about/"><b>About</b></Link>
-                            
+                        <ListItem divider>
+                            <ListItemIcon> <InfoIcon /> </ListItemIcon>
+                            <Link className={classes.link} to="/about/" onClick={handleDrawerClose}><b>About</b></Link>
+
                         </ListItem>
-                        <ListItem button onClick={handleDrawerClose}>
+                        <ListItem >
                             <ListItemIcon> <CardGiftcardIcon></CardGiftcardIcon>  </ListItemIcon>
-                                <Link className={classes.link} to="/list/"><b>Gift Lists</b></Link>
-                        
+                            <Link className={classes.link} to="/list/" onClick={handleDrawerClose} ><b>Gift Lists</b></Link>
+
                         </ListItem>
                         <Divider />
                         <Divider />
-                        <ListItem button onClick={() => { handleDrawerClose(); signOut() }}>
+                        <ListItem >
                             <ListItemIcon> <ExitToAppIcon /> </ListItemIcon>
-                                <Link className={classes.link} to="/login/"><b>Logout</b></Link>
-                            
+                            <Link className={classes.link} to="/login/" onClick={() => { handleDrawerClose(); signOut() }}><b>Logout</b></Link>
+
                         </ListItem>
                         <Divider />
                     </>}
                     {user == null && <>
-                        <ListItem button divider>
-                            <ListItemIcon> <InfoIcon/> </ListItemIcon>
-                                <Link className={classes.link} to="/about/" onClick={handleDrawerClose}><b>About</b></Link>
-                            
+                        <ListItem divider>
+                            <ListItemIcon> <InfoIcon /> </ListItemIcon>
+                            <Link className={classes.link} to="/about/" onClick={handleDrawerClose}><b>About</b></Link>
+
                         </ListItem>
                         <Divider />
-                        <ListItem button onClick={handleDrawerClose} divider>
+                        <ListItem  divider>
                             <ListItemIcon> <AccountCircleIcon /> </ListItemIcon>
-                                <Link className={classes.link} to="/login/"><b>Login</b></Link>
-                        
+                            <Link className={classes.link} to="/login/" onClick={handleDrawerClose}><b>Login</b></Link>
+
                         </ListItem>
-                        <ListItem button onClick={handleDrawerClose} divider>
+                        <ListItem divider>
                             <ListItemIcon> <PersonAddIcon /> </ListItemIcon>
-                                <Link className={classes.link} to="/register/"><b>Register</b></Link>
-                            
+                            <Link className={classes.link} to="/register/" onClick={handleDrawerClose}><b>Register</b></Link>
                         </ListItem>
                     </>}
                 </List>
