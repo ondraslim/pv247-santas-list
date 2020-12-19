@@ -25,6 +25,8 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import Box from '@material-ui/core/Box';
+
 import LocMenu from "./LocMenu";
 import { useTranslation } from 'react-i18next';
 
@@ -77,17 +79,19 @@ const MenuDrawerLeft: FC = () => {
         <div>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h4" noWrap>
-                        {t('menu.app_name')}
-                    </Typography>
+                    <Box display='flex' flexGrow={1}>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h4" style={{marginTop: '8px'}}>
+                            {t('menu.app_name')}
+                        </Typography>
+                    </Box>
                     <LocMenu />
                 </Toolbar>
             </AppBar>

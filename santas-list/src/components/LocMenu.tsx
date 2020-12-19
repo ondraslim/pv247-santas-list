@@ -20,6 +20,7 @@ const LocMenu: FC = () => {
     const changeLanguage = (lng: string) => {
         setLanguage(lng)
         i18n.changeLanguage(lng);
+        setAnchorEl(null);
     }
 
     return (
