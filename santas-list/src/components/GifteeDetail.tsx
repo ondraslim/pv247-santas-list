@@ -88,7 +88,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
 
     return (
         <Grid item container xs={12} md={6} spacing={5}>
-            <Grid item md={12}>
+            <Grid item xs={12} md={12}>
                 <Typography variant="h5" align="center">Detail</Typography>
             </Grid>
             {error && <Grid item xs={12}><Alert severity="error">{error}</Alert></Grid>}
@@ -158,7 +158,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
             </Grid>
             <Grid item container xs={12}>
                 <Grid item xs={12}>
-                    <Typography variant="h4">Gifts</Typography>
+                    <Typography variant="h5" align="center">Gifts</Typography>
                 </Grid>
 
                 {giftsError && <Grid item xs={12}><Alert severity="error">{giftsError}</Alert></Grid>}
@@ -168,7 +168,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
                         <GifteeGift key={g.id} gift={g} onGiftChange={onGiftUpdate} onGiftDelete={onGiftDelete}/>
                     ))}
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                     <Box m="2rem"></Box>
                 </Grid>
                 <Grid item xs={12}>

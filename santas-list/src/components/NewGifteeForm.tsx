@@ -79,7 +79,7 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
                         }}
                     />
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                     <Box m="2rem"></Box>
                 </Grid>
                 <Grid item xs={12}>
