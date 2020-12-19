@@ -91,6 +91,8 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
         onSaveChanges(giftee);
     };
 
+    const giftsSum = giftee.gifts.reduce((price_sum, current) => price_sum + (current.price || 0), 0);
+
     return (
         <Grid item container xs={12} md={6} spacing={3}>
             <Grid item xs={12} md={12}>
@@ -169,6 +171,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
                 </Grid>
 
                 {giftsError && <Grid item xs={12}><Alert severity="error">{giftsError}</Alert></Grid>}
+                {giftsSum > giftee.budget && <Grid item xs={12}><Alert severity="warning">{t('gifteeDetail.error_budget_exceeded')}</Alert></Grid>}
 
                 <Grid item container xs={12}>
                     {giftee.gifts && giftee.gifts.map(g => (

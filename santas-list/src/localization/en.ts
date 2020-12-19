@@ -98,6 +98,7 @@ const en = {
       "error_name": "Giftee's name is required.",
       "error_gift_name": "Gifts must have name specified.",
       "error_gift_price": "Gifts cannot have negative price.",
+      "error_budget_exceeded": "The budget was exceeded!",
     },
 
     "gifteeGift": {
