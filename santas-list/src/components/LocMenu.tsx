@@ -1,10 +1,8 @@
 import React, { FC, useState, } from "react";
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import i18n from '../utils/i18';
+import i18n, { languages, flags } from '../utils/i18';
 import { withTranslation } from 'react-i18next';
-import { Typography } from "@material-ui/core";
+import Flag from 'react-world-flags';
+import { Typography, Button, Menu, MenuItem, ListItemIcon } from "@material-ui/core";
 
 
 const LocMenu: FC = () => {
@@ -39,14 +37,18 @@ const LocMenu: FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => changeLanguage("en")}>EN</MenuItem>
-        <MenuItem onClick={() => changeLanguage("cs")}>CS</MenuItem>
-        <MenuItem onClick={() => changeLanguage("de")}>DE</MenuItem>
-        <MenuItem onClick={() => changeLanguage("es")}>ES</MenuItem>
-        <MenuItem onClick={() => changeLanguage("fr")}>FR</MenuItem>
-        <MenuItem onClick={() => changeLanguage("it")}>IT</MenuItem>
-        <MenuItem onClick={() => changeLanguage("pt")}>PT</MenuItem>
-        <MenuItem onClick={() => changeLanguage("ru")}>RU</MenuItem>
+          {languages.length === 0 ? (
+               <MenuItem />
+          ) : (
+            languages.map((item, index) => (
+                <MenuItem onClick={() => changeLanguage(item)}>
+                    <ListItemIcon>
+                        <Flag code ={flags[index]} height="20" width="30"/>
+                    </ListItemIcon>
+                    {item}
+                </MenuItem>
+              ))
+          )}                    
       </Menu>
         </div>
     )   

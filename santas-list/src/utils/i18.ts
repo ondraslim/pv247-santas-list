@@ -15,6 +15,14 @@ const resources = {
     en, es, fr, cs, de, it, pt, ru
 }
 
+export const languages: Array<string> = [
+  "EN", "ES", "FR", "CS", "DE", "IT", "PT", "RU"
+];
+
+export const flags: Array<string> = [
+  "gb", "es", "fr", "cz", "de", "it", "pt", "ru"
+]
+
 
 i18n
   .use(initReactI18next)
