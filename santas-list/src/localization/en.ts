@@ -29,7 +29,7 @@ const en = {
 
     "userStats": {
       "description": "Check your overall statistics!",
-      "giftlists_count": "Number of gist lists",
+      "giftlists_count": "Number of gift lists",
       "giftees_count": "Number of giftees",
     },
 
