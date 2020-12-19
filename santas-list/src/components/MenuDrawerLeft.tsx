@@ -85,7 +85,7 @@ const MenuDrawerLeft: FC = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h5" noWrap>
+                    <Typography variant="h4" noWrap>
                         {t('menu.app_name')}
                     </Typography>
                     <LocMenu />

@@ -12,14 +12,14 @@ export type Giftee = {
   note: string;
   budget: number;
   gifts: Gift[];
-}
+};
 
 export type GiftList = {
   id: string;
   name: string;
   user: string;
   recipients: Giftee[];   // TODO: rename to giftees
-}
+};
 
 export type GiftListStats = {
   gifteeCount: number;
@@ -28,9 +28,9 @@ export type GiftListStats = {
   maxCount: number;
   maxName: string;
   avgCount: number;
-}
+};
 
 export type UserStats = {
   giftListCount: number;
   gifteeCount: number;
-}
+};

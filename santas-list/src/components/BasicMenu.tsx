@@ -68,7 +68,7 @@ const BasicMenu: FC = () => {
                             m='auto'
                             alignItems="center"
                             justifyContent="center">
-                            <Typography variant="h5">
+                            <Typography variant="h4">
                                 {t('menu.app_name')}
                             </Typography>
                         </Box>
