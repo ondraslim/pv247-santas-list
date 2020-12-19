@@ -7,25 +7,10 @@
 * Michaela Horváthová
 * Ondřej Slimák
 
-### Routes
-#### About screen
-* Visible for all
-* Some text about the app
+### About application:
+Allows user to create and maintain gift lists. Each list can have number of assigned gift recipients, of whom each can have number of gifts assigned to them. Users can also make use of a search function to search for a gift online. 
 
-#### Register screen
-* Visible for unlogged
-* Enter username and password (twice for confirmation) text boxes and register button
-* Add new user to known user database
-
-#### Login screen
-* Visible for unlogged
-* Enter username and password text boxes and log in button
-* Check against known users and either log in or display wrong credentials message
-
-#### Home screen
-* Visible for logged
-* Personalized greeting
-* Overview statistics: nr. of entries on list, total cash intended to spend (...TODO more...)
-
-#### List screen
-* List of people (?maybe names and after click unroll rest of info?)
+### Features:
+#### Statistics:
+* A screen with statistics is availabe for every logged in user
+*
