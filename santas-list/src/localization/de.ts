@@ -1,11 +1,20 @@
 const en = {
   "translation" : {
+    "giftCard" : {
+      "delete" : "Lösche diese Liste",
+      "name" : "Name",
+      "price" : "Preis"
+    },
     "gifteeGift" : {
+      "delete" : "Lösche dieses Geschenk",
       "name" : "Name",
       "price" : "Preis"
     },
     "gifteeListItem" : {
       "delete" : "Dieser Beschenkt löschen"
+    },
+    "home" : {
+      "loaging" : "Wird geladen…"
     },
     "lists" : {
       "back" : "Zurück",
@@ -15,6 +24,23 @@ const en = {
       "saved_changes" : "Änderungen wurden gespeichert.",
       "title" : "Deine Geschenklisten",
       "unsaved_changes" : "Ungespeicherte Änderungen"
+    },
+    "login" : {
+      "email" : "E-Mail",
+      "login" : "Anmelden",
+      "new_user" : "Neuer Benutzer",
+      "password" : "Passwort",
+      "register" : "Registrieren Sie sich",
+      "sign_in" : "Anmelden"
+    },
+    "menu" : {
+      "about" : "Über",
+      "app_name" : "Liste des Weihnachtsmanns",
+      "gift_lists" : "Geschenklisten",
+      "home" : "Startseite",
+      "login" : "Anmelden",
+      "logout" : "Abmelden",
+      "register" : "Registrieren"
     },
     "newGiftCard" : {
       "awesome_gift_list" : "meine tolle Geschenkliste...",
@@ -28,6 +54,15 @@ const en = {
       "create_new" : "Neu erstellen",
       "name_required" : "Der Name ist erforderlich!",
       "new_giftee" : "Neuer Schenker"
+    },
+    "register" : {
+      "already_registered" : "Bereits registriert?",
+      "email" : "E-Mail",
+      "err_pswds_match" : "Passwörter stimmen nicht überein",
+      "password" : "Passwort",
+      "password_conf" : "Bestätige Passwort",
+      "register" : "Registrieren",
+      "sign_in" : "Anmelden"
     },
     "unsaved_changes" : "Ungespeicherte Änderungen"
   }

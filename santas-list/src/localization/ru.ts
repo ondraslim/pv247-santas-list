@@ -1,11 +1,20 @@
 const en = {
   "translation" : {
+    "giftCard" : {
+      "delete" : "Удалить этот список",
+      "name" : "Имя",
+      "price" : "Цена"
+    },
     "gifteeGift" : {
+      "delete" : "Удалить этот подарок",
       "name" : "Имя",
       "price" : "Цена"
     },
     "gifteeListItem" : {
       "delete" : "Удалить этого получа́тель"
+    },
+    "home" : {
+      "loaging" : "Загрузка..."
     },
     "lists" : {
       "back" : "Назад",
@@ -15,6 +24,23 @@ const en = {
       "saved_changes" : "Изменения были сохранены.",
       "title" : "Ваши списки подарков",
       "unsaved_changes" : "Несохранённые изменения"
+    },
+    "login" : {
+      "email" : "Почта",
+      "login" : "Логин",
+      "new_user" : "Новый пользователь?",
+      "password" : "Пароль",
+      "register" : "Зарегистрироваться здесь",
+      "sign_in" : "Войти"
+    },
+    "menu" : {
+      "about" : "О программе",
+      "app_name" : "Список Деда Мороза",
+      "gift_lists" : "Списки подарков",
+      "home" : "Главная",
+      "login" : "Логин",
+      "logout" : "Выход",
+      "register" : "Зарегистрироваться"
     },
     "newGiftCard" : {
       "awesome_gift_list" : "мой удивительный список подарков...",
@@ -28,6 +54,15 @@ const en = {
       "create_new" : "Создать",
       "name_required" : "Имя обязательно!",
       "new_giftee" : "Новый получа́тель"
+    },
+    "register" : {
+      "already_registered" : "Уже зарегистрирован?",
+      "email" : "Почта",
+      "err_pswds_match" : "Пароли не совпадают",
+      "password" : "Пароль",
+      "password_conf" : "Повторить пароль",
+      "register" : "Зарегистрироваться",
+      "sign_in" : "Войти"
     },
     "unsaved_changes" : "Несохранённые изменения"
   }

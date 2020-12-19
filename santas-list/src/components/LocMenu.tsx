@@ -1,5 +1,5 @@
 import React, { FC, useState, } from "react";
-import i18n, { languages, flags } from '../utils/i18';
+import i18n, { languages, languageLabels, flags } from '../utils/i18';
 import { withTranslation } from 'react-i18next';
 import Flag from 'react-world-flags';
 import { Typography, Button, Menu, MenuItem, ListItemIcon } from "@material-ui/core";
@@ -45,7 +45,7 @@ const LocMenu: FC = () => {
                     <ListItemIcon>
                         <Flag code ={flags[index]} height="20" width="30"/>
                     </ListItemIcon>
-                    {item}
+                    {languageLabels[index]}
                 </MenuItem>
               ))
           )}                    
