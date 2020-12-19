@@ -4,7 +4,7 @@ import CardGiftcardRoundedIcon from '@material-ui/icons/CardGiftcardRounded';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { Gift } from "../data/DataTypes";
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import { useTranslation } from 'react-i18next';
 
 
 type Props = {
@@ -15,12 +15,14 @@ type Props = {
 
 
 const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
+  const { t } = useTranslation();
+
     return (
     <>
       <Grid item container xs={12} justify="space-between">
         <Grid item xs={12} md={6}>
           <FormControl>
-            <InputLabel htmlFor="gift-name-input">Name</InputLabel>
+              <InputLabel htmlFor="gift-name-input">{t('gifteeGift.name')}</InputLabel>
             <Input
               id="gift-name-input"
               value={gift.name}
@@ -37,7 +39,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <FormControl variant="filled">
-            <InputLabel htmlFor="gift-price-adornment">Price</InputLabel>
+            <InputLabel htmlFor="gift-price-adornment">{t('gifteeGift.name')}</InputLabel>
             <Input
               id="gift-price-adornment"
               type="number"
@@ -51,7 +53,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
               }
             />
           </FormControl>
-          <Tooltip title="Delete this gift">
+          <Tooltip title={t('gifteeGift.delete').toString()}>
             <IconButton onClick={() => {
               onGiftDelete(gift.id)}}>
               <DeleteIcon />

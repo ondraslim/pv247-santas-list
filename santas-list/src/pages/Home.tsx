@@ -10,7 +10,7 @@ import UserStatsBox from "../components/userStats";
 import ListStatsBox from "../components/listStats"
 import { UserStats, GiftList } from "../data/DataTypes";
 import { makeStyles } from '@material-ui/styles';
-
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
     app: {
@@ -34,18 +34,20 @@ const useStyles = makeStyles({
 
 const Home: FC = () => {
     const classes = useStyles();
-    const [userStats, setUserStats] = useState<UserStats>({ giftListCount: -1, gifteeCount: -1 })
-    const { user } = useContext(UserContext);
+    const [userStats, setUserStats] = useState<UserStats>({ giftListCount: -1, gifteeCount: -1 });
     const [giftLists, setGiftLists] = useState<GiftList[]>([]);
+
+    const { user } = useContext(UserContext);
+    const { t } = useTranslation();
 
     useMemo(() => {
         if (user?.email) {
             statsForUser(user).then(val => {
                 setUserStats(val)
-            })
+            });
             getLists(user).then(val => {
                 setGiftLists(val);
-            })
+            });
         }
     }, [user])
 
@@ -55,7 +57,7 @@ const Home: FC = () => {
                 <Grid container direction="column" style={{ margin: '5px' }}>
                     <Grid item xs={12}>
                         <Typography align="center" color='primary' variant="h5">
-                            <CircularProgress /> Loading...
+                            <CircularProgress /> {t('home.loading')}
                         </Typography>
                     </Grid>
                 </Grid>

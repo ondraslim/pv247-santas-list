@@ -17,6 +17,8 @@ import TextField from '@material-ui/core/TextField';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { signIn } from '../utils/firebase';
 import UserContext from '../context/UserContext';
+import { useTranslation } from 'react-i18next';
+
 
 const useStyles = makeStyles({
     app: {
@@ -38,33 +40,38 @@ const useStyles = makeStyles({
     button: {
         borderRadius: '12px',
         flex: '1',
-    
+
     }
 });
 
 const Login: FC = () => {
     const classes = useStyles();
-    const { user } = useContext(UserContext);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    // Since firebase returns informative error messages we can show them directly
     const [error, setError] = useState<string>();
-  
+
+    const { user } = useContext(UserContext);
+    const { t } = useTranslation();
+
     const isLoggedIn = user !== null;
-  
+
     if (isLoggedIn) {
-      return <Redirect to='/' />;
+        return <Redirect to='/' />;
     }
 
     return (
         <Grid container className={classes.app}>
             <Card className={classes.card}>
                 <CardContent>
-                    <AccountBoxIcon style={{ fontSize: '60' }}/>
+                    <AccountBoxIcon style={{ fontSize: '60' }} />
                     <Typography variant='h5' component='h1'>
-                        Sign in
+                        {t('login.login')}
                     </Typography>
                     <TextField
-                        label='Email'
+                        label={t('login.email')}
                         type='email'
                         name='email'
                         fullWidth
@@ -76,7 +83,7 @@ const Login: FC = () => {
                         onChange={e => setEmail(e.target.value)}
                     />
                     <TextField
-                        label='Password'
+                        label={t('login.password')}
                         type='password'
                         name='password'
                         fullWidth
@@ -92,8 +99,8 @@ const Login: FC = () => {
                         </Typography>
                     )}
                     <Typography variant='subtitle2' align='left' paragraph>
-                        New user?{' '}
-                        <Link to="/register/">Register here</Link>
+                        {t('login.new_user')}{' '}
+                        <Link to="/register/">{t('login.register')}</Link>
                     </Typography>
                 </CardContent>
                 <CardActions className={classes.text}>
@@ -106,7 +113,7 @@ const Login: FC = () => {
                             signIn(email, password).catch(err => setError(err.message))
                         }
                     >
-                        Login
+                        {t('login.login')}
                     </Button>
                 </CardActions>
             </Card>

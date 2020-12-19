@@ -12,6 +12,7 @@ import { setGiftList } from "../utils/firebase";
 import { GiftList } from "../data/DataTypes";
 import { v4 as uuidv4 } from 'uuid';
 import UserContext from "../context/UserContext";
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -38,15 +39,16 @@ const NewGiftCard: FC<Props> = ({ giftLists, setGiftListsState }) => {
   const [newListingName, setNewListingName] = useState<string>("");
 
   const { user } = useContext(UserContext);
+  const { t } = useTranslation();
 
   const handleSubmit = async () => {
     if (!newListingName) {
-      setError("Gift list name is required!")
+      setError(t('newGiftCard.name_required'))
       return;
     }
 
     if (!user) {
-      setError("Only logged in users can create new git lists!")
+      setError(t('newGiftCard.error_logged_users_only'))
       return;
     }
 
@@ -72,7 +74,7 @@ const NewGiftCard: FC<Props> = ({ giftLists, setGiftListsState }) => {
 
   return (
     <Card className={classes.fullSizeCard}>
-      <CardHeader title="Create new gift list!" />
+      <CardHeader title={t('newGiftCard.create_new_title')} />
       <CardContent>
         <div style={{ textAlign: "center" }}>
           <CardGiftcardRoundedIcon />
@@ -82,7 +84,7 @@ const NewGiftCard: FC<Props> = ({ giftLists, setGiftListsState }) => {
           <TextField
             error={error ? true : false}
             id="listing-new-name"
-            placeholder="my awesome gift list..."
+            placeholder={t('newGiftCard.awesome_gift_list')}
             value={newListingName}
             onChange={e => {
               setNewListingName(e.target.value);
@@ -94,7 +96,7 @@ const NewGiftCard: FC<Props> = ({ giftLists, setGiftListsState }) => {
       </CardContent>
       <CardActions>
         <Button variant="text" color="primary" onClick={handleSubmit}>
-          Create new list
+          {t('newGiftCard.create_new_btn')}
         </Button>
       </CardActions>
     </Card>
