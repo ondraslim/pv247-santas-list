@@ -14,7 +14,7 @@ const en = {
       "delete" : "Supprimer ce giftee"
     },
     "home" : {
-      "loaging" : "Chargement..."
+      "loading" : "Chargement..."
     },
     "lists" : {
       "back" : "Retour",

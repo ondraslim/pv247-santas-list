@@ -21,6 +21,7 @@ import { GiftListStats, GiftList } from "../data/DataTypes"
 import { listStats } from "../utils/firebase";
 import UserContext from "../context/UserContext";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
     card: {
         borderWidth: '1px',
     },
-   
+
     list: {
         borderStyle: 'none',
         boxShadow: 'none',
@@ -40,11 +41,12 @@ type Props = {
     giftLists: GiftList[];
 };
 
-const ListStatsBox: FC<Props> = ({giftLists}) => { 
+const ListStatsBox: FC<Props> = ({ giftLists }) => {
     const [chosenList, setChosenList] = useState<string>("");
     const [giftListStats, setGiftListStats] = useState<GiftListStats>({ gifteeCount: -1, maxCount: -1, minCount: -1, maxName: "", minName: "", avgCount: -1 });
-    
+
     const { user } = useContext(UserContext);
+    const { t } = useTranslation();
 
     const classes = useStyles();
 
@@ -71,19 +73,19 @@ const ListStatsBox: FC<Props> = ({giftLists}) => {
     };
 
     return (
-         <Card style={{ minHeight: '40vh' }} className={classes.card}>
+        <Card style={{ minHeight: '40vh' }} className={classes.card}>
             <CardContent>
                 <Grid container >
                     <Grid item xs={12}>
                         <Grid container direction="row" >
                             <Grid item xs={6} sm={6} md={6}>
                                 <Typography variant='h5'>
-                                    Check your stats for chosen giftlist!
+                                    {t('listStats.description')}
                                 </Typography>
                             </Grid>
                             <Grid item xs={8} md={4} sm={4}>
                                 <FormControl>
-                                    <InputLabel>Choose giftlist</InputLabel>
+                                    <InputLabel>{t('listStats.select_list')}</InputLabel>
                                     <Select value={chosenList}
                                         onChange={e => setChosenList(e.target.value as string)}
                                         input={<Input />}>
@@ -99,93 +101,94 @@ const ListStatsBox: FC<Props> = ({giftLists}) => {
                     </Grid>
                     {(chosenList !== '') && <>
                         <Grid item xs={12}>
-                        {(giftListStats.gifteeCount === -1) ? (
-                            <Typography align="center" color='primary' variant="h5">
-                                <CircularProgress /> Loading...
-                            </Typography>
+                            {(giftListStats.gifteeCount === -1) ? (
+                                <Typography align="center" color='primary' variant="h5">
+                                    <CircularProgress /> {t('listStats.loading')}
+                                </Typography>
                             ) : (
-                            <Grid container direction="row">
-                                <Grid item xs={6} md={6} sm={6}>
-                                    <Grid container direction="column">
-                                        <Grid item>
-                                            <List className={classes.list}>
-                                                <ListItem>
-                                                    <Hidden only={'xs'}>
-                                                        <ListItemAvatar>
-                                                            <Avatar>
-                                                                <PeopleIcon />
-                                                            </Avatar>
-                                                        </ListItemAvatar>
-                                                    </Hidden>
-                                                    <ListItemText primary="Number of giftees" secondary={giftListStats.gifteeCount} />
-                                                </ListItem>
-                                                <ListItem>
-                                                    <Hidden only={'xs'}>
-                                                        <ListItemAvatar>
-                                                            <Avatar>
-                                                                <PersonIcon />
-                                                            </Avatar>
-                                                        </ListItemAvatar>
-                                                    </Hidden>
-                                                    <ListItemText primary="Low-budget giftee" secondary={giftListStats.minName} />
-                                                </ListItem>
-                                                <ListItem>
-                                                    <Hidden only={'xs'}>
-                                                        <ListItemAvatar>
-                                                            <Avatar>
-                                                                <ShowChartIcon />
-                                                            </Avatar>
-                                                        </ListItemAvatar>
-                                                    </Hidden>
-                                                    <ListItemText primary="The lowest budget" secondary={giftListStats.gifteeCount === 0 ? 0 : giftListStats.minCount} />
-                                                </ListItem>
-                                            </List>
+                                    <Grid container direction="row">
+                                        <Grid item xs={6} md={6} sm={6}>
+                                            <Grid container direction="column">
+                                                <Grid item>
+                                                    <List className={classes.list}>
+                                                        <ListItem>
+                                                            <Hidden only={'xs'}>
+                                                                <ListItemAvatar>
+                                                                    <Avatar>
+                                                                        <PeopleIcon />
+                                                                    </Avatar>
+                                                                </ListItemAvatar>
+                                                            </Hidden>
+                                                            <ListItemText primary={t('listStats.giftees_count')} secondary={giftListStats.gifteeCount} />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <Hidden only={'xs'}>
+                                                                <ListItemAvatar>
+                                                                    <Avatar>
+                                                                        <PersonIcon />
+                                                                    </Avatar>
+                                                                </ListItemAvatar>
+                                                            </Hidden>
+                                                            <ListItemText primary={t('listStats.low_budget_giftee')} secondary={giftListStats.minName} />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <Hidden only={'xs'}>
+                                                                <ListItemAvatar>
+                                                                    <Avatar>
+                                                                        <ShowChartIcon />
+                                                                    </Avatar>
+                                                                </ListItemAvatar>
+                                                            </Hidden>
+                                                            <ListItemText primary={t('listStats.lowest_budget_giftee')} secondary={giftListStats.gifteeCount === 0 ? 0 : giftListStats.minCount} />
+                                                        </ListItem>
+                                                    </List>
+                                                </Grid>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Grid item xs={6} md={6} sm={6}>
-                                    <Grid container direction="column">
-                                        <Grid item>
-                                            <List className={classes.list}>
-                                                <ListItem>
-                                                    <Hidden only={'xs'}>
-                                                        <ListItemAvatar>
-                                                            <Avatar>
-                                                                <ShowChartIcon />
-                                                            </Avatar>
-                                                        </ListItemAvatar>
-                                                    </Hidden>
-                                                    <ListItemText primary="Average budget" secondary={giftListStats.avgCount} />
-                                                </ListItem>
-                                                <ListItem>
-                                                    <Hidden only={'xs'}>
-                                                        <ListItemAvatar>
-                                                            <Avatar>
-                                                                <PersonIcon />
-                                                            </Avatar>
-                                                        </ListItemAvatar>
-                                                    </Hidden>
-                                                    <ListItemText primary="Big-budget giftee" secondary={giftListStats.maxName} />
-                                                </ListItem>
-                                                <ListItem>
-                                                    <Hidden only={'xs'}>
-                                                        <ListItemAvatar>
-                                                            <Avatar>
-                                                                <ShowChartIcon />
-                                                            </Avatar>
-                                                        </ListItemAvatar>
-                                                    </Hidden>
-                                                    <ListItemText primary="The highest budget" secondary={giftListStats.maxCount} />
-                                                </ListItem>
-                                            </List>
+                                        <Grid item xs={6} md={6} sm={6}>
+                                            <Grid container direction="column">
+                                                <Grid item>
+                                                    <List className={classes.list}>
+                                                        <ListItem>
+                                                            <Hidden only={'xs'}>
+                                                                <ListItemAvatar>
+                                                                    <Avatar>
+                                                                        <ShowChartIcon />
+                                                                    </Avatar>
+                                                                </ListItemAvatar>
+                                                            </Hidden>
+                                                            <ListItemText primary={t('listStats.avg_budget')} secondary={giftListStats.avgCount} />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <Hidden only={'xs'}>
+                                                                <ListItemAvatar>
+                                                                    <Avatar>
+                                                                        <PersonIcon />
+                                                                    </Avatar>
+                                                                </ListItemAvatar>
+                                                            </Hidden>
+                                                            <ListItemText primary={t('listStats.big_budget_giftee')} secondary={giftListStats.maxName} />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <Hidden only={'xs'}>
+                                                                <ListItemAvatar>
+                                                                    <Avatar>
+                                                                        <ShowChartIcon />
+                                                                    </Avatar>
+                                                                </ListItemAvatar>
+                                                            </Hidden>
+                                                            <ListItemText primary={t('listStats.highest_budget_giftee')} secondary={giftListStats.maxCount} />
+                                                        </ListItem>
+                                                    </List>
+                                                </Grid>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Grid>)}
+                                    </Grid>)}
                         </Grid>
                     </>}
                 </Grid>
             </CardContent>
-        </Card>)};
+        </Card>)
+};
 
 export default ListStatsBox;

@@ -14,7 +14,7 @@ const en = {
       "delete" : "Eliminar este beneficiario"
     },
     "home" : {
-      "loaging" : "Cargando…"
+      "loading" : "Cargando…"
     },
     "lists" : {
       "back" : "Regresa",

@@ -14,7 +14,7 @@ const en = {
       "delete" : "Odstráň tohto obdarovaného"
     },
     "home" : {
-      "loaging" : "loading..."
+      "loading" : "loading..."
     },
     "lists" : {
       "back" : "Späť",

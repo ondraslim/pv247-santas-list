@@ -6,7 +6,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
-import { Item } from "../utils/api";
+import { defaultImg, Item } from "../utils/api";
 
 
 type Props = {
@@ -16,7 +16,6 @@ type Props = {
 };
 
 const SearchDialogContent: FC<Props> = ({ searchResult, handleSearchItemClicked, columns }) => {
-    const defaultImg: string = "https://i.ibb.co/2P0DfdP/Daco-4409798.png";
 
     return (
         <GridList cellHeight={180} cols={columns}>

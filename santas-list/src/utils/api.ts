@@ -10,6 +10,8 @@ type Image = {
   src: string,
 };
 
+export const defaultImg: string = "https://i.ibb.co/2P0DfdP/Daco-4409798.png";
+
 export type Item = {
   title: string,
   link: string,

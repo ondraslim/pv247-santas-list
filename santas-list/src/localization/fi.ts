@@ -14,7 +14,7 @@ const en = {
       "delete" : "Poista tämä vastaanottajie"
     },
     "home" : {
-      "loaging" : "Ladataan…"
+      "loading" : "Ladataan…"
     },
     "lists" : {
       "back" : "Takaisin",

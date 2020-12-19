@@ -10,6 +10,7 @@ import CircularProgress from "@material-ui/core/CircularProgress/CircularProgres
 
 import SearchDialogContent from "./SearchDialogContent";
 import { Item } from "../utils/api";
+import { useTranslation } from 'react-i18next';
 
 
 type Props = {
@@ -21,6 +22,8 @@ type Props = {
 
 
 const SearchDialog: FC<Props> = ({ searchResult, open, handleClose, handleSearchItemClicked }) => {
+    const { t } = useTranslation();
+
     return (
         <Dialog open={open} onClose={handleClose}>
             <AppBar position="static" style={{ width: '45vw',}}>
@@ -34,7 +37,7 @@ const SearchDialog: FC<Props> = ({ searchResult, open, handleClose, handleSearch
                 <Grid container direction="column" style={{ width: '45vw', height: '50vh' }}>
                     <Grid item xs={12}>
                         <Typography align="center" color='primary' variant="h5">
-                            <CircularProgress /> Loading...
+                            <CircularProgress /> {t('searchDialog.loading')}
                     </Typography>
                     </Grid>
                 </Grid>

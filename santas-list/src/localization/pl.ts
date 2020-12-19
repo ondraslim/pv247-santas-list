@@ -14,7 +14,7 @@ const en = {
       "delete" : "Usuń ten odbiorcę"
     },
     "home" : {
-      "loaging" : "Ładowanie…"
+      "loading" : "Ładowanie…"
     },
     "lists" : {
       "back" : "Wróć",

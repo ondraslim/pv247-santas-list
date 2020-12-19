@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     card: {
         borderWidth: '1px',
     },
-   
+
     list: {
         borderStyle: 'none',
         boxShadow: 'none',
@@ -53,34 +53,36 @@ const Home: FC = () => {
 
     return (
         <div className="App">
-            {(user === undefined || userStats.gifteeCount === -1) ? (
-                <Grid container direction="column" style={{ margin: '5px' }}>
-                    <Grid item xs={12}>
-                        <Typography align="center" color='primary' variant="h5">
-                            <CircularProgress /> {t('home.loading')}
-                        </Typography>
-                    </Grid>
-                </Grid>
-            ) : (
-                <Grid container direction="column" style={{ margin: '5px' }}>
-                    <Grid item xs={12}>                        
-                        <br />
-                        <Typography variant="h3" align="center">
-                            Welcome<Hidden xsDown>, {user?.email}</Hidden> !
-                        </Typography>                        
-                    </Grid>
-                    <Grid container item xs={12} spacing={1} justify='flex-start' className={classes.app}>                            
-                        <Grid item xs container direction="column" spacing={2}>
-                            <Grid item>
-                                <UserStatsBox userStats={userStats}></UserStatsBox>
-                            </Grid>     
-                            <Grid item>
-                                <ListStatsBox giftLists={giftLists}></ListStatsBox>
-                                </Grid>                                 
+            {(user === undefined || userStats.gifteeCount === -1)
+                ? (
+                    <Grid container direction="column" style={{ margin: '5px' }}>
+                        <Grid item xs={12}>
+                            <Typography align="center" color='primary' variant="h5">
+                                <CircularProgress /> {t('home.loading')}
+                            </Typography>
                         </Grid>
                     </Grid>
-                </Grid>
-            )}
+                )
+                : (
+                    <Grid container direction="column" style={{ margin: '5px' }}>
+                        <Grid item xs={12}>
+                            <br />
+                            <Typography variant="h3" align="center">
+                                {t('home.welcome')}<Hidden xsDown>, {user?.email}</Hidden>!
+                        </Typography>
+                        </Grid>
+                        <Grid container item xs={12} spacing={1} justify='flex-start' className={classes.app}>
+                            <Grid item xs container direction="column" spacing={2}>
+                                <Grid item>
+                                    <UserStatsBox userStats={userStats}></UserStatsBox>
+                                </Grid>
+                                <Grid item>
+                                    <ListStatsBox giftLists={giftLists}></ListStatsBox>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                )}
         </div >
     );
 };

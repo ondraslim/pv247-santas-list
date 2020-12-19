@@ -10,9 +10,10 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import SearchIcon from '@material-ui/icons/Search';
 import { useTranslation } from 'react-i18next';
 
-import { Item, searchOnline } from "../utils/api";
+import { defaultImg, Item, searchOnline } from "../utils/api";
 import SearchDialog from "../components/SearchDialog";
 import { Gift } from "../data/DataTypes";
+import Alert from "@material-ui/lab/Alert";
 
 type Props = {
   gift: Gift;
@@ -21,21 +22,22 @@ type Props = {
 };
 
 const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
-  /* const item5: Item = { title: "title 5", imgLink: "https://i.ibb.co/94GvWcr/insights-Icon.png", link: "https://google.com" };
-   const item6: Item = { title: "title 6", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
-   const item4: Item = { title: "title 4", imgLink: "https://i.ibb.co/94GvWcr/insights-Icon.png", link: "https://google.com" };
-   const item1: Item = { title: "title 1", imgLink: "https://i.ibb.co/94GvWcr/insights-Icon.png", link: "https://google.com" };
-   const item2: Item = { title: "title 2", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
-   const item3: Item = { title: "title 3", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
-   const item7: Item = { title: "title 7", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };
-   const item8: Item = { title: "title 8", imgLink: "https://i.ibb.co/7S4LMvM/insight-Icon-LA.jpg", link: "https://google.com" };*/
-  const defaultImg: string = "https://i.ibb.co/2P0DfdP/Daco-4409798.png";
-
   const [open, setOpen] = React.useState(false);
   const [searchName, setSearch] = useState<string>("");
   const [searchResult, setSearchResult] = useState<Item[]>([]);
+  const [searchError, setSearchError] = useState<string>("");
+
+  const { t } = useTranslation();
+
 
   const handleSearchClicked = () => {
+    if (!searchName) {
+      setSearchError("gifteeGift.search_name_error");
+      return;
+    } else {
+      setSearchError("");
+    }
+
     searchOnline(searchName).then(response => {
       setSearchResult(response.items);
     });
@@ -55,13 +57,14 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
 
   const onGiftSearchReset = () => {
     onGiftChange({ ...gift, url: "", imgUrl: "" });
-    }
+  }
 
-  const { t } = useTranslation();
-
-    return (
+  return (
     <>
       <Grid container direction="row">
+        {searchError &&
+          <Grid item xs={12}><Alert severity="error">{searchError}</Alert></Grid>
+        }
         <Grid item xs={12} md={6} sm={6} lg={6}>
           <Grid container justify="space-between" direction="column">
             <Grid item >
@@ -83,7 +86,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
             </Grid>
             <Grid item>
               <FormControl variant="filled">
-                                <InputLabel htmlFor="gift-price-adornment">{t('gifteeGift.price')}</InputLabel>
+                <InputLabel htmlFor="gift-price-adornment">{t('gifteeGift.price')}</InputLabel>
                 <Input
                   id="gift-price-adornment"
                   type="number"
@@ -98,7 +101,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
                   }
                 />
               </FormControl>
-                <Tooltip title={t('gifteeGift.delete').toString()}>
+              <Tooltip title={t('gifteeGift.delete').toString()}>
                 <IconButton onClick={() => {
                   onGiftDelete(gift.id)
                 }}>
@@ -140,7 +143,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
               <Grid container>
                 <Grid item>
                   <FormControl>
-                    <InputLabel htmlFor="gift-name-input">Search</InputLabel>
+                    <InputLabel htmlFor="gift-name-input">{t('gifteeGift.search')}</InputLabel>
                     <Input
                       id="gift-name-input"
                       value={searchName}

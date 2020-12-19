@@ -8,7 +8,7 @@ import GifteeGift from "./GifteeGift";
 import { v4 as uuidv4 } from 'uuid';
 import Alert from '@material-ui/lab/Alert';
 import { deleteGift } from "../utils/firebase";
-
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     selectedGiftListId: string;
@@ -23,6 +23,8 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
     const [giftee, setGiftee] = useState<Giftee>(selectedGiftee);
     const [error, setError] = useState<string>("");
     const [giftsError, setGiftsError] = useState<string>("");
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         setGiftee(selectedGiftee);
@@ -61,26 +63,26 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
 
     const handleSubmit = () => {
         if (!giftee.budget) {
-            setError("Giftee's budget is required.")
+            setError(t('gifteeDetail.error_budget'))
             return;
         }
         if (giftee.budget! < 0) {
-            setError("Giftee's budget cannot be a negative number.")
+            setError(t('gifteeDetail.error_budget_neg'))
             return;
         }
         if (!giftee.name) {
-            setError("Giftee's name is required.")
+            setError(t('gifteeDetail.error_name'))
             return;
         }
 
         for (let i = 0; i < giftee.gifts.length; i++) {
             const gift = giftee.gifts[i];
             if (!gift.name) {
-                setGiftsError("Gifts must have name specified.");
+                setGiftsError(t('gifteeDetail.error_gift_name'));
                 return;
             }
             if (gift.price && gift.price < 0) {
-                setGiftsError("Gifts cannot have negative price.");
+                setGiftsError(t('gifteeDetail.error_gift_price'));
                 return;
             }
         }
@@ -92,12 +94,12 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
     return (
         <Grid item container xs={12} md={6} spacing={3}>
             <Grid item xs={12} md={12}>
-                <Typography variant="h5" align="center">Detail</Typography>
+                <Typography variant="h5" align="center">{t('gifteeDetail.title')}</Typography>
             </Grid>
             {error && <Grid item xs={12}><Alert severity="error">{error}</Alert></Grid>}
             <Grid item xs={12} md={6}>
                 <FormControl>
-                    <InputLabel htmlFor="input-with-icon-adornment">Name</InputLabel>
+                    <InputLabel htmlFor="input-with-icon-adornment">{t('gifteeDetail.name')}</InputLabel>
                     <Input
                         id="input-with-icon-adornment"
                         value={giftee.name}
@@ -117,7 +119,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
             </Grid>
             <Grid item xs={12} md={6}>
                 <FormControl variant="filled">
-                    <InputLabel htmlFor="adornment-budget">Budget</InputLabel>
+                    <InputLabel htmlFor="adornment-budget">{t('gifteeDetail.budget')}</InputLabel>
                     <Input
                         id="adornment-budget"
                         type="number"
@@ -140,7 +142,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
                 <TextField
                     fullWidth
                     id="note"
-                    label="Note"
+                    label={t('gifteeDetail.note')}
                     value={giftee?.note ?? ""}
                     onChange={e => {
                         console.log("?")
@@ -163,7 +165,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
             </Grid>
             <Grid item container xs={12}>
                 <Grid item xs={12}>
-                    <Typography variant="h5" align="center">Gifts</Typography>
+                    <Typography variant="h5" align="center">{t('gifteeDetail.gifts')}</Typography>
                 </Grid>
 
                 {giftsError && <Grid item xs={12}><Alert severity="error">{giftsError}</Alert></Grid>}
@@ -178,13 +180,13 @@ const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveCha
                 </Grid>
                 <Grid item xs={12}>
                     <Button variant="contained" color="primary" onClick={onAddGift} fullWidth>
-                        Add New Gift
+                        {t('gifteeDetail.add_gift')}
                     </Button>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" color="primary" onClick={handleSubmit} fullWidth>
-                    Save changes
+                    {t('gifteeDetail.save')}
                 </Button>
             </Grid>
         </Grid>

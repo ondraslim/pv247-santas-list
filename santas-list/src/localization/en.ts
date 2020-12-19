@@ -11,7 +11,30 @@ const en = {
     },
 
     "home": {
-      "loaging": "loading...",
+      "loading": "loading...",
+      "welcome": "Welcome",
+    },
+
+    "searchDialog": {
+      "loading": "loading...",
+    },
+
+    "userStats": {
+      "description": "Check your overall statistics!",
+      "giftlists_count": "Number of gist lists",
+      "giftees_count": "Number of giftees",
+    },
+
+    "listStats": {
+      "description": "Check your stats for chosen giftlist!",
+      "select_list": "Choose giftlist",
+      "loading": "loading...",
+      "giftees_count": "Number of giftees",
+      "low_budget_giftee": "Low-budget giftee",
+      "big_budget_giftee": "Big-budget giftee",
+      "lowest_budget_giftee": "The lowest budget",
+      "highest_budget_giftee": "The highest budget",
+      "avg_budget": "Average budget",
     },
 
     "register": {
@@ -42,7 +65,7 @@ const en = {
       "title": "Your Gift Lists",
       "giftLists": "Gift Lists",
     },
-    
+
     "newGifteeForm": {
       "create_new": "Create new",
       "new_giftee": "New Giftee",
@@ -62,6 +85,21 @@ const en = {
       "delete": "Delete this giftee",
     },
 
+    "gifteeDetail": {
+      "title": "Detail",
+      "name": "Name",
+      "budget": "Budget",
+      "note": "Note",
+      "gifts": "Gifts",
+      "add_gift": "Add new gift",
+      "save": "Save changes",
+      "error_budget": "Giftee's budget is required.",
+      "error_budget_neg": "Giftee's budget cannot be a negative number.",
+      "error_name": "Giftee's name is required.",
+      "error_gift_name": "Gifts must have name specified.",
+      "error_gift_price": "Gifts cannot have negative price.",
+    },
+
     "gifteeGift": {
       "name": "Name",
       "price": "Price",
@@ -72,6 +110,8 @@ const en = {
       "name": "Name",
       "price": "Price",
       "delete": "Delete this list",
+      "search": "Search",
+      "search_name_error": "No gift idea was entered to search for."
     },
   }
 };

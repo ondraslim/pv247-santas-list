@@ -14,7 +14,7 @@ const en = {
       "delete" : "Excluir este beneficiário"
     },
     "home" : {
-      "loaging" : "Carregando..."
+      "loading" : "Carregando..."
     },
     "lists" : {
       "back" : "Voltar",

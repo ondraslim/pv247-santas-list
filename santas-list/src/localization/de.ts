@@ -14,7 +14,7 @@ const en = {
       "delete" : "Dieser Beschenkt löschen"
     },
     "home" : {
-      "loaging" : "Wird geladen…"
+      "loading" : "Wird geladen…"
     },
     "lists" : {
       "back" : "Zurück",
