@@ -1,11 +1,9 @@
-
-
-
 export type Gift = {
   id: string;
   name: string;
   price: number;
   url: string;
+  imgUrl: string;
 };
 
 export type Giftee = {

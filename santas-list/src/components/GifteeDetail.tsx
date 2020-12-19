@@ -7,10 +7,11 @@ import NoteIcon from '@material-ui/icons/Note';
 import GifteeGift from "./GifteeGift";
 import { v4 as uuidv4 } from 'uuid';
 import Alert from '@material-ui/lab/Alert';
-import { searchOnline } from "../utils/api";
+import { deleteGift } from "../utils/firebase";
 
 
 type Props = {
+    selectedGiftListId: string;
     selectedGiftee: Giftee;
     onSaveChanges: (updatedGiftee: Giftee) => void;
     setChange: (n: number) => void;
@@ -18,7 +19,7 @@ type Props = {
 };
 
 
-const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, setChangesSaved }) => {
+const GifteeDetail: FC<Props> = ({ selectedGiftListId, selectedGiftee, onSaveChanges, setChange, setChangesSaved }) => {
     const [giftee, setGiftee] = useState<Giftee>(selectedGiftee);
     const [error, setError] = useState<string>("");
     const [giftsError, setGiftsError] = useState<string>("");
@@ -26,26 +27,28 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
     useEffect(() => {
         setGiftee(selectedGiftee);
 
-        // TODO: test purposes, remove
-        // searchOnline("baby pet kangaroo")
-        //     .then(response => console.log(response.items));
-
     }, [selectedGiftee]);
 
     const onAddGift = () => {
         setChange(9);
         setChangesSaved(false);
         let updatedGiftee = { ...giftee };
-        updatedGiftee.gifts.push({ id: uuidv4(), name: "", price: 0, url: "" });
+        updatedGiftee.gifts.push({ id: uuidv4(), name: "", price: 0, url: "", imgUrl: "" });
         setGiftee(updatedGiftee);
     }
 
-    const onGiftDelete = (giftId: string) => {
+    const onGiftDelete = async (giftId: string) => {
         setChange(9);
         setChangesSaved(false);
-        let updatedGiftee = { ...giftee };
-        updatedGiftee.gifts = updatedGiftee.gifts.filter(g => g.id !== giftId);
-        setGiftee(updatedGiftee);
+
+        try {
+            await deleteGift(giftId, giftee.id, selectedGiftListId);
+            let updatedGiftee = { ...giftee };
+            updatedGiftee.gifts = updatedGiftee.gifts.filter(g => g.id !== giftId);
+            setGiftee(updatedGiftee);
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
     const onGiftUpdate = (gift: Gift) => {
@@ -87,7 +90,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
     };
 
     return (
-        <Grid item container xs={12} md={6} spacing={5}>
+        <Grid item container xs={12} md={6} spacing={3}>
             <Grid item xs={12} md={12}>
                 <Typography variant="h5" align="center">Detail</Typography>
             </Grid>
@@ -98,9 +101,9 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
                     <Input
                         id="input-with-icon-adornment"
                         value={giftee.name}
-                        onChange={e => setGiftee(g => {  
-                            setChange(1);    
-                            setChangesSaved(false);                      
+                        onChange={e => setGiftee(g => {
+                            setChange(1);
+                            setChangesSaved(false);
                             setError("");
                             return { ...g, name: e.target.value }
                         })}
@@ -143,8 +146,10 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
                         console.log("?")
                         setChange(1);
                         setChangesSaved(false);
-                        setGiftee(g => { return { ...g, note: e.target.value }; 
-                        })}}
+                        setGiftee(g => {
+                            return { ...g, note: e.target.value };
+                        })
+                    }}
                     multiline
                     variant="outlined"
                     InputProps={{
@@ -165,7 +170,7 @@ const GifteeDetail: FC<Props> = ({ selectedGiftee, onSaveChanges, setChange, set
 
                 <Grid item container xs={12}>
                     {giftee.gifts && giftee.gifts.map(g => (
-                        <GifteeGift key={g.id} gift={g} onGiftChange={onGiftUpdate} onGiftDelete={onGiftDelete}/>
+                        <GifteeGift key={g.id} gift={g} onGiftChange={onGiftUpdate} onGiftDelete={onGiftDelete} />
                     ))}
                 </Grid>
                 <Grid item xs={12}>

@@ -50,7 +50,7 @@ export const getLists = async (user: User) => {
             let gifts: Array<Gift> = [];
             await d.ref.collection('gifts').get().then(async dc => {
               dc.forEach(g => {
-                let gft: Gift = { id: g.id, name: g.get("name"), url: g.get("url"), price: g.get("price") };
+                let gft: Gift = { id: g.id, name: g.get("name"), url: g.get("url"), price: g.get("price"), imgUrl: g.get("imgUrl") };
                 gifts.push(gft)
               })
             })
@@ -146,9 +146,9 @@ export const deleteGiftee = async (gifteeId: string, giftList: GiftList) => {
 }
 
 // Delete given gift for given giftee within given gift list
-export const deleteGift = async (giftId: string, giftee: Giftee, giftListId: string) => {
+export const deleteGift = async (giftId: string, gifteeId: string, giftListId: string) => {
   await giftListsCollection.doc(giftListId).get().then(async doc => {
-    await doc.ref.collection('recipients').doc(giftee.id).get().then(async d => {
+    await doc.ref.collection('recipients').doc(gifteeId).get().then(async d => {
       await d.ref.collection('gifts').doc(giftId).delete();
     })
   });
@@ -171,7 +171,8 @@ export const setGiftee = async (listName: string, giftee: Giftee, user: User) =>
                 d.ref.collection('gifts').doc(gift.id).set({
                   name: gift.name,
                   price: gift.price,
-                  url: gift.url
+                  url: gift.url,
+                  imgUrl: gift.imgUrl,
                 }, { merge: true });
               })
             }))

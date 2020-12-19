@@ -111,7 +111,8 @@ const Lists: FC = () => {
                     if (item.id === selectedGiftList.id) {
                         updatedLists.splice(index, 1);
                     }
-                })
+                });
+                
                 updatedLists.push(updatedList);
                 setGiftLists([...updatedLists]);
                 setError("");                
@@ -140,7 +141,7 @@ const Lists: FC = () => {
 
     const title = selectedGiftList?.name ?? t('lists.title');
     return (
-        <Grid container spacing={5} xs={12}>
+        <Grid container spacing={2} xs={12}>
             <Grid item xs={12}>
                 <br />
                 <Typography variant="h3" align="center">{title}</Typography>
@@ -172,7 +173,7 @@ const Lists: FC = () => {
                     </Grid>
 
                     {selectedGiftee &&
-                        <GifteeDetail selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} setChange={setChange} setChangesSaved={setChangesSaved} />
+                        <GifteeDetail selectedGiftListId={selectedGiftList.id} selectedGiftee={selectedGiftee!} onSaveChanges={onSaveGifteeChanges} setChange={setChange} setChangesSaved={setChangesSaved} />
                     }
                 </Grid>
             }

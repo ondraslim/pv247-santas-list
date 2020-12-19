@@ -6,9 +6,16 @@ const apiConfig = {
   urlBase: 'https://www.googleapis.com/customsearch/v1'
 };
 
+type Image = {
+  src: string,
+};
+
 export type Item = {
   title: string,
   link: string,
+  pagemap: {
+    cse_image: Image[],
+  }
   imgLink: string,
 }
 
