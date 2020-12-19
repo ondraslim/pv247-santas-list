@@ -17,8 +17,8 @@ const en = {
 
     "about": {
       "title": "Welcome to the Santa's List!",
-      "description1": "Here you can create your own custom Gift Lists. Christmas, birthdays, anniversaries - whatever you need! You can add people to each of your lists.And not only people! Do you want to have a Gift List for your dog's Adoption Day? You can!",
-      "description2": "You can note your budget as well as other comments to each entry.The app is connected to public search API, making the search for gifts even easier! Just enter a keyword, press a button and a gift will be found, displayed and saved for that specific person in specific list.",
+      "description1": "Here you can create your own custom Gift Lists. Christmas, birthdays, anniversaries - whatever you need! You can add people to each of your lists. And not only people! Do you want to have a Gift List for your dog's Adoption Day? You can!",
+      "description2": "You can note your budget as well as other comments to each entry. The app is connected to public search API, making the search for gifts even easier! Just enter a keyword, press a button and a gift will be found, displayed and saved for that specific person in specific list.",
       "description3": "Register now and add your Gift Lists to the {{listCount}} already existing ones.",
       "creators": "Created by: Katarína Matúšová, Michaela Horváthová, Ondřej Slimák, 2020",
     },
