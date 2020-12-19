@@ -76,7 +76,8 @@ export const listStats = async (name: string, user: User) => {
   let min_name: string = "";
   let max_name: string = "";
   let total_count: number = 0;
-
+  let avg_count: number = 0;
+  
   return await giftListsCollection.where("name", "==", name).get().then(
     async snapshot => {
       await Promise.all(snapshot.docs.map(async doc => {
@@ -94,11 +95,17 @@ export const listStats = async (name: string, user: User) => {
                 min_count = m;
                 min_name = d.get("name");
               }
-            })
+            })            
           })
         }
-      }))
-      const stats: GiftListStats = { gifteeCount: giftee_count, maxCount: max_count, minCount: min_count, maxName: max_name, minName: min_name, avgCount: (total_count / giftee_count) }
+      }))      
+      if (giftee_count === 0) {
+        min_count = 0;
+        avg_count = 0;
+      } else {
+        avg_count = (total_count / giftee_count);
+      }
+      const stats: GiftListStats = { gifteeCount: giftee_count, maxCount: max_count, minCount: min_count, maxName: max_name, minName: min_name, avgCount: avg_count};
       return stats;
     })
 }

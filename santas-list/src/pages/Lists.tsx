@@ -15,6 +15,7 @@ import NewGifteeForm from "../components/NewGifteeForm";
 import UserContext from "../context/UserContext";
 import { useContext, useMemo } from "react";
 import Alert from '@material-ui/lab/Alert';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -24,9 +25,10 @@ const Lists: FC = () => {
     const [changesSaved, setChangesSaved] = useState<boolean>(false);
     const [selectedGiftList, setSelectedGiftList] = useState<GiftList>();
     const [selectedGiftee, setSelectedGiftee] = useState<Giftee>();
-    const { user } = useContext(UserContext);
     const [change, setChange] = useState<number>(0);
 
+    const { user } = useContext(UserContext);
+    const { t } = useTranslation();
 
     useMemo(() => {
         if (user?.email) {
@@ -67,7 +69,7 @@ const Lists: FC = () => {
             setChange(0);
             setError("");
         } else {
-            setError("Unsaved changes");
+            setError(t('lists.unsaved_changes'));
         }             
     };
 
@@ -89,7 +91,7 @@ const Lists: FC = () => {
                 setChange((ch) => (ch + 1) % 100);
                 setChangesSaved(true);
             }).catch((error: Error) => {
-                setError("Couldn't delete the giftee.");
+                setError(t("lists.giftee_delete_error"));
                 console.log(error.message);
                 setChangesSaved(false);
             })
@@ -116,7 +118,7 @@ const Lists: FC = () => {
                 setError("");                
                 setChangesSaved(true);
             }).catch((error: Error) => {
-                setError("Couldn't update the giftee.");
+                setError(t("lists.giftee_update_error"));
                 console.log(error.message);
                 setChangesSaved(false);
             })
@@ -133,31 +135,32 @@ const Lists: FC = () => {
                 setChangesSaved(false);
                 setError("")
         } else {
-                setError("Unsaved changes");
+                setError(t('lists.unsaved_changes'));
         }     
     }
 
-    const title = selectedGiftList?.name ?? "Your Gift Lists";
+    const title = selectedGiftList?.name ?? t('lists.title');
     return (
         <Grid container spacing={2} xs={12}>
             <Grid item xs={12}>
+                <br />
                 <Typography variant="h3" align="center">{title}</Typography>
             </Grid>
 
             {error && <Grid item xs={12}><Alert severity="error">{error}</Alert></Grid>}
-            {changesSaved && <Grid item xs={12}><Alert severity="success">Changes were saved.</Alert></Grid>}
+            {changesSaved && <Grid item xs={12}><Alert severity="success">{t('lists.saved_changes')}</Alert></Grid>}
 
             {
                 selectedGiftList &&
-                <Grid item container spacing={5}>
+                <Grid item xs={12} container spacing={5}>
                     <Grid item xs={12} md={6}>
                         <Typography variant="h5">
-                            <Tooltip title="Go back">
+                            <Tooltip title={t('lists.back').toString()}>
                                 <IconButton onClick={onBackButton}>
                                     <ArrowBackIcon />
                                 </IconButton>
                             </Tooltip>
-                            Gift Lists
+                            {t('lists.giftLists')}
                         </Typography>
                         <List style={{ borderStyle: "solid" }}>
                             {
@@ -177,7 +180,7 @@ const Lists: FC = () => {
 
             {
                 !selectedGiftList &&
-                <Grid item container direction='row' spacing={5}>
+                <Grid item xs={12} container direction='row' spacing={5}>
                     <Grid item xs={12} sm={6} md={4} lg={3}>
                         <NewGiftCard giftLists={giftLists} setGiftListsState={setGiftLists} />
                     </Grid>

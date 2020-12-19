@@ -8,11 +8,11 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import SearchIcon from '@material-ui/icons/Search';
+import { useTranslation } from 'react-i18next';
 
 import { Item, searchOnline } from "../utils/api";
 import SearchDialog from "../components/SearchDialog";
 import { Gift } from "../data/DataTypes";
-
 
 type Props = {
   gift: Gift;
@@ -55,16 +55,18 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
 
   const onGiftSearchReset = () => {
     onGiftChange({ ...gift, url: "", imgUrl: "" });
-  }
+    }
 
-  return (
+  const { t } = useTranslation();
+
+    return (
     <>
       <Grid container direction="row">
         <Grid item xs={12} md={6} sm={6} lg={6}>
           <Grid container justify="space-between" direction="column">
             <Grid item >
               <FormControl>
-                <InputLabel htmlFor="gift-name-input">Name</InputLabel>
+                <InputLabel htmlFor="gift-name-input">{t('gifteeGift.name')}</InputLabel>
                 <Input
                   id="gift-name-input"
                   value={gift.name}
@@ -81,7 +83,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
             </Grid>
             <Grid item>
               <FormControl variant="filled">
-                <InputLabel htmlFor="gift-price-adornment">Price</InputLabel>
+                                <InputLabel htmlFor="gift-price-adornment">{t('gifteeGift.price')}</InputLabel>
                 <Input
                   id="gift-price-adornment"
                   type="number"
@@ -96,7 +98,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
                   }
                 />
               </FormControl>
-              <Tooltip title="Delete this gift">
+                <Tooltip title={t('gifteeGift.delete').toString()}>
                 <IconButton onClick={() => {
                   onGiftDelete(gift.id)
                 }}>

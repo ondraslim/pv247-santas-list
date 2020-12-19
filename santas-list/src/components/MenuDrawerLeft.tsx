@@ -18,17 +18,24 @@ import { makeStyles } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import UserContext from '../context/UserContext';
 import { signOut } from '../utils/firebase';
+import HomeIcon from '@material-ui/icons/Home';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import InfoIcon from '@material-ui/icons/Info';
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import LocMenu from "./LocMenu";
+import { useTranslation } from 'react-i18next';
 
 
 
-const useStyles = makeStyles((theme) => ({
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
 
+const useStyles = makeStyles({
     link: {
         textDecoration: "none",
         color: red[900],
+        fontSize: '20',
     },
 
     title: {
@@ -37,20 +44,26 @@ const useStyles = makeStyles((theme) => ({
 
     button: {
         borderRadius: '2px',
+        backgroundColor: 'darkgrey',
+        '&:hover': {
+            backgroundColor: 'white',
+        }
     },
 
     list: {
-        backgroundColor: 'primary',
-        color: 'green',
+        backgroundColor: 'white',
+        borderStyle: 'none',
+        boxShadow: 'none',
     }
 
-}));
+});
 
 
 const MenuDrawerLeft: FC = () => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const { user } = useContext(UserContext);
+    const { t } = useTranslation();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -73,8 +86,9 @@ const MenuDrawerLeft: FC = () => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h5" noWrap>
-                        Santa's list
-            </Typography>
+                        {t('menu.app_name')}
+                    </Typography>
+                    <LocMenu />
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -89,7 +103,7 @@ const MenuDrawerLeft: FC = () => {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>
+                <List className={classes.list}>
                     {user && <>
                         <ListItem alignItems='flex-start'>
                             <Button disabled style={{ color: "darkgrey" }}>
@@ -97,46 +111,45 @@ const MenuDrawerLeft: FC = () => {
                             </Button>
                         </ListItem>
                         <Divider />
-                        <ListItem button onClick={handleDrawerClose} divider alignItems='center'>
-                            <Button fullWidth>
-                                <Link className={classes.link} to="/"><b>Home</b></Link>
-                            </Button>
+                        <ListItem divider alignItems='center'>
+                            <ListItemIcon> <HomeIcon /></ListItemIcon>
+                            <Link className={classes.link} to="/" onClick={handleDrawerClose}><b>{t('menu.home')}</b></Link>
+
                         </ListItem>
-                        <ListItem button onClick={handleDrawerClose} divider>
-                            <Button fullWidth>
-                                <Link className={classes.link} to="/about/"><b>About</b></Link>
-                            </Button>
+                        <ListItem divider>
+                            <ListItemIcon> <InfoIcon /> </ListItemIcon>
+                            <Link className={classes.link} to="/about/" onClick={handleDrawerClose}><b>{t('menu.about')}</b></Link>
+
                         </ListItem>
-                        <ListItem button onClick={handleDrawerClose}>
-                            <Button fullWidth>
-                                <Link className={classes.link} to="/list/"><b>Gift Lists</b></Link>
-                            </Button>
+                        <ListItem >
+                            <ListItemIcon> <CardGiftcardIcon></CardGiftcardIcon>  </ListItemIcon>
+                            <Link className={classes.link} to="/list/" onClick={handleDrawerClose} ><b>{t('menu.gift_lists')}</b></Link>
+
                         </ListItem>
                         <Divider />
                         <Divider />
-                        <ListItem button onClick={() => { handleDrawerClose(); signOut() }}>
-                            <Button fullWidth>
-                                <Link className={classes.link} to="/login/"><b>Logout</b></Link>
-                            </Button>
+                        <ListItem >
+                            <ListItemIcon> <ExitToAppIcon /> </ListItemIcon>
+                            <Link className={classes.link} to="/login/" onClick={() => { handleDrawerClose(); signOut() }}><b>{t('menu.logout')}</b></Link>
+
                         </ListItem>
                         <Divider />
                     </>}
                     {user == null && <>
-                        <ListItem button key={-1} onClick={handleDrawerClose} divider>
-                            <Button fullWidth>
-                                <Link className={classes.link} to="/about/"><b>About</b></Link>
-                            </Button>
+                        <ListItem divider>
+                            <ListItemIcon> <InfoIcon /> </ListItemIcon>
+                            <Link className={classes.link} to="/about/" onClick={handleDrawerClose}><b>{t('menu.about')}</b></Link>
+
                         </ListItem>
                         <Divider />
-                        <ListItem button onClick={handleDrawerClose} divider>
-                            <Button fullWidth>
-                                <Link className={classes.link} to="/login/"><b>Login</b></Link>
-                            </Button>
+                        <ListItem  divider>
+                            <ListItemIcon> <AccountCircleIcon /> </ListItemIcon>
+                            <Link className={classes.link} to="/login/" onClick={handleDrawerClose}><b>{t('menu.login')}</b></Link>
+
                         </ListItem>
-                        <ListItem button onClick={handleDrawerClose} divider>
-                            <Button fullWidth>
-                                <Link className={classes.link} to="/register/"><b>Register</b></Link>
-                            </Button>
+                        <ListItem divider>
+                            <ListItemIcon> <PersonAddIcon /> </ListItemIcon>
+                            <Link className={classes.link} to="/register/" onClick={handleDrawerClose}><b>{t('menu.register')}</b></Link>
                         </ListItem>
                     </>}
                 </List>

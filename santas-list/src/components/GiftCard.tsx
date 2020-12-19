@@ -9,6 +9,7 @@ import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardActions from "@material-ui/core/CardActions/CardActions";
+import { useTranslation } from 'react-i18next';
 
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
 
 
 const GiftCard: FC<Props> = ({ giftList, onClick, onDelete }) => {
+  const { t } = useTranslation();
 
   const deleteGiftList = (event: any) => {
     event.stopPropagation();
@@ -29,7 +31,7 @@ const GiftCard: FC<Props> = ({ giftList, onClick, onDelete }) => {
     <Card onClick={() => onClick(giftList.id)}>
       <CardHeader title={giftList.name}
         action={
-          <Tooltip title="Delete this list.">
+          <Tooltip title={t('giftCard.delete').toString()}>
             <IconButton onClick={e => deleteGiftList(e)}>
               <DeleteIcon />
             </IconButton>

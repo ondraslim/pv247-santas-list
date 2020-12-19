@@ -10,14 +10,13 @@ useEffect(() =>{
         setListCount(val));
 }, [])
 
-return <div>
-    <p>
+return <div>    
        <br />
        <Typography variant="h3" align="center">
         Welcome to the Santa's List!
         </Typography>
        <br /> 
-    </p>
+    
     
 <p>Here you can create your own custom Gift Lists. Christmas, birthdays, anniversaries - whatever you need!
 You can add people to each of your lists. And not only people! Do you want to have a Gift List for your dog's Adoption Day? You can!</p>

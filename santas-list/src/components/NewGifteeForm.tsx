@@ -5,6 +5,7 @@ import { Giftee, GiftList } from "../data/DataTypes";
 import { v4 as uuidv4 } from 'uuid';
 import { setGiftee } from "../utils/firebase";
 import UserContext from "../context/UserContext"
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -19,10 +20,12 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
     const { user } = useContext(UserContext);
     const [newGifteeName, setNewGifteeName] = useState<string>("");
     const [error, setError] = useState<string>("");
+    
+    const { t } = useTranslation();
 
     const onCreateNewGiftee = () => {
         if (!newGifteeName) {
-            setError("The name is required!");
+            setError(t('newGifteeForm.name_required'));
             return;
         }
 
@@ -43,7 +46,7 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
                 onGifteeCreated(newGiftee);
                 setError("");
             }).catch((error: Error) => {
-                setError("New giftee coudn't be created.");
+                setError(t('newGifteeForm.create_error'));
                 console.log(error.message)
             });    
         }
@@ -58,7 +61,7 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
                 <Grid item xs={12}>
                     <TextField
                         fullWidth
-                        label="New Giftee"
+                        label={t('newGifteeForm.create_error')}
                         error={error ? true : false}
                         value={newGifteeName}
                         onChange={e => {
@@ -76,12 +79,12 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
                         }}
                     />
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                     <Box m="2rem"></Box>
                 </Grid>
                 <Grid item xs={12}>
                     <Button variant="contained" color="primary" onClick={onCreateNewGiftee} fullWidth>
-                        Create new
+                        {t('newGifteeForm.create_new')}
                     </Button>
                 </Grid>
             </Grid>

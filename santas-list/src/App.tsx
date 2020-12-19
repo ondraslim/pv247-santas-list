@@ -27,6 +27,7 @@ import MenuDrawerLeft from "./components/MenuDrawerLeft";
 import BasicMenu from "./components/BasicMenu";
 
 
+
 const ourTheme = createMuiTheme({
     palette: {
         primary: {
@@ -58,6 +59,7 @@ const ourTheme = createMuiTheme({
                 borderWidth: "medium",
                 borderColor: green[900],
                 backgroundColor: green[50],
+                boxShadow: '0 3px 5px 2px rgba(56, 56, 56, 0.83)',
             }
         },
         MuiCardHeader: {
@@ -72,21 +74,47 @@ const ourTheme = createMuiTheme({
                 borderWidth: 'medium',
                 borderStyle: 'solid',
                 borderColor: green[900],
+                boxShadow: '0 3px 5px 2px rgba(56, 56, 56, 0.83)',
+            }
+        },
+        MuiListItem: {
+            root: {
+                '&:hover': {
+                    backgroundColor: green[100],
+                }
             }
         },
         MuiTypography: {
             h3: {
                 fontSize: '2.8rem',
                 textDecoration: 'underline',
-                textDecorationColor: green[900]
+                textDecorationColor: green[900],
+                color:  red[900],
             },
             h4: {
-                fontSize: '2.2rem',
+                fontSize: '1.6rem',                
             },
             h5: {
                 fontSize: '1.6rem',
+                color: green[900],
+                fontStyle: "italic",
             }
         },
+        MuiGrid: {
+            root: {
+                flex: 'auto',                
+            }
+        },
+        MuiFormControl: {
+            root: {
+                minWidth: '130px',
+            }
+        },
+        MuiCardMedia: {
+            root: {
+                height: '25vh',
+            }
+        }
     },
     
 });
@@ -106,9 +134,9 @@ function App() {
                     </Hidden>
                     <Hidden smUp>
                         <MenuDrawerLeft/>
-                    </Hidden>
+                    </Hidden>                
 
-                    {user === null && <Redirect to='/login' />}
+                    {user === null && <Redirect to='/about' />}
 
                     <main className="App">
                         <Container maxWidth="lg">
@@ -121,6 +149,7 @@ function App() {
                             </Switch>
                         </Container>
                     </main>
+                    
                 </Router>
             </UserContext.Provider>
         </MuiThemeProvider>

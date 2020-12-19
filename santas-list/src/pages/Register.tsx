@@ -15,8 +15,9 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { signUp,} from '../utils/firebase';
+import { signUp, } from '../utils/firebase';
 import UserContext from '../context/UserContext';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
     app: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles({
     },
     card: {
         boxShadow: '0 3px 5px 2px rgba(56, 56, 56, 0.83)',
-        maxWidth: '50vw'
+        maxWidth: '700px',
     },
 
     text: {
@@ -38,45 +39,48 @@ const useStyles = makeStyles({
     button: {
         borderRadius: '12px',
         flex: '1',
-    
+
     }
 });
 
 const Login: FC = () => {
     // Since firebase returns informative error messages we can show them directly
     const classes = useStyles();
-    const { user } = useContext(UserContext);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-  
+
     // Since firebase returns informative error messages we can show them directly
     const [error, setError] = useState<string>();
-  
+
+    const { user } = useContext(UserContext);
+    const { t } = useTranslation();
+
     const isLoggedIn = user !== null;
-  
+
     if (isLoggedIn) {
-      return <Redirect to='/' />;
+        return <Redirect to='/' />;
     }
 
     const register = async (): Promise<void> => {
         try {
             await signUp(email, password);
-          } catch (err) {
+        } catch (err) {
             setError(err.message);
-          }
+        }
     };
 
     return (
         <Grid container className={classes.app}>
             <Card className={classes.card}>
                 <CardContent>
-                    <PersonAddIcon style={{ fontSize: '60'}}/>
+                    <PersonAddIcon style={{ fontSize: '60' }} />
                     <Typography variant='h5' component='h1'>
-                        Register
+                        {t('register.register')}
                     </Typography>
                     <TextField
-                        label='Email'
+                        label={t('register.email')}
                         type='email'
                         name='email'
                         fullWidth
@@ -88,7 +92,7 @@ const Login: FC = () => {
                         onChange={e => setEmail(e.target.value)}
                     />
                     <TextField
-                        label='Password'
+                        label={t('register.password')}
                         type='password'
                         name='password'
                         fullWidth
@@ -99,7 +103,7 @@ const Login: FC = () => {
                         onChange={e => setPassword(e.target.value)}
                     />
                     <TextField
-                        label='Confirm password'
+                        label={t('register.password_conf')}
                         type='password'
                         name='password'
                         fullWidth
@@ -115,8 +119,8 @@ const Login: FC = () => {
                         </Typography>
                     )}
                     <Typography variant='subtitle2' align='left' paragraph>
-                        Already registered?{' '}
-                        <Link to="/login/">Sign in</Link>
+                        {t('register.already_registered')}{' '}
+                        <Link to="/login/">{t('register.sign_in')}</Link>
                     </Typography>
                 </CardContent>
                 <CardActions className={classes.text}>
@@ -125,12 +129,12 @@ const Login: FC = () => {
                         variant='contained'
                         size='large'
                         color='primary'
-                        onClick={() => { 
-                            password === confirmPassword ? register() : setError("Passwords do not match");
-                         }
+                        onClick={() => {
+                            password === confirmPassword ? register() : setError(t('register.err_pswds_match'));
+                        }
                         }
                     >
-                        Register
+                        {t('register.register')}
                     </Button>
                 </CardActions>
             </Card>
