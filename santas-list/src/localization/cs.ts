@@ -1,9 +1,33 @@
 const en = {
   "translation" : {
+    "about" : {
+      "creators" : "Vytvořili: Katarína Matúšová, Michaela Horváthová, Ondřej Slimák, 2020",
+      "description1" : "Zde si můžete vytvořit vlastní dárkové seznamy. Vánoce, narozeniny, výročí - vše, co potřebujete! Můžete přidat lidi do každého z Vašich seznamů. A nejen lidi! Chcete mít dárkový seznam pro Den Adopce Vašeho psa?? Ty můžeš!",
+      "description2" : "Můžete zaznamenat svůj rozpočet, stejně jako další komentáře ke každému obdarovanému. Aplikace je připojena k vyhledávacímu API, takže hledání dárků je ještě jednodušší! Stačí zadat klíčové slovo, stisknout tlačítko a dárek bude nalezen, zobrazen a uložen pro danou osobu v konkrétním seznamu.",
+      "description3" : "Zaregistrujte se nyní a přidejte své dárkové seznamy do již existujících {{listCount}}.",
+      "title" : "Vítejte v Santově seznamu!"
+    },
     "giftCard" : {
       "delete" : "Smazat tento seznam",
       "name" : "Název",
-      "price" : "Cena"
+      "price" : "Cena",
+      "search" : "Hledat",
+      "search_name_error" : "Žádný nápad na dárek nebyl zadán k vyhledání."
+    },
+    "gifteeDetail" : {
+      "add_gift" : "Přidat nový dárek",
+      "budget" : "Rozpočet",
+      "error_budget" : "Je vyžadován rozpočet pro obdarovaného.",
+      "error_budget_exceeded" : "Rozpočet byl překročen!",
+      "error_budget_neg" : "Rozpočet obdarovaného nemůže být záporný.",
+      "error_gift_name" : "Dárky musí mít zadaný název.",
+      "error_gift_price" : "Dárky nemohou mít zápornou cenu.",
+      "error_name" : "Jméno obdarovaného je povinné.",
+      "gifts" : "Dárky",
+      "name" : "Jméno",
+      "note" : "Poznámka",
+      "save" : "Uložit změny",
+      "title" : "Detaily"
     },
     "gifteeGift" : {
       "delete" : "Smazat tento dárek",
@@ -14,7 +38,20 @@ const en = {
       "delete" : "Odstranit tohoto obdarovaného"
     },
     "home" : {
-      "loading" : "Načítání…"
+      "loading" : "Načítání…",
+      "loaging" : "Načítání…",
+      "welcome" : "Vítejte"
+    },
+    "listStats" : {
+      "avg_budget" : "Průměrný rozpočet",
+      "big_budget_giftee" : "Obdarovaný s nejvyšším rozpočtem",
+      "description" : "Podívejte se na své statistiky pro vybraný dárkový seznam!",
+      "giftees_count" : "Počet obdarovaných",
+      "highest_budget_giftee" : "Nejvyšší rozpočet",
+      "loading" : "Načítání…",
+      "low_budget_giftee" : "Obdarovaný s nejjnižším rozpočtem",
+      "lowest_budget_giftee" : "Nejnižší rozpočet",
+      "select_list" : "Vybraný seznam dárků"
     },
     "lists" : {
       "back" : "Zpět",
@@ -64,7 +101,15 @@ const en = {
       "register" : "Registrovat se",
       "sign_in" : "Přihlásit se"
     },
-    "unsaved_changes" : "Neuložené změny"
+    "searchDialog" : {
+      "loading" : "Načítání…"
+    },
+    "unsaved_changes" : "Neuložené změny",
+    "userStats" : {
+      "description" : "Zobrazte si své celkové statistiky!",
+      "giftees_count" : "Počet obdarovaných",
+      "giftlists_count" : "Počet dárkových seznamů"
+    }
   }
 } ;
 

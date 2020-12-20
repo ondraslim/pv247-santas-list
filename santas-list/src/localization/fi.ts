@@ -1,9 +1,33 @@
 const en = {
   "translation" : {
+    "about" : {
+      "creators" : "Luonut: Katarína Matúšová, Michaela Horváthová, Ondřej Slimák, 2020",
+      "description1" : "Täällä voit luoda omia mukautettuja lahjalistoja. Joulu, syntymäpäivät, merkkipäivät - mitä ikinä tarvitsetkaan! Voit lisätä ihmisiä kuhunkin listoihin.Eikä vain ihmisiä! Haluatko saada lahjalistan koirasi adoptiopäiväksi? Voit!",
+      "description2" : "Voit huomata budjetin sekä muita kommentteja kuhunkin entry.App on liitetty julkisen haun API, jolloin etsiä lahjoja vieläkin helpompaa! Syötä vain avainsana, paina painiketta ja lahja löytyy, näytetään ja tallennetaan kyseiselle henkilölle tietyssä luettelossa.",
+      "description3" : "Rekisteröidy nyt ja lisää lahjalistat jo olemassa oleviin {{listCount}} -luetteloihin.",
+      "title" : "Tervetuloa joulupukkilistalle!"
+    },
     "giftCard" : {
       "delete" : "Poista tämä luettelo",
       "name" : "Nimi",
-      "price" : "Hinta"
+      "price" : "Hinta",
+      "search" : "Haku…",
+      "search_name_error" : "Mitään lahjaideaa ei syötetty etsimään."
+    },
+    "gifteeDetail" : {
+      "add_gift" : "Lisää uusi lahja",
+      "budget" : "Budjetti",
+      "error_budget" : "Vastaanottajan budjetti on pakollinen.",
+      "error_budget_exceeded" : "Budjetti ylittyi!",
+      "error_budget_neg" : "Vastaanottajapuvun budjetti ei voi olla negatiivinen luku.",
+      "error_gift_name" : "Lahjoilla on oltava nimi.",
+      "error_gift_price" : "Lahjoilla ei voi olla negatiivinen hinta.",
+      "error_name" : "Vastaanottajan nimi on pakollinen.",
+      "gifts" : "Lahjat",
+      "name" : "Nimi",
+      "note" : "Huomautus",
+      "save" : "Tallenna muutokset",
+      "title" : "Tarkempi tieto"
     },
     "gifteeGift" : {
       "delete" : "Poista tämä lahja",
@@ -14,7 +38,20 @@ const en = {
       "delete" : "Poista tämä vastaanottajie"
     },
     "home" : {
-      "loading" : "Ladataan…"
+      "loading" : "Ladataan…",
+      "loaging" : "Ladataan…",
+      "welcome" : "Tervetuloa!"
+    },
+    "listStats" : {
+      "avg_budget" : "Keskimääräinen budjetti",
+      "big_budget_giftee" : "Suuren budjetin vastaanottajapaita",
+      "description" : "Tarkista tilastosi valitun lahjalistan!",
+      "giftees_count" : "Vastaanottajalahjien lukumäärä",
+      "highest_budget_giftee" : "Korkein budjetti",
+      "loading" : "Ladataan…",
+      "low_budget_giftee" : "Pienten budjetin vastaanottajapaita",
+      "lowest_budget_giftee" : "Pienin budjetti",
+      "select_list" : "Valitse lahjalisti"
     },
     "lists" : {
       "back" : "Takaisin",
@@ -64,7 +101,15 @@ const en = {
       "register" : "Rekisteröidy",
       "sign_in" : "Kirjaudu sisään"
     },
-    "unsaved_changes" : "Tallentamattomat muutokset"
+    "searchDialog" : {
+      "loading" : "Ladataan…"
+    },
+    "unsaved_changes" : "Tallentamattomat muutokset",
+    "userStats" : {
+      "description" : "Tarkista kokonaistilastosi!",
+      "giftees_count" : "Vastaanottajalahjien lukumäärä",
+      "giftlists_count" : "Lahjalistojen määrä"
+    }
   }
 } ;
 
