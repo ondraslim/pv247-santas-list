@@ -157,7 +157,7 @@ const ListStatsBox: FC<Props> = ({ giftLists }) => {
                                                                     </Avatar>
                                                                 </ListItemAvatar>
                                                             </Hidden>
-                                                            <ListItemText primary={t('listStats.avg_budget')} secondary={giftListStats.avgCount} />
+                                                            <ListItemText primary={t('listStats.avg_budget')} secondary={giftListStats.avgCount.toFixed(2)} />
                                                         </ListItem>
                                                         <ListItem>
                                                             <Hidden only={'xs'}>
