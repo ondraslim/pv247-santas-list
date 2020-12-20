@@ -143,7 +143,7 @@ const GifteeGift: FC<Props> = ({ gift, onGiftChange, onGiftDelete }) => {
               <Grid container>
                 <Grid item>
                   <FormControl>
-                    <InputLabel htmlFor="gift-name-input">{t('gifteeGift.search')}</InputLabel>
+                    <InputLabel htmlFor="gift-name-input">{t('giftCard.search')}</InputLabel>
                     <Input
                       id="gift-name-input"
                       value={searchName}
