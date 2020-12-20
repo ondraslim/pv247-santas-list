@@ -61,7 +61,7 @@ const NewGifteeForm: FC<Props> = ({ giftList, onGifteeCreated, setChange }) => {
                 <Grid item xs={12}>
                     <TextField
                         fullWidth
-                        label={t('newGifteeForm.create_error')}
+                        label={t('newGifteeForm.new_giftee')}
                         error={error ? true : false}
                         value={newGifteeName}
                         onChange={e => {

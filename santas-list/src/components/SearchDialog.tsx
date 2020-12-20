@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import CloseIcon from '@material-ui/icons/Close';
 import Hidden from '@material-ui/core/Hidden';
+import Box from '@material-ui/core/Box';
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 import SearchDialogContent from "./SearchDialogContent";
@@ -26,7 +27,7 @@ const SearchDialog: FC<Props> = ({ searchResult, open, handleClose, handleSearch
 
     return (
         <Dialog open={open} onClose={handleClose}>
-            <AppBar position="static" style={{ width: '45vw',}}>
+            <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
                         <CloseIcon />
@@ -34,11 +35,16 @@ const SearchDialog: FC<Props> = ({ searchResult, open, handleClose, handleSearch
                 </Toolbar>
             </AppBar>
             {(searchResult.length === 0) ? (
-                <Grid container direction="column" style={{ width: '45vw', height: '50vh' }}>
+                <Grid container direction="column" style={{ width: '180px', height: '50vh'}}>
                     <Grid item xs={12}>
-                        <Typography align="center" color='primary' variant="h5">
-                            <CircularProgress /> {t('searchDialog.loading')}
-                    </Typography>
+                        <Box display="flex"
+                            m='auto'
+                            alignItems="center"
+                            justifyContent="center">
+                            <Typography align="left" color='primary' variant="h5">
+                                <CircularProgress /> {t('searchDialog.loading')}
+                            </Typography>
+                        </Box>
                     </Grid>
                 </Grid>
 
