@@ -1,6 +1,33 @@
 {
   "short_name": "Santa's list",
   "name": "Create gift lists for every occasion",
+  "icons": [
+    {
+      "src": "gift64.png",
+      "sizes": "64x64",
+      "type": "image/jpg"
+    },
+    {
+      "src": "gift96.png",
+      "sizes": "96x96",
+      "type": "image/jpg"
+    },
+    {
+      "src": "gift128.png",
+      "sizes": "128x128",
+      "type": "image/jpg"
+    },
+    {
+      "src": "gift152.png",
+      "sizes": "152x152",
+      "type": "image/jpg"
+    },
+    {
+      "src": "gift512.png",
+      "sizes": "512x512",
+      "type": "image/jpg"
+    }
+  ],
   
   "start_url": ".",
   "display": "standalone",
