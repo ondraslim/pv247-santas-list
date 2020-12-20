@@ -1,9 +1,33 @@
 const en = {
   "translation" : {
+    "about" : {
+      "creators" : "Vytvorili: Katarína Matúšová, Michaela Horváthová, Ondřej Slimák, 2020",
+      "description1" : "Tu si môžete vytvoriť vlastné zoznamy darčekov. Vianoce, narodeniny, výročia - všetko, čo potrebujete! Do každého zo svojich zoznamov môžete pridať ľudí. A nielen ľudí! Chcete mať zoznam darčekov na Deň Adopcie Vášho psa? Môžete!",
+      "description2" : "Môžete si zaznamenať svoj rozpočet, rovnako ako poznámky ku každému obdarovanému. Aplikácia je pripojená k vyhľadávaciemu API, takže hľadanie darčekov je ešte jednoduchšie! Stačí zadať kľúčové slovo, stlačiť tlačidlo a darček bude nájdený, zobrazený a uložený pre konkrétnu osobu v danom zozname.",
+      "description3" : "Zaregistrujte sa hneď a pridajte zoznamy darčekov k už existujúcim {{listCount}}.",
+      "title" : "Vitajte na Santovom zozname!"
+    },
     "giftCard" : {
       "delete" : "Odstráň tento zoznam",
-      "name" : "Name",
-      "price" : "Price"
+      "name" : "Meno",
+      "price" : "Cena",
+      "search" : "Vyhľadať",
+      "search_name_error" : "Na vyhľadávanie nebol zadaný žiadny darček."
+    },
+    "gifteeDetail" : {
+      "add_gift" : "Pridaj nový darček",
+      "budget" : "Rozpočet",
+      "error_budget" : "Rozpočet je povinná položka.",
+      "error_budget_exceeded" : "Rozpočet bol prekročený!",
+      "error_budget_neg" : "Rozpočet nemôže byť záporné číslo.",
+      "error_gift_name" : "Darčeky musia mať zadaný názov.",
+      "error_gift_price" : "Darčeky nemôžu mať zápornú cenu.",
+      "error_name" : "Meno obdarovaného je povinná položka.",
+      "gifts" : "Darčeky",
+      "name" : "Meno",
+      "note" : "Poznámka",
+      "save" : "Uložiť zmeny",
+      "title" : "Podrobnosti"
     },
     "gifteeGift" : {
       "delete" : "Odstráň tento darček",
@@ -14,7 +38,20 @@ const en = {
       "delete" : "Odstráň tohto obdarovaného"
     },
     "home" : {
-      "loading" : "loading..."
+      "loading" : "Načítava sa…",
+      "loaging" : "Načítava sa…",
+      "welcome" : "Vitajte!"
+    },
+    "listStats" : {
+      "avg_budget" : "Priemerný rozpočet",
+      "big_budget_giftee" : "Obdarovaný s najvyšším rozpočtom",
+      "description" : "Pozrite si svoje štatistiky k vybranému zoznamu!",
+      "giftees_count" : "Počet obdarovaných",
+      "highest_budget_giftee" : "Najvyšší rozpočet",
+      "loading" : "Načítava sa…",
+      "low_budget_giftee" : "Obdarovaný s najnižším rozpočtom",
+      "lowest_budget_giftee" : "Najnižší rozpočet",
+      "select_list" : "Vyberte zoznam"
     },
     "lists" : {
       "back" : "Späť",
@@ -26,21 +63,21 @@ const en = {
       "unsaved_changes" : "Neuložené zmeny"
     },
     "login" : {
-      "email" : "Email",
-      "login" : "Login",
-      "new_user" : "New user?",
-      "password" : "Password",
+      "email" : "E-mail",
+      "login" : "Prihlásiť",
+      "new_user" : "Nový používateľ?",
+      "password" : "Heslo",
       "register" : "Zaregistruj sa tu",
-      "sign_in" : "Sign in"
+      "sign_in" : "Prihlásiť sa"
     },
     "menu" : {
-      "about" : "About",
+      "about" : "O aplikácii",
       "app_name" : "Santov zoznam",
-      "gift_lists" : "Gift Lists",
+      "gift_lists" : "Zoznamy darčekov",
       "home" : "Domov",
-      "login" : "Login",
-      "logout" : "Logout",
-      "register" : "Register"
+      "login" : "Prihlásiť",
+      "logout" : "Odhlásiť",
+      "register" : "Registrovať"
     },
     "newGiftCard" : {
       "awesome_gift_list" : "môj úžasný zoznam darčekov...",
@@ -56,15 +93,23 @@ const en = {
       "new_giftee" : "Nový obdarovaný"
     },
     "register" : {
-      "already_registered" : "Already registered?",
-      "email" : "Email",
-      "err_pswds_match" : "Passwords do not match",
-      "password" : "Password",
-      "password_conf" : "Confirm password",
-      "register" : "Register",
-      "sign_in" : "Sign in"
+      "already_registered" : "Už ste registrovaný?",
+      "email" : "E-mail",
+      "err_pswds_match" : "Heslá sa nezhodujú",
+      "password" : "Heslo",
+      "password_conf" : "Potvrdiť heslo",
+      "register" : "Registrovať",
+      "sign_in" : "Prihlásiť sa"
     },
-    "unsaved_changes" : "Neuložené zmeny"
+    "searchDialog" : {
+      "loading" : "Načítava sa…"
+    },
+    "unsaved_changes" : "Neuložené zmeny",
+    "userStats" : {
+      "description" : "Pozrite si svoje celkové štatistiky!",
+      "giftees_count" : "Počet obdarovaných",
+      "giftlists_count" : "Počet darčekových zoznamov"
+    }
   }
 } ;
 

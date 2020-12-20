@@ -1,9 +1,33 @@
 const en = {
   "translation" : {
+    "about" : {
+      "creators" : "Creato da: Katarína Matúšová, Michaela Horváthová, Ondřej Slimák, 2020",
+      "description1" : "Qui puoi creare le tue liste regalo personalizzate. Natale, compleanni, anniversari - tutto ciò di cui hai bisogno! Puoi aggiungere persone a ciascuna delle tue liste. E non solo le persone! Vuoi avere una lista regalo per il giorno dell'adozione del tuo cane? Tu puoi!",
+      "description2" : "Puoi annotare il tuo budget e altri commenti a ogni voce. L'app è collegata all'API di ricerca pubblica, rendendo la ricerca di regali ancora più facile! Basta inserire una parola chiave, premere un pulsante e un regalo sarà trovato, visualizzato e salvato per quella persona specifica in un elenco specifico.",
+      "description3" : "Registrati ora e aggiungi le tue Liste Regalo alle {{listCount}} già esistenti.",
+      "title" : "Benvenuti nella Lista di Babbo Natale!"
+    },
     "giftCard" : {
       "delete" : "Elimina questa lista",
       "name" : "Nome",
-      "price" : "Prezzo"
+      "price" : "Prezzo",
+      "search" : "Ricerca",
+      "search_name_error" : "Nessuna idea regalo è stata inserita per la ricerca."
+    },
+    "gifteeDetail" : {
+      "add_gift" : "Aggiungi nuovo regalo",
+      "budget" : "Budget",
+      "error_budget" : "Il budget di beneficiario è richiesto.",
+      "error_budget_exceeded" : "Il budget è stato superato!",
+      "error_budget_neg" : "Il budget di beneficiario non può essere un numero negativo.",
+      "error_gift_name" : "I regali devono avere il nome specificato.",
+      "error_gift_price" : "I regali non possono avere un prezzo negativo.",
+      "error_name" : "Il nome del beneficiario è obbligatorio.",
+      "gifts" : "Regali",
+      "name" : "Nome",
+      "note" : "Nota",
+      "save" : "Salva modifiche",
+      "title" : "Dettaglio"
     },
     "gifteeGift" : {
       "delete" : "Elimina questo regalo",
@@ -14,7 +38,20 @@ const en = {
       "delete" : "Elimina questo beneficiario"
     },
     "home" : {
-      "loading" : "Caricamento in corso..."
+      "loading" : "Caricamento in corso...",
+      "loaging" : "Caricamento in corso...",
+      "welcome" : "Benvenuto"
+    },
+    "listStats" : {
+      "avg_budget" : "Budget medio",
+      "big_budget_giftee" : "Beneficiario a grande budget",
+      "description" : "Controlla le tue statistiche per la lista regalo scelta!",
+      "giftees_count" : "Numero di beneficiari",
+      "highest_budget_giftee" : "Il budget più alto",
+      "loading" : "Caricamento in corso...",
+      "low_budget_giftee" : "Beneficiario a basso costo",
+      "lowest_budget_giftee" : "Il budget più basso",
+      "select_list" : "Scegli giftlist"
     },
     "lists" : {
       "back" : "Indietro",
@@ -64,7 +101,15 @@ const en = {
       "register" : "Registrati",
       "sign_in" : "Accedi"
     },
-    "unsaved_changes" : "Modifiche non salvate"
+    "searchDialog" : {
+      "loading" : "Caricamento in corso..."
+    },
+    "unsaved_changes" : "Modifiche non salvate",
+    "userStats" : {
+      "description" : "Controlla le tue statistiche generali!",
+      "giftees_count" : "Numero di beneficiari",
+      "giftlists_count" : "Numero di liste regalo"
+    }
   }
 } ;
 

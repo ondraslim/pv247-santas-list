@@ -1,9 +1,33 @@
 const en = {
   "translation" : {
+    "about" : {
+      "creators" : "Creado por: Katarína Matúšová, Michaela Horváthová, Ondřej Slimák, 2020",
+      "description1" : "Aquí puedes crear tus propias listas de regalos personalizadas. Navidad, cumpleaños, aniversarios, ¡lo que necesites! Puede agregar personas a cada una de sus listas. ¡Y no sólo la gente! ¿Quieres tener una lista de regalos para el Día de la Adopción de tu perro? ¡Puedes!",
+      "description2" : "Puede anotar su presupuesto, así como otros comentarios en cada entrada. La aplicación está conectada a la API de búsqueda pública, haciendo que la búsqueda de regalos sea aún más fácil! Solo tienes que introducir una palabra clave, pulsar un botón y un regalo será encontrado, mostrado y guardado para esa persona específica en una lista específica.",
+      "description3" : "Regístrese ahora y agregue sus listas de regalos a las {{listCount}} ya existentes.",
+      "title" : "¡Bienvenido a la Lista de Santa!"
+    },
     "giftCard" : {
       "delete" : "Eliminar esta lista",
       "name" : "Nombre",
-      "price" : "Precio"
+      "price" : "Precio",
+      "search" : "Buscar",
+      "search_name_error" : "No se introdujo ninguna idea de regalo para buscar."
+    },
+    "gifteeDetail" : {
+      "add_gift" : "Añadir nuevo regalo",
+      "budget" : "Económico",
+      "error_budget" : "El presupuesto de beneficiario es necesario.",
+      "error_budget_exceeded" : "¡El presupuesto fue superado!",
+      "error_budget_neg" : "El presupuesto de beneficiario no puede ser un número negativo.",
+      "error_gift_name" : "Los regalos deben tener el nombre especificado.",
+      "error_gift_price" : "Los regalos no pueden tener un precio negativo.",
+      "error_name" : "El nombre de beneficiario es obligatorio.",
+      "gifts" : "Regalos",
+      "name" : "Nombre",
+      "note" : "Nota",
+      "save" : "Guardar cambios",
+      "title" : "Detalle"
     },
     "gifteeGift" : {
       "delete" : "Eliminar este regalo",
@@ -14,7 +38,20 @@ const en = {
       "delete" : "Eliminar este beneficiario"
     },
     "home" : {
-      "loading" : "Cargando…"
+      "loading" : "Cargando…",
+      "loaging" : "Cargando…",
+      "welcome" : "¡Bienvenido!"
+    },
+    "listStats" : {
+      "avg_budget" : "Presupuesto medio",
+      "big_budget_giftee" : "Beneficiarios de gran presupuesto",
+      "description" : "¡Comprueba tus estadísticas para la lista de regalos elegida!",
+      "giftees_count" : "Número de beneficiarios",
+      "highest_budget_giftee" : "El presupuesto más alto",
+      "loading" : "Cargando…",
+      "low_budget_giftee" : "Beneficiarios de bajo presupuesto",
+      "lowest_budget_giftee" : "El presupuesto más bajo",
+      "select_list" : "Elegir lista de regalos"
     },
     "lists" : {
       "back" : "Regresa",
@@ -64,7 +101,15 @@ const en = {
       "register" : "Registrarse",
       "sign_in" : "Iniciar sesión"
     },
-    "unsaved_changes" : "Cambios sin guardar"
+    "searchDialog" : {
+      "loading" : "Cargando…"
+    },
+    "unsaved_changes" : "Cambios sin guardar",
+    "userStats" : {
+      "description" : "¡Compruebe sus estadísticas generales!",
+      "giftees_count" : "Número de beneficiarios",
+      "giftlists_count" : "Número de listas de regalos"
+    }
   }
 } ;
 

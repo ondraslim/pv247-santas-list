@@ -1,9 +1,33 @@
 const en = {
   "translation" : {
+    "about" : {
+      "creators" : "Criado por: Katarína Matúšová, Michaela Horváthová, Ondřej Slimák, 2020",
+      "description1" : "Aqui você pode criar suas próprias Listas de Presentes personalizadas. Natal, aniversários, aniversários - o que você precisa! Você pode adicionar pessoas a cada uma de suas listas. E não só as pessoas! Você quer ter uma lista de presentes para o dia da adoção do seu cão? Você pode!",
+      "description2" : "Você pode anotar seu orçamento, bem como outros comentários para cada entrada. O aplicativo está conectado à API de pesquisa pública, tornando a busca de presentes ainda mais fácil! Basta digitar uma palavra-chave, pressionar um botão e um presente será encontrado, exibido e salvo para essa pessoa específica na lista específica.",
+      "description3" : "Registre-se agora e adicione suas Listas de Presentes às {{listCount}} já existentes.",
+      "title" : "Bem-vindo à Lista do Papai Noel!"
+    },
     "giftCard" : {
       "delete" : "Excluir esta lista",
       "name" : "Nome",
-      "price" : "Preço"
+      "price" : "Preço",
+      "search" : "Pesquisar",
+      "search_name_error" : "Nenhuma ideia de presente foi inserida para procurar."
+    },
+    "gifteeDetail" : {
+      "add_gift" : "Adicionar novo presente",
+      "budget" : "Preço máximo",
+      "error_budget" : "O orçamento do beneficiário é necessário.",
+      "error_budget_exceeded" : "O orçamento foi ultrapassado!",
+      "error_budget_neg" : "O orçamento do beneficiário não pode ser um número negativo.",
+      "error_gift_name" : "Os presentes devem ter o nome especificado.",
+      "error_gift_price" : "Presentes não podem ter preço negativo.",
+      "error_name" : "O nome do beneficiário é necessário.",
+      "gifts" : "Presentes",
+      "name" : "Nome",
+      "note" : "Nota",
+      "save" : "Salvar Alterações",
+      "title" : "Detalhe"
     },
     "gifteeGift" : {
       "delete" : "Excluir este presente",
@@ -14,7 +38,20 @@ const en = {
       "delete" : "Excluir este beneficiário"
     },
     "home" : {
-      "loading" : "Carregando..."
+      "loading" : "Carregando...",
+      "loaging" : "Carregando...",
+      "welcome" : "Bem-vindo"
+    },
+    "listStats" : {
+      "avg_budget" : "Orçamento médio",
+      "big_budget_giftee" : "Beneficiário de grande orçamento",
+      "description" : "Verifique suas estatísticas para lista de presentes escolhidos!",
+      "giftees_count" : "Número de beneficiários",
+      "highest_budget_giftee" : "O orçamento mais alto",
+      "loading" : "Carregando...",
+      "low_budget_giftee" : "Beneficiário de baixo orçamento",
+      "lowest_budget_giftee" : "O orçamento mais baixo",
+      "select_list" : "Escolha a lista de presentes"
     },
     "lists" : {
       "back" : "Voltar",
@@ -64,7 +101,15 @@ const en = {
       "register" : "Registar",
       "sign_in" : "Iniciar Sessão"
     },
-    "unsaved_changes" : "Alterações não salvas"
+    "searchDialog" : {
+      "loading" : "Carregando..."
+    },
+    "unsaved_changes" : "Alterações não salvas",
+    "userStats" : {
+      "description" : "Verifique suas estatísticas gerais!",
+      "giftees_count" : "Número de beneficiários",
+      "giftlists_count" : "Número de listas de presentes"
+    }
   }
 } ;
 

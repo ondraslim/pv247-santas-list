@@ -79,7 +79,6 @@ const Lists: FC = () => {
             let updatedList: GiftList = selectedGiftList;
             updatedList!.recipients = selectedGiftList!.recipients.filter(r => r.id !== gifteeId);
 
-
             deleteGiftee(gifteeId, selectedGiftList).then(() => {
                 updatedLists.forEach((item, index) => {
                     if (item.id === selectedGiftList.id) {
@@ -126,9 +125,6 @@ const Lists: FC = () => {
     }
 
     const onBackButton = () => {
-        console.log(changesSaved);    
-        console.log(selectedGiftee); 
-        console.log(change)
             if (selectedGiftee === undefined || changesSaved || change === 0) {
                 setSelectedGiftList(undefined);
                 setSelectedGiftee(undefined); 
